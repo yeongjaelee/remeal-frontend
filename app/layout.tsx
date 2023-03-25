@@ -1,4 +1,8 @@
 import './globals.css'
+import NavLayout from "./nav/NavLayout";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
 
 export const metadata = {
   title: 'Create Next App',
@@ -12,7 +16,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+          <NavLayout />
+          {children}
+      </body>
     </html>
+
   )
 }
