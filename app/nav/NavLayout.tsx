@@ -20,7 +20,7 @@ export default function NavLayout({
                     </Link>
                 </div>
                 <div className="justify-items-end">
-                    <button onClick={() => setShowModal(true)}>
+                    <button onClick={() => setShowModal(true)} className="loginButton">
                         <FontAwesomeIcon icon={faArrowRightFromBracket} className="w-4 h-4" />
                     </button>
                 </div>
@@ -33,7 +33,6 @@ export default function NavLayout({
 
             </div>
             {children}
-
         </div>
     );
 }

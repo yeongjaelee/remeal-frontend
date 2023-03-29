@@ -6,5 +6,6 @@ describe("<NavLayout /> 컴포넌트", () => {
         const homepageButton = cy.get(".homepageButton");
         homepageButton.should("exist");
         homepageButton.click();
+        const loginButton = cy.get
     });
 });
