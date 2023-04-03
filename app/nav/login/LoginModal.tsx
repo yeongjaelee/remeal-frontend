@@ -5,24 +5,31 @@ import {faComment, faEnvelope} from "@fortawesome/free-solid-svg-icons";
 import { gql } from "@apollo/client";
 import client from "../../../apollo-client";
 
-const TEST_MUTATION = gql`
+const CHECK_USER = gql`
     mutation TestMutation($email:String){
         testMutation(email:$email){
             success
+            token
         }
     }
 `;
 
 const LoginModal = ({ show, onClose, title, children }) => {
     const [isBrowser, setIsBrowser] = useState(false);
-    const [firstEmailPage, setFirstEmailPage] = useState(false)
-    const [index, setIndex] = useState(0)
-    const [email, setEmail] = useState('')
+    const [firstEmailPage, setFirstEmailPage] = useState(false);
+    const [index, setIndex] = useState(0);
+    const [email, setEmail] = useState('');
     const [error, setError] = useState<string>(null);
 
-    const Test = async () => {
-        await client.mutate({mutation: TEST_MUTATION, variables: {'email':email}})
+    const check_user = async () => {
+        const {data} = await client.mutate({mutation: CHECK_USER, variables: {'email':email}})
         console.log('success')
+        if (data.testMutation.token !== undefined){
+            localStorage.setItem('token', data.testMutation.token)
+        }
+        else {
+            alert('check the email')
+        }
     }
 
     useEffect(() => {
@@ -48,7 +55,8 @@ const LoginModal = ({ show, onClose, title, children }) => {
             setError(null);
             setIndex(2)
         }
-        Test()
+        check_user().then(r => console.log(r))
+
     };
     const modalContent = show ? (
         <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
