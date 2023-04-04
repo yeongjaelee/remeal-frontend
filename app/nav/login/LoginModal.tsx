@@ -6,8 +6,8 @@ import { gql } from "@apollo/client";
 import client from "../../../apollo-client";
 
 const CHECK_USER = gql`
-    mutation TestMutation($email:String){
-        testMutation(email:$email){
+    mutation CheckUser($email:String){
+        checkUser(email:$email){
             success
             token
         }
@@ -24,8 +24,8 @@ const LoginModal = ({ show, onClose, title, children }) => {
     const check_user = async () => {
         const {data} = await client.mutate({mutation: CHECK_USER, variables: {'email':email}})
         console.log('success')
-        if (data.testMutation.token !== undefined){
-            localStorage.setItem('token', data.testMutation.token)
+        if (data.checkUser.token !== undefined){
+            localStorage.setItem('token', data.checkUser.token)
         }
         else {
             alert('check the email')

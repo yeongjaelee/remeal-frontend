@@ -3,6 +3,8 @@ import './globals.css'
 import NavLayout from "./nav/NavLayout";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import {ApolloProvider} from "@apollo/client";
+import client from "../apollo-client";
 config.autoAddCss = false;
 
 // export const metadata = {
@@ -18,8 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-          <NavLayout />
-          {children}
+      <ApolloProvider client={client}>
+            <NavLayout />
+            {children}
+      </ApolloProvider>
       </body>
     </html>
   )
