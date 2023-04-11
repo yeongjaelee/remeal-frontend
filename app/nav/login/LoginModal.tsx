@@ -4,6 +4,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faComment, faEnvelope} from "@fortawesome/free-solid-svg-icons";
 import { gql } from "@apollo/client";
 import client from "../../../apollo-client";
+import UserService from "../../data/users";
+import auth_client from "../../../auth-client";
 
 const CHECK_USER = gql`
     mutation CheckUser($email:String){
@@ -22,16 +24,18 @@ const LoginModal = ({ show, onClose, title, children }) => {
     const [error, setError] = useState<string>(null);
 
     const check_user = async () => {
-        const {data} = await client.mutate({mutation: CHECK_USER, variables: {'email':email}})
-        console.log('success')
-        if (data.checkUser.token !== undefined){
-            localStorage.setItem('token', data.checkUser.token)
+        const {data} = await auth_client.mutate({mutation: UserService.GetToken, variables:{'email':email}})
+        if (data.getToken.success){
+            localStorage.setItem('token', data.getToken.token)
+            localStorage.setItem('refreshToken', data.getToken.refreshToken)
+            localStorage.setItem('email', data.getToken.email)
+            window.location.replace('/');
         }
-        else {
-            alert('check the email')
+        else{
+            alert('로그인을 다시하세요');
+            window.location.replace('/');
         }
     }
-
     useEffect(() => {
         setIsBrowser(true);
     }, []);
@@ -60,7 +64,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
     };
     const modalContent = show ? (
         <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+            <div className="fixed inset-0 bg-gray-100 bg-opacity-75 transition-opacity"></div>
             <div className="fixed inset-0 z-10 overflow-y-auto">
                 <div className="flex w-full h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
                     <div

@@ -2,7 +2,7 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRightFromBracket} from "@fortawesome/free-solid-svg-icons/faArrowRightFromBracket";
 import LoginModal from "./login/LoginModal";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
 export default function NavLayout({
                                          children,
@@ -17,30 +17,35 @@ export default function NavLayout({
     }, []);
     return (
         <div>
-            <div className="flex justify-between pl-4 pt-4 pb-4 pr-4">
-                <div>
-                    <Link href="/" className="homepageButton">
-                        {/*<img src={`${process.env.PUBLIC_URL}/img/logo.png`} alt=""/>*/}
-                        <img src={`http://localhost:3000/img/logo.png`} alt="" width="78" height="18"/>
-                    </Link>
-                </div>
-                {token?
+            <div className="flex justify-between items-center pl-4 pt-4 pb-4 pr-4">
+                <div className="flex flex-row items-center">
                     <div>
-                        you are log in
-                    </div>:''}
-                <div className="justify-items-end">
-                    <button onClick={() => setShowModal(true)} className="loginButton">
+                        <Link href="/" className="homepageButton">
+                            <img src={`http://localhost:3000/img/logo.png`} alt="" width="78" height="18"/>
+                        </Link>
+                    </div>
+                    <div>
+                        <Link href="../chatting">
+                            chatting room
+                        </Link>
+                    </div>
+                </div>
+                <div className="flex items-center">
+                    {token ?
+                        <div>
+                            you are log in
+                        </div>
+                        : ''}
+                    <button onClick={() => setShowModal(true)} className="loginButton ml-4">
                         <FontAwesomeIcon icon={faArrowRightFromBracket} className="w-4 h-4" />
                     </button>
+                    <LoginModal
+                        onClose={() => setShowModal(false)}
+                        show={showModal}
+                    >
+                        Hello from the modal!
+                    </LoginModal>
                 </div>
-                <LoginModal
-                    onClose={() => setShowModal(false)}
-                    show={showModal}
-                >
-                    Hello from the modal!
-
-                </LoginModal>
-
             </div>
             {children}
         </div>
