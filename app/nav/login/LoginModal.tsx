@@ -68,7 +68,8 @@ const LoginModal = ({ show, onClose, title, children }) => {
             <div className="fixed inset-0 z-10 overflow-y-auto">
                 <div className="flex w-full h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
                     <div
-                        className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all max-w-xl h-96">
+                        className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-2xl h-2/3"
+                        >
                         <div className="flex justify-end">
                             <button type="button"
                                     className="pr-6 pt-6 text-gray-400 justify-items-center"
@@ -78,36 +79,44 @@ const LoginModal = ({ show, onClose, title, children }) => {
                         <div className="flex justify-center">
                             <img src={`http://localhost:3000/img/logo.png`} alt="" width="78" height="18"/>
                         </div>
-                        <div className="flex w-100 h-48">
+                        <div className="flex w-2xl h-2xl items-center">
                         <div className="flex justify-center items-end">
-                            <div className="flex items-center justify-items-center overflow-hidden w-96">
-                                <div className="flex transition duration-500 w-96" style={{transform:`translateX(-${index}00%)`}}>
+                            <div className="flex items-center justify-items-center overflow-hidden w-2xl h-2xl">
+                                <div className="flex transition duration-500 w-2xl" style={{transform:`translateX(-${index}00%)`}}>
 
                                     {/*<FirstEmailPage/>*/}
-                                    <div className="flex flex-col items-center justify-items-center w-96">
-                                        <div className="flex items-center justify-center w-96 h-8">
-                                            <div className="flex items-center justify-center bg-yellow-300 w-56">
-                                                <FontAwesomeIcon icon={faComment} />
-                                                <div className="text-center w-32">
-                                                    카카오로 시작하기
+                                    <div className="flex flex-col w-2xl h-xl items-center">
+                                        <div className="flex flex-col items-center justify-items-center justify-center h-xxl" >
+                                            <div className="flex items-center justify-center w-2xl h-8">
+                                                <div className="flex items-center justify-center bg-yellow-300 w-56">
+                                                    <FontAwesomeIcon icon={faComment} />
+                                                    <div className="text-center w-32">
+                                                        카카오로 시작하기
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-center justify-center w-2xl h-8">
+                                                <div className="flex items-center justify-center bg-gray-200 w-56">
+                                                    <FontAwesomeIcon icon={faEnvelope} />
+                                                    <button className="text-center w-32" onClick={()=>setIndex(1)}>
+                                                        이메일로 시작하기
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="flex items-center justify-center w-96 h-8">
-                                            <div className="flex items-center justify-center bg-gray-200 w-56">
-                                                <FontAwesomeIcon icon={faEnvelope} />
-                                                <button className="text-center w-32" onClick={()=>setIndex(1)}>
-                                                    이메일로 시작하기
-                                                </button>
-                                            </div>
-
+                                        <div className="h-8">
+                                            개인정보관련
                                         </div>
+
                                     </div>
 
+
+
                                     {/*<SecondEmailPage/>*/}
-                                    <div className="flex flex-col items-center justify-items-center w-96">
-                                        <div className="flex items-center justify-center w-96 h-24">
+                                    <div className="flex flex-col items-center justify-items-center w-2xl h-xl">
+                                        <div className="flex items-center justify-center w-2xl h-xxl">
                                             <div className="flex flex-col items-center justify-center w-56">
                                                 <div>
                                                     이메일을 일력해주세요
@@ -121,13 +130,37 @@ const LoginModal = ({ show, onClose, title, children }) => {
                                                 <div className="w-56 border-t-4"></div>
                                             </div>
                                         </div>
+                                        <div className="h-8">
+                                            <button className="text-green-700" onClick={()=>setIndex(0)}>
+                                                {'<'} 다른 방법으로 시작하기
+                                            </button>
+
+                                        </div>
                                     </div>
 
                                     {/*<ThirdEmailPage/>*/}
-                                    <div className="flex flex-col items-center justify-items-center w-96">
-                                        <div className="flex items-center justify-center w-96 h-24">
-                                            <div className="flex flex-col items-center justify-center w-56">
-                                                이메일을 보냈습니다
+                                    <div className="flex flex-col items-center justify-items-center w-2xl h-xl">
+                                        <div className="flex flex-col items-center justify-center w-2xl h-xxl">
+                                            <div className="flex flex-col items-center justify-center w-2xl h-36">
+                                                <p className="text-xl">
+                                                    인증메일이 전송되었습니다
+                                                </p>
+                                            </div>
+                                            <div className="flex flex-col justify-center items-center w-2xl h-24">
+                                                <div className="flex flex-row h-6">
+                                                    <p className="text-base mr-1 text-green-700 font-light">
+                                                        {email}{" "}
+                                                    </p>
+                                                    <p className="text-base">
+                                                        으로 인증링크가 담긴 메일을 보냈어요.
+                                                    </p>
+                                                </div>
+                                                <div className="flex flex-row h-6">
+                                                    <p className="text-base">
+                                                        인증을 완료하시려면 메일의 링크를 클릭해주세요.
+                                                    </p>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
