@@ -4,16 +4,25 @@ import {faArrowRightFromBracket} from "@fortawesome/free-solid-svg-icons/faArrow
 import LoginModal from "./login/LoginModal";
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
+import {useRouter} from "next/router";
 export default function NavLayout({
                                          children,
                                      }: {
     children: React.ReactNode,
 }) {
     const [showModal, setShowModal] = useState(false);
-    const [token, setToken] = useState<string>(null);
+    const token = localStorage.getItem('token')
     useEffect(() => {
-        const token = localStorage.getItem('token')
-        setToken(token)
+        const urlParams = new URLSearchParams(window.location.search)
+        const token = urlParams.get('token')
+        const refreshToken = urlParams.get('refreshToken')
+        const email = urlParams.get('email')
+        if (typeof token === "string" && typeof refreshToken==="string" && typeof email==="string") {
+            localStorage.setItem('token', token)
+            localStorage.setItem('refreshToken', refreshToken)
+            localStorage.setItem('email',email)
+            window.location.replace('/')
+        }
     }, []);
     return (
         <div>
@@ -23,11 +32,11 @@ export default function NavLayout({
                         <Link href="/" className="homepageButton">
                             <img src={`http://localhost:3000/img/logo.png`} alt="" width="78" height="18"/>
                         </Link>
-                    </div>
-                    <div>
-                        <Link href="../chatting">
-                            chatting room
-                        </Link>
+                        <div>
+                            <Link href="../chatting">
+                                chatting room
+                            </Link>
+                        </div>
                     </div>
                 </div>
                 <div className="flex items-center">

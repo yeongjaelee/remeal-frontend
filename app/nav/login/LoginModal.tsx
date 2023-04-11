@@ -24,17 +24,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
     const [error, setError] = useState<string>(null);
 
     const check_user = async () => {
-        const {data} = await auth_client.mutate({mutation: UserService.GetToken, variables:{'email':email}})
-        if (data.getToken.success){
-            localStorage.setItem('token', data.getToken.token)
-            localStorage.setItem('refreshToken', data.getToken.refreshToken)
-            localStorage.setItem('email', data.getToken.email)
-            window.location.replace('/');
-        }
-        else{
-            alert('로그인을 다시하세요');
-            window.location.replace('/');
-        }
+        await auth_client.mutate({mutation: CHECK_USER, variables:{'email':email}})
     }
     useEffect(() => {
         setIsBrowser(true);
@@ -87,7 +77,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
                                     {/*<FirstEmailPage/>*/}
                                     <div className="flex flex-col w-2xl h-xl items-center">
                                         <div className="flex flex-col items-center justify-items-center justify-center h-xxl" >
-                                            <div className="flex items-center justify-center w-2xl h-8">
+                                            <div className="flex items-center justify-center w-2xl h-8 mb-2">
                                                 <div className="flex items-center justify-center bg-yellow-300 w-56">
                                                     <FontAwesomeIcon icon={faComment} />
                                                     <div className="text-center w-32">
