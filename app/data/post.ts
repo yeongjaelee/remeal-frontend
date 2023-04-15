@@ -15,4 +15,13 @@ export default class PostService{
         }
     }
     `;
+    static getPost = gql`
+    query Post($id:Int){
+        post(id:$id){
+            title
+            content
+            dateCreated
+        }
+    }
+    `;
 }
