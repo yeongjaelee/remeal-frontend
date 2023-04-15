@@ -13,57 +13,23 @@ const httpLink = new HttpLink({
 
 const authLink = setContext( async (_, {headers}) => {
     const token = localStorage.getItem('token');
+    const refreshToken = localStorage.getItem('refreshToken')
     try {
-        const decodedToken = jwt.decode(token) as JwtPayload;
-        if (decodedToken && decodedToken.exp && decodedToken.exp < Date.now() / 1000) {
-            // If the token is expired, remove it from local storage and redirect to login page
-            const refresh = localStorage.getItem('refreshToken')
-            const email = localStorage.getItem('email')
-            const {data} = await auth_client.mutate({
-                mutation: UserService.CheckRefreshToken,
-                variables: {'refreshToken': refresh, 'email':email}
-            })
-            console.log(data)
-            if (data.checkRefreshToken.success){
-                console.log('success')
-                localStorage.setItem('token', data.checkRefreshToken.token)
-                localStorage.setItem('refreshToken', data.checkRefreshToken.refreshToken)
-                window.location.replace('/');
+        const {data} = await auth_client.mutate({mutation:UserService.CheckToken, variables:{'token':token, 'refreshToken': refreshToken}})
+        if (data.checkToken.success){
+            if (typeof data.checkToken.token ==='string' && typeof data.checkToken.refreshToken==='string'){
+                localStorage.setItem('token', data.checkToken.token)
+                localStorage.setItem('refreshToken', data.checkToken.refreshToken)
             }
-            else{
-                console.log('fail')
-                alert('로그인을 apollo-client 다시하세요')
-                window.location.replace('/');
+            else if (typeof data.checkToken.token === 'string'){
+                localStorage.setItem('token', data.checkToken.token)
             }
-        } else {
-            await auth_client.mutate({mutation: UserService.verify, variables: {'token': token}})
+            else if (typeof data.checkToken.refreshToken === 'string'){
+                localStorage.setItem('refreshToken', data.checkToken.refreshToken)
+            }
         }
     } catch (err) {
-        try {
-            const refresh = localStorage.getItem('refreshToken')
-            const email = localStorage.getItem('email')
-            const {data} = await auth_client.mutate({
-                mutation: UserService.CheckRefreshToken,
-                variables: {'refreshToken': refresh, 'email':email}
-            })
-            console.log(data)
-            if (data.refreshToken.success){
-                console.log('success')
-                localStorage.setItem('token', data.checkRefreshToken.token)
-                localStorage.setItem('refreshToken', data.checkRefreshToken.refreshToken)
-                window.location.replace('/');
-            }
-            else{
-                console.log('fail')
-                alert('로그인을 apollo-client 다시하세요')
-                window.location.replace('/');
-            }
-        } catch (err) {
-            alert('로그인을 다시 해주세요')
-            localStorage.removeItem('refreshToken')
-            localStorage.removeItem('token');
-            window.location.replace('/')
-        }
+        alert('재로그인 부탁드립니다')
     }
     return {
         headers: {

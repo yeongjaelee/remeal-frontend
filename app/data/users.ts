@@ -47,4 +47,13 @@ export default class UserService{
             }
     }
     `;
+    static CheckToken = gql`
+    mutation CheckToken($token: String!, $refreshToken: String!){
+        checkToken(token:$token, refreshToken: $refreshToken){
+            success
+            token
+            refreshToken
+        }
+    }
+    `
 }

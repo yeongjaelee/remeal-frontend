@@ -16,11 +16,9 @@ export default function NavLayout({
         const urlParams = new URLSearchParams(window.location.search)
         const token = urlParams.get('token')
         const refreshToken = urlParams.get('refreshToken')
-        const email = urlParams.get('email')
-        if (typeof token === "string" && typeof refreshToken==="string" && typeof email==="string") {
+        if (typeof token === "string" && typeof refreshToken==="string") {
             localStorage.setItem('token', token)
             localStorage.setItem('refreshToken', refreshToken)
-            localStorage.setItem('email',email)
             window.location.replace('/')
         }
     }, []);
