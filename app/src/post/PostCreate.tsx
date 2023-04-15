@@ -71,9 +71,16 @@ export default function PostCreate() {
         };
     }, []);
 
-    function handleChange(e) {
+    async function handleChange(e) {
         e.preventDefault();
-        console.log(value)
+        const {data} = await client.mutate({
+            mutation: PostService.CreatePost,
+            variables: {'title': '테스트', 'content': value}
+        })
+        console.log(data)
+        if (data.createPost.success) {
+            alert('성공')
+        }
     }
 
     return (
