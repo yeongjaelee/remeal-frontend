@@ -24,4 +24,12 @@ export default class PostService{
         }
     }
     `;
+    static getPostList = gql`
+    query PostList{
+        postList{
+            id
+            title
+        }
+    }
+    `;
 }

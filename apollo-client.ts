@@ -16,6 +16,7 @@ const authLink = setContext( async (_, {headers}) => {
     const refreshToken = localStorage.getItem('refreshToken')
     try {
         const {data} = await auth_client.mutate({mutation:UserService.CheckToken, variables:{'token':token, 'refreshToken': refreshToken}})
+        console.log(data)
         if (data.checkToken.success){
             if (typeof data.checkToken.token ==='string' && typeof data.checkToken.refreshToken==='string'){
                 localStorage.setItem('token', data.checkToken.token)

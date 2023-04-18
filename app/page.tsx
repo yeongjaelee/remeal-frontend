@@ -7,6 +7,7 @@ import React from "react";
 import {useRouter} from "next/router";
 import PostCreate from "./src/post/PostCreate";
 import GetPost from "./src/post/GetPost";
+import PostList from "./src/post/PostList";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +15,7 @@ export default function Home() {
 
   return (
     <div className="flex justify-center items-center left-3 xl:pr-16">
-        <GetPost />
+        <PostList />
     </div>
   );
 }

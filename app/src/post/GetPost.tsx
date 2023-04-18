@@ -15,15 +15,13 @@ export default function GetPost(){
         setDatetime(data.post.dateCreated)
     }
     useEffect(() => {
-
             callPost()
         }
     )
     return(
         <div>
-            show post
             {title}
-            {content}
+            <div dangerouslySetInnerHTML={{__html : content}}/>
             {datetime}
         </div>
     )
