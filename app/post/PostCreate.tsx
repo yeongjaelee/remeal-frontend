@@ -3,8 +3,8 @@ import React, {useMemo, useRef, useState} from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import parse from 'html-react-parser';
-import client from "../../../apollo-client";
-import PostService from "../../data/post";
+import client from "../../apollo-client";
+import PostService from "../data/post";
 
 // 위에서 설정한 모듈들 foramts을 설정한다
 const formats = [

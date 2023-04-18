@@ -76,7 +76,7 @@ context('Network Requests', () => {
         })
 
         // we don't know the exact post id - only that it will be > 100
-        // since JSONPlaceholder has built-in 100 posts
+        // since JSONPlaceholder has built-in 100 post
         expect(response.body).property('id').to.be.a('number')
           .and.to.be.gt(100)
 
@@ -131,7 +131,7 @@ context('Network Requests', () => {
     // Listen to POST to comments
     cy.intercept('POST', '**/comments').as('postComment')
 
-    // we have code that posts a comment when
+    // we have code that post a comment when
     // the button is clicked in scripts.js
     cy.get('.network-post').click()
     cy.wait('@postComment').should(({ request, response }) => {

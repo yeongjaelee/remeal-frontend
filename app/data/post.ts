@@ -29,6 +29,7 @@ export default class PostService{
         postList{
             id
             title
+            content
         }
     }
     `;
