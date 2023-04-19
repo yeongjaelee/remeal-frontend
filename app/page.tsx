@@ -5,7 +5,7 @@ import styles from "./page.module.css";
 import Link from 'next/link';
 import React from "react";
 import {useRouter} from "next/router";
-import PostCreate from "./post/PostCreate";
+import PostCreate from "./post/postCreate/PostCreate";
 import GetPost from "./post/[id]/GetPost";
 import PostList from "./post/PostList";
 

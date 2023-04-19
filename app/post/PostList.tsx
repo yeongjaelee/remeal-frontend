@@ -28,16 +28,21 @@ export default function PostList (){
         },[]
     )
     return(
-        <div>
-            {postList.map((item, index) => {
-                const titleLettersOnly = removeImages(item.content);
-                return (
-                    <div key={item.id} className="border-b-4 border-indigo-500">
-                        <Link href={`../post/[id]?id=${item.id}`}>{item.title}</Link>
-                        {titleLettersOnly}
-                    </div>
-                )
-            })}
+        <div className="flex">
+            <div className="bg-white w-xl">
+                {postList.map((item, index) => {
+                    const titleLettersOnly = removeImages(item.content);
+                    return (
+                        <div key={item.id} className="border-b-4 border-indigo-500 h-64">
+                            <Link href={`../post/[id]?id=${item.id}`}>{item.title}</Link>
+                            {titleLettersOnly}
+                        </div>
+                    )
+                })}
+            </div>
+            <div>
+                <Link href="../post/postCreate">post create</Link>
+            </div>
         </div>
     )
 }

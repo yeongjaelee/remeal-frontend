@@ -3,8 +3,11 @@ import React, {useMemo, useRef, useState} from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import parse from 'html-react-parser';
-import client from "../../apollo-client";
-import PostService from "../data/post";
+import client from "../../../apollo-client";
+import PostService from "../../data/post";
+import ImageResize from '@looop/quill-image-resize-module-react';
+
+Quill.register('modules/imageResize', ImageResize)
 
 // 위에서 설정한 모듈들 foramts을 설정한다
 const formats = [
@@ -68,35 +71,48 @@ export default function PostCreate() {
                     image: imageHandler,
                 },
             },
-        };
+            imageResize: { modules: ['Resize'] },
+    };
     }, []);
+    function imageSelected(str){
 
+
+    }
     async function handleChange(e) {
         e.preventDefault();
+
         const {data} = await client.mutate({
             mutation: PostService.CreatePost,
             variables: {'title': '테스트', 'content': value}
         })
         console.log(data)
         if (data.createPost.success) {
+
             alert('성공')
         }
     }
 
     return (
-        <div>
-            here is post create title: {title}
+        <div className="flex flex-col justify-items-center items-center">
             <form onSubmit={handleChange}>
-                <ReactQuill
-                    ref={quillRef}
-                    theme="snow"
-                    placeholder="플레이스 홀더"
-                    value={value}
-                    onChange={setValue}
-                    modules={modules}
-                    formats={formats}
-                />
-                <button>submit</button>
+                <div>
+                    title :
+                </div>
+                <div className="w-3xl h-2xl border-2 border-gray-400">
+                    <ReactQuill
+                        ref={quillRef}
+                        theme="snow"
+                        value={value}
+                        onChange={setValue}
+                        modules={modules}
+                        formats={formats}
+                        className="h-2xl overflow-y-scroll "
+                    />
+                </div>
+                <div className="m-4">
+                    <button>submit</button>
+                </div>
+
             </form>
         </div>
     );
