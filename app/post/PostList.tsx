@@ -33,9 +33,17 @@ export default function PostList (){
                 {postList.map((item, index) => {
                     const titleLettersOnly = removeImages(item.content);
                     return (
-                        <div key={item.id} className="border-b-4 border-indigo-500 h-64">
-                            <Link href={`../post/[id]?id=${item.id}`}>{item.title}</Link>
-                            {titleLettersOnly}
+                        <div key={item.id} className="flex flex-row border-b-4 border-indigo-500 h-64">
+                            <div className="w-72">
+                                <Link href={`../post/[id]?id=${item.id}`}>{item.title}</Link>
+                                {titleLettersOnly}
+                            </div>
+                            <div className="justify-end">
+                                {item.firstPostImage?
+                                    <img src={item.firstPostImage?.image} alt={item.firstPostImage} width="200" height="100"/>
+                                    :''
+                                }
+                            </div>
                         </div>
                     )
                 })}

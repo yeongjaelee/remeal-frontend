@@ -2,8 +2,8 @@ import {gql} from "@apollo/client";
 
 export default class PostService{
     static CreatePost = gql`
-    mutation CreatePost($title:String, $content:String){
-        createPost(title:$title, content:$content){
+    mutation CreatePost($title:String, $content:String, $images:[Upload]){
+        createPost(title:$title, content:$content, images:$images){
             success
         }
     }
@@ -21,6 +21,7 @@ export default class PostService{
             title
             content
             dateCreated
+            
         }
     }
     `;
@@ -30,6 +31,10 @@ export default class PostService{
             id
             title
             content
+            firstPostImage{
+                id
+                image
+            }
         }
     }
     `;

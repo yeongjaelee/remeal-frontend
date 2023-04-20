@@ -74,16 +74,21 @@ export default function PostCreate() {
             imageResize: { modules: ['Resize'] },
     };
     }, []);
-    function imageSelected(str){
-
-
+    function extractImageUrls(htmlString) {
+        const regex = /<img.*?src="(.*?)"/g;
+        const urls = [];
+        let match;
+        while ((match = regex.exec(htmlString))) {
+            urls.push(match[1]);
+        }
+        return urls;
     }
     async function handleChange(e) {
         e.preventDefault();
-
+        const images = extractImageUrls(value)
         const {data} = await client.mutate({
             mutation: PostService.CreatePost,
-            variables: {'title': '테스트', 'content': value}
+            variables: {'title': title, 'content': value, 'images':images}
         })
         console.log(data)
         if (data.createPost.success) {
@@ -91,12 +96,25 @@ export default function PostCreate() {
             alert('성공')
         }
     }
+    const handleImageDelete = (image) => {
+        console.log('delete image')
+        if (quillRef.current instanceof ReactQuill) {
+            const editor = quillRef.current.getEditor();
+            const selection = editor.getSelection();
+            if ("index" in selection) {
+                editor.formatText(selection.index, selection.length, 'clean', {image: image});
+                const content = quillRef.current.getEditor().root.innerHTML;
+                setValue(content);
+            }
+
+        }
+    };
 
     return (
         <div className="flex flex-col justify-items-center items-center">
             <form onSubmit={handleChange}>
                 <div>
-                    title :
+                    <input type="text" placeholder="제목을 입력하세요" onChange={(e)=>setTitle(e.target.value)}/>
                 </div>
                 <div className="w-3xl h-2xl border-2 border-gray-400">
                     <ReactQuill
@@ -107,6 +125,7 @@ export default function PostCreate() {
                         modules={modules}
                         formats={formats}
                         className="h-2xl overflow-y-scroll "
+                        onImageDelete={handleImageDelete}
                     />
                 </div>
                 <div className="m-4">
