@@ -14,11 +14,13 @@ export default function PostList (){
     const [checkSame, setCheckSame] = useState<boolean>(false)
     const Max_contents_length = 10
     const fetchData = async () => {
+        console.log('limit')
+        console.log(limit)
         const {data} = await auth_client.query({query: PostService.getPostList, variables:{'limit':limit}})
         const {data:allPost} = await auth_client.query({query: PostService.allPost})
         setPostList(data.postList);
         setAllNumber(allPost.allPost);
-        if (postList.length == allNumber){
+        if (data.postList.length == allPost.allPost){
             setCheckSame(true)
         }
     };
@@ -35,8 +37,6 @@ export default function PostList (){
             // If the length of the text content is greater than 100, truncate the HTML and add an ellipsis
             const truncatedText = stringWithoutHtml.slice(0, 100) + ' ...';
             // truncatedHtml = htmlWithoutImages.replace(stringWithoutHtml, truncatedText + '...');
-            console.log('--------')
-            console.log(truncatedHtml)
             stringWithoutHtml = truncatedText
         }
         // Convert the string to HTML
@@ -52,11 +52,20 @@ export default function PostList (){
         function handleScroll() {
             const {scrollHeight, scrollTop, clientHeight} = containerRef.current;
             // redux로 상태관리
-            if (scrollTop + clientHeight >= scrollHeight && !isFetching && !checkSame) {
-
+            if (scrollTop + clientHeight === scrollHeight && !isFetching && !checkSame) {
+                console.log('scrollTop')
+                console.log(scrollTop)
+                console.log('clientHeight')
+                console.log(clientHeight)
+                console.log('scrollHeight')
+                console.log(scrollHeight)
                 setIsFetching(true);
+                console.log(1)
                 setTimeout(() => {
+                    console.log('222222222')
                     setLimit((prevLimit) => prevLimit + 4);
+                    console.log('limit')
+                    console.log(limit)
                     setIsFetching(false);
                 }, 1000);
             }
@@ -81,7 +90,7 @@ export default function PostList (){
             <div ref={containerRef} className="w-xl overflow-y-scroll h-3xl">
                 {postList.map((item, index) => {
                     const contentLettersOnly = removeImages(item.content);
-
+                    const tags = item.tagsOnPost;
                     return (
                         <div key={item.id} className="bg-white flex flex-col border-b-2 border-gray-200 h-64">
                             <div className="h-4"></div>
@@ -117,6 +126,24 @@ export default function PostList (){
                                         <img src={item.firstPostImage?.image} alt={item.firstPostImage} width="96" height="96"/>
                                         :''
                                     }
+                                </div>
+                            </div>
+                            <div className="h-4"></div>
+                            <div className="flex flex-row">
+                                <div className="w-4"></div>
+                                <div className="flex flex-row">
+                                    {tags.map((tag, index)=>{
+                                        return(
+                                            <div key={tag.id} className="w-20" >
+                                                <div className="w-16 h-7 rounded-lg bg-gray-100">
+                                                    <div className="flex items-center justify-center content-center">
+                                                        {tag.name}
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            )
+                                    })}
                                 </div>
                             </div>
                         </div>

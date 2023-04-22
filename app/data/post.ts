@@ -43,6 +43,10 @@ export default class PostService{
             dateCreatedYear
             dateCreatedMonth
             dateCreatedDay
+            tagsOnPost{
+                id
+                name
+            }
         }
     }
     `;
