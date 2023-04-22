@@ -12,7 +12,8 @@ module.exports = {
       height:{
         'xl':'400px',
         'xxl':'360px',
-        '2xl':'640px'
+        '2xl':'640px',
+        '3xl':'800px'
       },
 
     },

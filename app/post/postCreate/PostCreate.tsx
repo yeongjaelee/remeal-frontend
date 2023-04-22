@@ -86,13 +86,13 @@ export default function PostCreate() {
     async function handleChange(e) {
         e.preventDefault();
         const images = extractImageUrls(value)
+        const token = localStorage.getItem('token')
         const {data} = await client.mutate({
             mutation: PostService.CreatePost,
-            variables: {'title': title, 'content': value, 'images':images}
+            variables: {'token':token, 'title': title, 'content': value, 'images':images}
         })
         console.log(data)
         if (data.createPost.success) {
-
             alert('성공')
         }
     }
