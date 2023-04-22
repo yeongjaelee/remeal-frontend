@@ -2,8 +2,8 @@ import {gql} from "@apollo/client";
 
 export default class PostService{
     static CreatePost = gql`
-    mutation CreatePost($token:String, $title:String, $content:String, $images:[Upload]){
-        createPost(token:$token, title:$title, content:$content, images:$images){
+    mutation CreatePost($token:String, $title:String, $content:String, $images:[Upload], $tagsName:[String]){
+        createPost(token:$token, title:$title, content:$content, images:$images, tagsName:$tagsName){
             success
         }
     }

@@ -12,6 +12,7 @@ export default function PostList (){
     const [offset, setOffset] = useState<number>(0)
     const [allNumber, setAllNumber] = useState<number>(0)
     const [checkSame, setCheckSame] = useState<boolean>(false)
+    const Max_contents_length = 10
     const fetchData = async () => {
         const {data} = await auth_client.query({query: PostService.getPostList, variables:{'limit':limit}})
         const {data:allPost} = await auth_client.query({query: PostService.allPost})
@@ -27,11 +28,22 @@ export default function PostList (){
             return '';
         }
         // Replace image tags with an empty string
-        const stringWithoutImages = str.replace(/<img[^>]*>/g, '');
+        const htmlWithoutImages = str.replace(/<img[^>]*>/g, '');
+        let stringWithoutHtml = htmlWithoutImages.replace(/(<([^>]+)>)/gi, '');
+        let truncatedHtml = htmlWithoutImages;
+        if (stringWithoutHtml.length > 100) {
+            // If the length of the text content is greater than 100, truncate the HTML and add an ellipsis
+            const truncatedText = stringWithoutHtml.slice(0, 100) + ' ...';
+            // truncatedHtml = htmlWithoutImages.replace(stringWithoutHtml, truncatedText + '...');
+            console.log('--------')
+            console.log(truncatedHtml)
+            stringWithoutHtml = truncatedText
+        }
         // Convert the string to HTML
-        const html = {__html: stringWithoutImages};
+        const html = {__html: truncatedHtml};
         // Render the HTML with the dangerouslySetInnerHTML property
-        return <div dangerouslySetInnerHTML={html} />;
+        return stringWithoutHtml
+        // return <div dangerouslySetInnerHTML={html} className="font-light text-xs" />;
     }
     useEffect(() => {
         fetchData();
@@ -69,6 +81,7 @@ export default function PostList (){
             <div ref={containerRef} className="w-xl overflow-y-scroll h-3xl">
                 {postList.map((item, index) => {
                     const contentLettersOnly = removeImages(item.content);
+
                     return (
                         <div key={item.id} className="bg-white flex flex-col border-b-2 border-gray-200 h-64">
                             <div className="h-4"></div>
@@ -96,7 +109,7 @@ export default function PostList (){
                             <div className="h-4"></div>
                             <div className="flex flex-row h-24">
                                 <div className="w-4"></div>
-                                <div className="w-80">
+                                <div className="w-80 font-light text-xs">
                                     {contentLettersOnly}
                                 </div>
                                 <div className="ml-auto">

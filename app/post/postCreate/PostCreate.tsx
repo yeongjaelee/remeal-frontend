@@ -1,5 +1,5 @@
 'use client'
-import React, {useMemo, useRef, useState} from "react";
+import React, {useCallback, useMemo, useRef, useState} from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import parse from 'html-react-parser';
@@ -23,6 +23,7 @@ const formats = [
 export default function PostCreate() {
     const [title, setTitle] = useState<string>("");
     const [value, setValue] = useState("");
+    const [tags, setTags] = useState([])
     const quillRef = useRef<ReactQuill>();
 
     const imageHandler = () => {
@@ -89,7 +90,7 @@ export default function PostCreate() {
         const token = localStorage.getItem('token')
         const {data} = await client.mutate({
             mutation: PostService.CreatePost,
-            variables: {'token':token, 'title': title, 'content': value, 'images':images}
+            variables: {'token':token, 'title': title, 'content': value, 'images':images, 'tagsName':tags}
         })
         console.log(data)
         if (data.createPost.success) {
@@ -110,12 +111,30 @@ export default function PostCreate() {
         }
     };
 
+    function handleKeyDown(e){
+        // If user did not press enter key, return
+        if(e.key !== 'Enter') return
+        // Get the value of the input
+        const value = e.target.value
+        // If the value is empty, return
+        if(!value.trim()) return
+        // Add the value to the tags array
+        setTags([...tags, value])
+        // Clear the input
+        e.target.value = ''
+    }
+    function removeTag(index){
+        setTags(tags.filter((el, i) => i !== index))
+    }
+
     return (
         <div className="flex flex-col justify-items-center items-center">
-            <form onSubmit={handleChange}>
-                <div>
-                    <input type="text" placeholder="제목을 입력하세요" onChange={(e)=>setTitle(e.target.value)}/>
+            <div className="h-3"></div>
+            <div>
+                <div className="h-12 w-3xl bg-transparent">
+                    <input type="text" placeholder="제목을 입력하세요" className="bg-transparent h-12 w-3xl border-transparent" onChange={(e)=>setTitle(e.target.value)}/>
                 </div>
+                <div className="h-2"></div>
                 <div className="w-3xl h-2xl border-2 border-gray-400">
                     <ReactQuill
                         ref={quillRef}
@@ -128,11 +147,22 @@ export default function PostCreate() {
                         onImageDelete={handleImageDelete}
                     />
                 </div>
-                <div className="m-4">
-                    <button>submit</button>
+                <div className="h-1"></div>
+                <div className="flex flex-row">
+                    { tags.map((tag, index) => (
+                        <div className="rounded-lg border-2 border-white" key={index}>
+                            <span className="text">#{tag}</span>
+                            <button className="close" onClick={() => removeTag(index)}>&times;</button>
+                        </div>
+                    )) }
+                    <div className="w-1"></div>
+                    <input onKeyPress={handleKeyDown} type="text" className="bg-transparent" placeholder="#해시태그를 입력하세요" />
                 </div>
+                <div className="m-4">
+                    <button onClick={handleChange}>submit</button>
+                </div>
+            </div>
 
-            </form>
         </div>
     );
 
