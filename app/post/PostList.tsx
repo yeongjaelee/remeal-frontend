@@ -12,11 +12,15 @@ export default function PostList (){
     const [offset, setOffset] = useState<number>(0)
     const [allNumber, setAllNumber] = useState<number>(0)
     const [checkSame, setCheckSame] = useState<boolean>(false)
-    const Max_contents_length = 10
+    const Max_contents_length = 100
+    const [searchTag, setSearchTag] = useState<string>(null)
     const fetchData = async () => {
+        console.log('searchTag')
+        console.log(searchTag)
         console.log('limit')
         console.log(limit)
-        const {data} = await auth_client.query({query: PostService.getPostList, variables:{'limit':limit}})
+        const {data} = await auth_client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':searchTag}})
+        console.log(data)
         const {data:allPost} = await auth_client.query({query: PostService.allPost})
         setPostList(data.postList);
         setAllNumber(allPost.allPost);
@@ -47,7 +51,7 @@ export default function PostList (){
     }
     useEffect(() => {
         fetchData();
-    },[limit]);
+    },[limit, searchTag]);
     useEffect(() => {
         function handleScroll() {
             const {scrollHeight, scrollTop, clientHeight} = containerRef.current;
@@ -84,9 +88,13 @@ export default function PostList (){
 
     return(
         <div className="flex flex-col">
-            <div className="flex items-end justify-end m-1">
-                <Link href="../post/postCreate" className="border-2 border-gray-400">글쓰기</Link>
+            <div className="flex flex-row justify-between ">
+                <input value={searchTag} onChange={(e)=>setSearchTag(e.target.value)} className="bg-gray-200 border-gray-400 border-2 mb-1 w-56" placeholder="검색할 해시태그를 입력하세요"/>
+                <div className="flex items-end justify-end m-1">
+                    <Link href="../post/postCreate" className="border-2 border-gray-400">글쓰기</Link>
+                </div>
             </div>
+
             <div ref={containerRef} className="w-xl overflow-y-scroll h-3xl">
                 {postList.map((item, index) => {
                     const contentLettersOnly = removeImages(item.content);
@@ -137,7 +145,9 @@ export default function PostList (){
                                             <div key={tag.id} className="w-20" >
                                                 <div className="w-16 h-7 rounded-lg bg-gray-100">
                                                     <div className="flex items-center justify-center content-center">
-                                                        {tag.name}
+                                                        <button onClick={()=>setSearchTag(tag.name)}>
+                                                            {tag.name}
+                                                        </button>
                                                     </div>
                                                 </div>
 
