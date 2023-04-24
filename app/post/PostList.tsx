@@ -28,7 +28,6 @@ export default function PostList (){
             setCheckSame(true)
         }
     };
-
     function removeImages(str) {
         if (!str) {
             return '';

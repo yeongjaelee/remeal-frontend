@@ -21,7 +21,9 @@ export default class PostService{
             title
             content
             dateCreated
-           
+            comments{
+                comment
+            }
         }
     }
     `;
@@ -53,6 +55,30 @@ export default class PostService{
     static allPost = gql`
     query AllPost{
         allPost
+    }
+    `;
+
+    static createComment = gql`
+    mutation CreateComment($postId: Int, $token:String, $comment:String){
+        createComment(postId:$postId, token:$token, comment:$comment){
+            success
+            isWriter
+            comments{
+                comment
+                dateCreated
+            }
+        }
+    }
+    `;
+
+    static getComments = gql`
+    query Comments($postId: Int){
+        comments(postId: $postId){
+            comment
+            user{
+              email
+            }
+        }
     }
     `;
 }

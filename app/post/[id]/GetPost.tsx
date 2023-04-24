@@ -23,10 +23,11 @@ export default function GetPost(){
         }
     )
     return(
-        <div>
-            {title}
+        <div className="flex flex-col items-center justify-center">
+            <div>
+                {title}
+            </div>
             <div dangerouslySetInnerHTML={{__html : content}}/>
-            {datetime}
         </div>
     )
 }
