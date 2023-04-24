@@ -24,6 +24,18 @@ export default class PostService{
             comments{
                 comment
             }
+            user{
+              email
+            }
+            dateCreatedYear
+            dateCreatedMonth
+            dateCreatedDay
+            dateCreatedHour
+            dateCreatedMinute
+            tagsOnPost{
+                id
+                name
+            }
         }
     }
     `;
