@@ -8,8 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
 
   return (
-    <div className="flex flex-col justify-center items-center left-3 ">
-        <div className="h-8" />
+    <div>
         <PostList />
     </div>
   );

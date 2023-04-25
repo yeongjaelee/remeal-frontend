@@ -21,10 +21,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-      <div id="modal" className="w-screen h-screen bg-gray-400 flex justify-items-center items-center justify-center overflow-y-scroll">
+      <div id="modal" className="w-screen h-screen">
           <ApolloProvider client={client}>
-              <div className="h-screen bg-gray-200 w-9/12 overflow-y-scroll">
-                  <NavLayout />
+              <div className="h-12 w-screen border-black border-b justify-center items-center">
+                  <div className="flex items-center justify-center h-12">
+                      <div className="w-mainLayout h-12">
+                          <NavLayout />
+                      </div>
+
+                  </div>
+
                   {/*<LeftSideBar />*/}
                   {children}
               </div>

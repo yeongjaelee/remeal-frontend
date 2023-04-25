@@ -23,18 +23,18 @@ export default function NavLayout({
         }
     }, []);
     return (
-        <div>
-            <div className="flex justify-between items-center pl-4 pt-4 pb-4 pr-4 border-b-2 border-gray-300">
+        <div className="h-12">
+            <div className="flex justify-between h-12 pl-4 pt-4 pb-4 pr-4">
                 <div className="flex flex-row items-center">
                     <div>
                         <Link href="/" className="homepageButton">
                             <img src={`http://localhost:3000/img/logo.png`} alt="" width="78" height="18"/>
                         </Link>
-                        <div>
-                            <Link href="../chatting">
-                                chatting room
-                            </Link>
-                        </div>
+                        {/*<div>*/}
+                        {/*    <Link href="../chatting">*/}
+                        {/*        chatting room*/}
+                        {/*    </Link>*/}
+                        {/*</div>*/}
                     </div>
                 </div>
                 <div className="flex items-center">

@@ -6,6 +6,9 @@ import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
 import {faChevronDown, faChevronUp, faCommentDots} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Layout from "./layout";
+import CommentsBar from "../../components/CommentsBar";
+import LoginModal from "../../nav/login/LoginModal";
 
 export default function Page() {
     const [title, setTitle] = useState<string>('')
@@ -14,7 +17,7 @@ export default function Page() {
     const searchParams = useSearchParams();
     const id = Number(searchParams.get('id'));
     const [comment, setComment] = useState<string>('')
-    const [comments, setComments] = useState([])
+    const [comments, setComments] = useState(null)
     const [email, setEmail] = useState<string>('')
     const [year, setYear] = useState<string>('')
     const [month, setMonth] = useState<string>('')
@@ -23,6 +26,8 @@ export default function Page() {
     const [minute, setMinute] = useState<string>('')
     const [isComment, setIsComment] = useState<boolean>(false)
     const [tags, setTags] = useState([])
+    const [commentLength, setCommentLength] = useState<number>(0)
+    const [showComment, setShowComment] = useState<boolean>(false)
     async function callPost() {
         const {data} = await client.query({query: PostService.getPost, variables: {id: id}})
         setTitle(data.post.title)
@@ -38,7 +43,14 @@ export default function Page() {
     }
     async function getComments(){
         const {data} = await client.query({query:PostService.getComments, variables:{'postId':id}})
-        setComments(data.comments)
+        if (data){
+            setComments(data.comments)
+            setCommentLength(data.comments.length)
+        }
+        else{
+            setCommentLength(0)
+        }
+
     }
     useEffect(() => {
             callPost()
@@ -57,7 +69,7 @@ export default function Page() {
 
     }
     return(
-        <div className="flex flex-col items-center justify-center overflow-y-scroll">
+        <div className="relative flex flex-col items-center justify-center overflow-y-scroll">
             <div className="mt-8 flex ">
                 <p className="text-3xl">{title}</p>
             </div>
@@ -108,48 +120,44 @@ export default function Page() {
                     })}
                 </div>
                 <div className="h-5"></div>
-                <div className={isComment?'w-28 h-6 border border-pink-600 flex flex-row items-center justify-between':"w-28 h-6 border border-gray-400 flex flex-row items-center justify-between"}>
-                    <FontAwesomeIcon icon={faCommentDots} style={{color: "#04090b",}} className="m-1"/>
-                    <div>
-                        댓글
-                    </div>
-                    <div>
-                        {comments.length}
-                    </div>
-                    <div className="h-4 border border-gray-400 outline-1"></div>
-                    {isComment?
-                        <button onClick={()=>setIsComment(false)}>
-                            <FontAwesomeIcon icon={faChevronDown} style={{color: "#05070b",}} />
-                        </button>
-                        :
-                        <button onClick={()=>setIsComment(true)}>
-                            <FontAwesomeIcon icon={faChevronUp} style={{color: "#05070b",}} />
-                        </button>
-
-                    }
-                    <div className="w-1"></div>
+                <div className="flex flex-row">
+                    <button className="flex flex-row" onClick={()=>setShowComment(!showComment)}>
+                        <FontAwesomeIcon icon={faCommentDots} style={{color: "#04090b",}} className="m-1"/>
+                        <div>
+                            {commentLength}
+                        </div>
+                    </button>
                 </div>
 
-                <div className="h-5"></div>
-                {isComment?
-                    <div className="w-3xl h-3xl bg-gray-300 overflow-y-scroll">
-                        <div className="flex flex-col">
-                            {comments.map((item, index)=>(
-                                    <div key={index}>
-                                        {item.comment}
-                                    </div>
-                                )
-                            )}
+
+                <div className={`fixed w-96 inset-y-0 overflow-hidden ${showComment ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"} top-0 right-0 z-[999] h-full bg-gray-200 text-black transition-opacity transition-transform duration-500 ease-out overflow-y-scroll`}>
+                    <div className="mt-6 ml-8 mb-6">
+                        <p className="text-xl font-bold">Responses ({comments.length})</p>
+                    </div>
+                    <form onSubmit={createComment} className="flex flex-col justify-center items-center">
+                        <div className="w-80 h-8 bg-white flex items-center justify-center rounded-md drop-shadow-lg">
+                            <div className="w-72">
+                                <input value={comment} onChange={(e)=>setComment(e.target.value)} placeholder="당신의 생각은 무엇인가요?"/>
+                            </div>
                         </div>
-                        <form onSubmit={createComment}>
-                            <input value={comment} onChange={(e)=>setComment(e.target.value)}/>
-                        </form></div>:''
-                }
-
-
-                <div className="h-48"></div>
+                    </form>
+                    <div className="h-8"></div>
+                    <div className="border border-white"></div>
+                    {comments?
+                        <div className="w-3xl">
+                            <div className="h-5"></div>
+                            <div className="flex flex-col">
+                                {comments.map((item, index)=>(
+                                        <div key={item.id} className="w-80 h-12 ml-8">
+                                            {item.comment}
+                                        </div>
+                                    )
+                                )}
+                            </div>
+                            </div>:'아직 댓글이 없습니다'
+                    }
+                </div>
             </div>
-
         </div>
     )
 }

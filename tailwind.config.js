@@ -7,7 +7,9 @@ module.exports = {
         '3xl': '840px',
         '2xl':'612px',
         'xl':'480px',
-        '1.5xl':'540px'
+        '1.5xl':'540px',
+        '5xl': '1200px',
+        'mainLayout':'1025.5px'
       },
       height:{
         'xl':'400px',

@@ -54,6 +54,7 @@ export default function PostList (){
     useEffect(() => {
         function handleScroll() {
             const {scrollHeight, scrollTop, clientHeight} = containerRef.current;
+            console.log(111)
             // redux로 상태관리
             if (scrollTop + clientHeight === scrollHeight && !isFetching && !checkSame) {
                 console.log('scrollTop')
@@ -84,85 +85,93 @@ export default function PostList (){
             }
         };
     }, [isFetching]);
-
+    //
     return(
-        <div className="flex flex-col">
-            <div className="flex flex-row justify-between ">
-                <input value={searchTag} onChange={(e)=>setSearchTag(e.target.value)} className="bg-gray-200 border-gray-400 border-2 mb-1 w-56" placeholder="검색할 해시태그를 입력하세요"/>
-                <div className="flex items-end justify-end m-1">
-                    <Link href="../post/postCreate" className="border-2 border-gray-400">글쓰기</Link>
+        <div ref={containerRef} className="flex flex-col justify-center items-center left-3  h-screen overflow-y-scroll">
+            <div className="w-screen flex items-center justify-center">
+                <div className="flex flex-col h-screen w-xl ">
+                    {/*<div className="flex flex-row justify-between ">*/}
+                    {/*    <input value={searchTag} onChange={(e)=>setSearchTag(e.target.value)} className="bg-gray-200 border-gray-400 border-2 mb-1 w-56" placeholder="검색할 해시태그를 입력하세요"/>*/}
+                    {/*    <div className="flex items-end justify-end m-1">*/}
+                    {/*        <Link href="../post/postCreate" className="border-2 border-gray-400">글쓰기</Link>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+                    <div className="h-screen mt-12 ">
+                        {postList.map((item, index) => {
+                            const contentLettersOnly = removeImages(item.content);
+                            const tags = item.tagsOnPost;
+                            return (
+                                <div key={item.id} className="bg-white flex flex-col h-64">
+                                    <div className="h-4"></div>
+                                    <div className="flex flex-row items-end content-center place-items-center h-5">
+                                        <div className="w-3"></div>
+                                        <div className="pl-4 rounded-full bg-green-400 w-5 h-5"></div>
+                                        <div className="w-2"></div>
+                                        <div className="underline">
+                                            {item.user.email}
+                                        </div>
+                                        <div className="w-1"></div>
+                                        <div className="w-2 flex items-center ">.</div>
+                                        <div className="w-1"></div>
+                                        <div className="flex flex-row w-20 justify-between">
+                                            <div className="text-xs font-normal text-gray-700">{item.dateCreatedYear}.</div>
+                                            <div className="text-xs font-normal text-gray-700">{item.dateCreatedMonth}.</div>
+                                            <div className="text-xs font-normal text-gray-700">{item.dateCreatedDay}</div>
+                                        </div>
+                                    </div>
+                                    <div className="h-4"></div>
+                                    <div className="flex flex-row">
+                                        <div className="w-3"></div>
+                                        <Link href={`../post/[id]?id=${item.id}`}>{item.title}</Link>
+                                    </div>
+                                    <div className="h-4"></div>
+                                    <div className="flex flex-row h-24">
+                                        <div className="w-3"></div>
+                                        <div className="w-80 font-light text-xs">
+                                            <Link href={`../post/[id]?id=${item.id}`}>{contentLettersOnly}</Link>
+                                        </div>
+                                        <div className="ml-auto">
+                                            <Link href={`../post/[id]?id=${item.id}`}>
+                                                {item.firstPostImage?
+                                                    <img src={item.firstPostImage?.image} alt={item.firstPostImage} width="96" height="96"/>
+                                                    :''
+                                                }
+                                            </Link>
+
+                                        </div>
+                                    </div>
+                                    <div className="h-4"></div>
+                                    <div className="flex flex-row">
+                                        <div className="w-3"></div>
+                                        <div className="flex flex-row">
+                                            {tags.map((tag, index)=>{
+                                                return(
+                                                    <div key={tag.id} className="w-20" >
+                                                        <div className="w-16 h-7 rounded-lg bg-gray-100">
+                                                            <div className="flex items-center justify-center content-center">
+                                                                <button onClick={()=>setSearchTag(tag.name)}>
+                                                                    {tag.name}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                        {isFetching?<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" width="50" height="50" />:''}
+                    </div>
+                    <div>
+
+                    </div>
                 </div>
             </div>
-
-            <div ref={containerRef} className="w-xl overflow-y-scroll h-3xl">
-                {postList.map((item, index) => {
-                    const contentLettersOnly = removeImages(item.content);
-                    const tags = item.tagsOnPost;
-                    return (
-                        <div key={item.id} className="bg-white flex flex-col border-b-2 border-gray-200 h-64">
-                            <div className="h-4"></div>
-                            <div className="flex flex-row items-center content-center place-items-center h-5">
-                                <div className="w-4"></div>
-                                <div className="pl-4 rounded-full bg-green-400 w-5 h-5"></div>
-                                <div className="w-2"></div>
-                                <div className="underline">
-                                    {item.user.email}
-                                </div>
-                                <div className="w-1"></div>
-                                <div className="w-2 flex items-center ">.</div>
-                                <div className="w-1"></div>
-                                <div className="flex flex-row w-20 justify-between">
-                                    <div className="text-xs font-normal text-gray-700">{item.dateCreatedYear}.</div>
-                                    <div className="text-xs font-normal text-gray-700">{item.dateCreatedMonth}.</div>
-                                    <div className="text-xs font-normal text-gray-700">{item.dateCreatedDay}</div>
-                                </div>
-                            </div>
-                            <div className="h-4"></div>
-                            <div className="flex flex-row">
-                                <div className="w-4"></div>
-                                <Link href={`../post/[id]?id=${item.id}`}>{item.title}</Link>
-                            </div>
-                            <div className="h-4"></div>
-                            <div className="flex flex-row h-24">
-                                <div className="w-4"></div>
-                                <div className="w-80 font-light text-xs">
-                                    {contentLettersOnly}
-                                </div>
-                                <div className="ml-auto">
-                                    {item.firstPostImage?
-                                        <img src={item.firstPostImage?.image} alt={item.firstPostImage} width="96" height="96"/>
-                                        :''
-                                    }
-                                </div>
-                            </div>
-                            <div className="h-4"></div>
-                            <div className="flex flex-row">
-                                <div className="w-4"></div>
-                                <div className="flex flex-row">
-                                    {tags.map((tag, index)=>{
-                                        return(
-                                            <div key={tag.id} className="w-20" >
-                                                <div className="w-16 h-7 rounded-lg bg-gray-100">
-                                                    <div className="flex items-center justify-center content-center">
-                                                        <button onClick={()=>setSearchTag(tag.name)}>
-                                                            {tag.name}
-                                                        </button>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            )
-                                    })}
-                                </div>
-                            </div>
-                        </div>
-                    )
-                })}
-                {isFetching?<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" width="50" height="50" />:''}
-            </div>
-            <div>
-
-            </div>
         </div>
+
+
     )
 }
