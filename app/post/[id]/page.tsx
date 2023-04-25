@@ -128,11 +128,11 @@ export default function Page() {
                         </div>
                     </button>
                 </div>
-
+                <div className="h-96"></div>
 
                 <div className={`fixed w-96 inset-y-0 overflow-hidden ${showComment ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"} top-0 right-0 z-[999] h-full bg-gray-200 text-black transition-opacity transition-transform duration-500 ease-out overflow-y-scroll`}>
                     <div className="mt-6 ml-8 mb-6">
-                        <p className="text-xl font-bold">Responses ({comments.length})</p>
+                        <p className="text-xl font-bold">Responses ({comments?.length})</p>
                     </div>
                     <form onSubmit={createComment} className="flex flex-col justify-center items-center">
                         <div className="w-80 h-8 bg-white flex items-center justify-center rounded-md drop-shadow-lg">
