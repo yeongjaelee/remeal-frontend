@@ -269,3 +269,9 @@
     transform: rotate(0deg);
   }
 }
+
+
+@font-face {
+  font-family:'NanumSquareNeoOTF-Rg';
+  src: url('public/font/NanumSquareNeo/OTF/NanumSquareNeoOTF-Rg.otf') format('truetype')
+}

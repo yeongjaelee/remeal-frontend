@@ -104,57 +104,52 @@ export default function PostList (){
                                 <div key={item.id} className="bg-white flex flex-col h-64">
                                     <div className="h-4"></div>
                                     <div className="flex flex-row items-end content-center place-items-center h-5">
-                                        <div className="w-3"></div>
+                                        <div className="w-4"></div>
                                         <div className="pl-4 rounded-full bg-green-400 w-5 h-5"></div>
                                         <div className="w-2"></div>
-                                        <div className="underline">
-                                            {item.user.email}
+                                        <div className="underline h-4.5">
+                                            <p className="text-xs font-normal font-mono">{item.user.email}</p>
                                         </div>
                                         <div className="w-1"></div>
-                                        <div className="w-2 flex items-center ">.</div>
+                                        <div className="flex items-center ">.</div>
                                         <div className="w-1"></div>
-                                        <div className="flex flex-row w-20 justify-between">
-                                            <div className="text-xs font-normal text-gray-700">{item.dateCreatedYear}.</div>
-                                            <div className="text-xs font-normal text-gray-700">{item.dateCreatedMonth}.</div>
-                                            <div className="text-xs font-normal text-gray-700">{item.dateCreatedDay}</div>
+                                        <div className="flex flex-row w-20 h-4.5 justify-between">
+                                            <div className="text-xs font-normal text-gray-700 text-xs " >{item.dateCreatedYear}.</div>
+                                            <div className="text-xs font-normal text-gray-700 text-xs">{item.dateCreatedMonth}.</div>
+                                            <div className="text-xs font-normal text-gray-700 text-xs">{item.dateCreatedDay}</div>
                                         </div>
                                     </div>
                                     <div className="h-4"></div>
                                     <div className="flex flex-row">
-                                        <div className="w-3"></div>
-                                        <Link href={`../post/[id]?id=${item.id}`}>{item.title}</Link>
+                                        <div className="w-4"></div>
+                                        <Link href={`../post/[id]?id=${item.id}`} className="h-7 font-bold text-lg font-NanumSquareNeoOTF-rg">{item.title}</Link>
                                     </div>
                                     <div className="h-4"></div>
                                     <div className="flex flex-row h-24">
-                                        <div className="w-3"></div>
-                                        <div className="w-80 font-light text-xs">
-                                            <Link href={`../post/[id]?id=${item.id}`}>{contentLettersOnly}</Link>
+                                        <div className="w-4"></div>
+                                        <div className="w-80 font-light text-xs leading-5">
+                                            <Link href={`../post/[id]?id=${item.id}`} className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 text-gray-700">{contentLettersOnly}</Link>
                                         </div>
-                                        <div className="ml-auto">
-                                            <Link href={`../post/[id]?id=${item.id}`}>
-                                                {item.firstPostImage?
-                                                    <img src={item.firstPostImage?.image} alt={item.firstPostImage} width="96" height="96"/>
-                                                    :''
-                                                }
-                                            </Link>
-
-                                        </div>
+                                        <div className="w-10"></div>
+                                        <Link href={`../post/[id]?id=${item.id}`}>
+                                            {item.firstPostImage?
+                                                <img src={item.firstPostImage?.image} alt={item.firstPostImage} width="120" height="100" />
+                                                :''
+                                            }
+                                        </Link>
                                     </div>
                                     <div className="h-4"></div>
                                     <div className="flex flex-row">
-                                        <div className="w-3"></div>
+                                        <div className="w-4"></div>
                                         <div className="flex flex-row">
                                             {tags.map((tag, index)=>{
                                                 return(
                                                     <div key={tag.id} className="w-20" >
-                                                        <div className="w-16 h-7 rounded-lg bg-gray-100">
-                                                            <div className="flex items-center justify-center content-center">
-                                                                <button onClick={()=>setSearchTag(tag.name)}>
-                                                                    {tag.name}
-                                                                </button>
-                                                            </div>
+                                                        <div className="w-listOnTag h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center">
+                                                                    <button onClick={()=>setSearchTag(tag.name)} className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5">
+                                                                        # {tag.name}
+                                                                    </button>
                                                         </div>
-
                                                     </div>
                                                 )
                                             })}
