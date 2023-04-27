@@ -3,6 +3,7 @@ import React, {useEffect, useRef, useState} from "react";
 import auth_client from "../../auth-client";
 import PostService from "../data/post";
 import Link from "next/link";
+import { debounce } from 'lodash';
 
 export default function PostList (){
     const [postList, setPostList] = useState([])
@@ -15,14 +16,12 @@ export default function PostList (){
     const Max_contents_length = 100
     const [searchTag, setSearchTag] = useState<string>(null)
     const fetchData = async () => {
-        console.log('searchTag')
-        console.log(searchTag)
-        console.log('limit')
-        console.log(limit)
-        const {data} = await auth_client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':searchTag}})
-        console.log(data)
+        const {data} = await auth_client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':searchTag, 'offset':offset}})
         const {data:allPost} = await auth_client.query({query: PostService.allPost})
-        setPostList(data.postList);
+        console.log(postList)
+        console.log(data.postList)
+        setPostList(data.postList)
+        setPostList([...postList, ...data.postList]);
         setAllNumber(allPost.allPost);
         if (data.postList.length == allPost.allPost){
             setCheckSame(true)
@@ -51,29 +50,29 @@ export default function PostList (){
     useEffect(() => {
         fetchData();
     },[limit, searchTag]);
+
     useEffect(() => {
-        function handleScroll() {
-            const {scrollHeight, scrollTop, clientHeight} = containerRef.current;
-            console.log(111)
-            // redux로 상태관리
+        const handleScroll = debounce(() => {
+            const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
             if (scrollTop + clientHeight === scrollHeight && !isFetching && !checkSame) {
-                console.log('scrollTop')
-                console.log(scrollTop)
-                console.log('clientHeight')
-                console.log(clientHeight)
-                console.log('scrollHeight')
-                console.log(scrollHeight)
                 setIsFetching(true);
-                console.log(1)
+                window.scrollTo({
+                    top: scrollTop - 100,
+                    behavior: "smooth",
+                });
                 setTimeout(() => {
-                    console.log('222222222')
-                    setLimit((prevLimit) => prevLimit + 4);
-                    console.log('limit')
-                    console.log(limit)
+                    setOffset(limit);
+                    setLimit(limit + 4);
+                    const newScrollHeight = containerRef.current.scrollHeight;
+                    containerRef.current.scrollTo({
+                        top: newScrollHeight - 100,
+                        behavior: "smooth",
+                    });
                     setIsFetching(false);
-                }, 1000);
+                }, 500);
             }
-        }
+        }, 500); // debounce with 500ms delay
+
         const container = containerRef.current;
         if (container) {
             container.addEventListener("scroll", handleScroll);
@@ -158,7 +157,7 @@ export default function PostList (){
                                 </div>
                             )
                         })}
-                        {isFetching?<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" width="50" height="50" />:''}
+                        {/*{isFetching?<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" width="100" height="100" />:''}*/}
                     </div>
                     <div>
 

@@ -40,8 +40,8 @@ export default class PostService{
     }
     `;
     static getPostList = gql`
-    query PostList($limit:Int, $tagName:String){
-        postList(limit:$limit, tagName:$tagName){
+    query PostList($limit:Int, $offset:Int, $tagName:String){
+        postList(limit:$limit, offset:$offset, tagName:$tagName){
             id
             title
             content
