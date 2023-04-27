@@ -54,10 +54,10 @@ export default function PostList (){
     useEffect(() => {
         const handleScroll = debounce(() => {
             const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
-            if (scrollTop + clientHeight === scrollHeight && !isFetching && !checkSame) {
+            if (scrollTop + clientHeight > scrollHeight-100 && !isFetching && !checkSame) {
                 setIsFetching(true);
                 window.scrollTo({
-                    top: scrollTop - 100,
+                    top: scrollTop - 20,
                     behavior: "smooth",
                 });
                 setTimeout(() => {
@@ -65,13 +65,13 @@ export default function PostList (){
                     setLimit(limit + 4);
                     const newScrollHeight = containerRef.current.scrollHeight;
                     containerRef.current.scrollTo({
-                        top: newScrollHeight - 100,
+                        top: newScrollHeight - 20,
                         behavior: "smooth",
                     });
                     setIsFetching(false);
-                }, 500);
+                }, 50);
             }
-        }, 500); // debounce with 500ms delay
+        }, 50); // debounce with 500ms delay
 
         const container = containerRef.current;
         if (container) {

@@ -55,6 +55,8 @@ export default function Page() {
     useEffect(() => {
             callPost()
             getComments()
+            setTimeout(()=>setShowComment(true))
+
         },[]
     )
     async function createComment(e) {
