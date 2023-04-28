@@ -30,7 +30,7 @@ const authLink = setContext( async (_, {headers}) => {
             }
         }
     } catch (err) {
-        alert('재로그인 부탁드립니다')
+        // alert('재로그인 부탁드립니다')
     }
     return {
         headers: {

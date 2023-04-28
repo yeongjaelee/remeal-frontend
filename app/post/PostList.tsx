@@ -4,29 +4,48 @@ import auth_client from "../../auth-client";
 import PostService from "../data/post";
 import Link from "next/link";
 import { debounce } from 'lodash';
+import {useDispatch, useSelector} from "react-redux";
+import {RootSate} from "../GlobalRedux/store";
+import {incrementLimit, incrementOffset, initialLimit, initialOffset} from "../GlobalRedux/Features/tagSlice";
 
 export default function PostList (){
     const [postList, setPostList] = useState([])
     const containerRef = useRef(null);
     const [isFetching, setIsFetching] = useState<boolean>(false)
-    const [limit, setLimit] = useState<number>(4)
-    const [offset, setOffset] = useState<number>(0)
+    // const [limit, setLimit] = useState<number>(4)
+    // const [offset, setOffset] = useState<number>(0)
+    const limit = useSelector((state:RootSate)=>state.tag.limit)
+    const offset = useSelector((state:RootSate)=>state.tag.offset)
+    const dispatch = useDispatch();
+    //
     const [allNumber, setAllNumber] = useState<number>(0)
     const [checkSame, setCheckSame] = useState<boolean>(false)
     const Max_contents_length = 100
     const [searchTag, setSearchTag] = useState<string>(null)
+    const [searchTagCopy, setSearchTagCopy] = useState<string>(null)
     const fetchData = async () => {
         const {data} = await auth_client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':searchTag, 'offset':offset}})
         const {data:allPost} = await auth_client.query({query: PostService.allPost})
-        console.log(postList)
-        console.log(data.postList)
-        setPostList(data.postList)
-        setPostList([...postList, ...data.postList]);
-        setAllNumber(allPost.allPost);
-        if (data.postList.length == allPost.allPost){
+        // setPostList(data.postList)
+        if (data.postList.length>0){
+            setPostList([...postList, ...data.postList]);
+            setAllNumber(allPost.allPost);
+            // if (data.postList.length == allPost.allPost){
+            //     setCheckSame(true)
+            // }
+            console.log('data fetching')
+            setSearchTagCopy(searchTag)
+        }
+        else{
             setCheckSame(true)
         }
     };
+    const handleTagClick = (tagName) => {
+        dispatch(initialLimit())
+        dispatch(initialOffset())
+        setPostList([])
+        setSearchTag(tagName);
+    }
     function removeImages(str) {
         if (!str) {
             return '';
@@ -47,31 +66,35 @@ export default function PostList (){
         return stringWithoutHtml
         // return <div dangerouslySetInnerHTML={html} className="font-light text-xs" />;
     }
+
     useEffect(() => {
         fetchData();
+
     },[limit, searchTag]);
 
     useEffect(() => {
         const handleScroll = debounce(() => {
             const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
-            if (scrollTop + clientHeight > scrollHeight-100 && !isFetching && !checkSame) {
+            if (scrollTop + clientHeight === scrollHeight && !isFetching && !checkSame) {
                 setIsFetching(true);
                 window.scrollTo({
                     top: scrollTop - 20,
                     behavior: "smooth",
                 });
                 setTimeout(() => {
-                    setOffset(limit);
-                    setLimit(limit + 4);
+                    // setOffset(limit);
+                    // setLimit(limit + 4);
+                    dispatch(incrementLimit())
+                    dispatch(incrementOffset())
                     const newScrollHeight = containerRef.current.scrollHeight;
                     containerRef.current.scrollTo({
                         top: newScrollHeight - 20,
                         behavior: "smooth",
                     });
                     setIsFetching(false);
-                }, 50);
+                }, 100);
             }
-        }, 50); // debounce with 500ms delay
+        }, 100); // debounce with 500ms delay
 
         const container = containerRef.current;
         if (container) {
@@ -89,12 +112,12 @@ export default function PostList (){
         <div ref={containerRef} className="flex flex-col justify-center items-center left-3  h-screen overflow-y-scroll">
             <div className="w-screen flex items-center justify-center">
                 <div className="flex flex-col h-screen w-xl ">
-                    {/*<div className="flex flex-row justify-between ">*/}
-                    {/*    <input value={searchTag} onChange={(e)=>setSearchTag(e.target.value)} className="bg-gray-200 border-gray-400 border-2 mb-1 w-56" placeholder="검색할 해시태그를 입력하세요"/>*/}
-                    {/*    <div className="flex items-end justify-end m-1">*/}
-                    {/*        <Link href="../post/postCreate" className="border-2 border-gray-400">글쓰기</Link>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                    <div className="flex flex-row justify-between ">
+                        <input value={searchTag ||''} onChange={(e)=>setSearchTag(e.target.value)} className="bg-gray-200 border-gray-400 border-2 mb-1 w-56" placeholder="검색할 해시태그를 입력하세요"/>
+                        <div className="flex items-end justify-end m-1">
+                            <Link href="../post/postCreate" className="border-2 border-gray-400">글쓰기</Link>
+                        </div>
+                    </div>
                     <div className="h-screen mt-12 ">
                         {postList.map((item, index) => {
                             const contentLettersOnly = removeImages(item.content);
@@ -145,7 +168,7 @@ export default function PostList (){
                                                 return(
                                                     <div key={tag.id} className="w-20" >
                                                         <div className="w-listOnTag h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center">
-                                                                    <button onClick={()=>setSearchTag(tag.name)} className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5">
+                                                                    <button onClick={() => handleTagClick(tag.name)} className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5">
                                                                         # {tag.name}
                                                                     </button>
                                                         </div>

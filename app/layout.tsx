@@ -5,7 +5,8 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import {ApolloProvider} from "@apollo/client";
 import client from "../apollo-client";
-import LeftSideBar from "./nav/LeftSideBar";
+import {Providers} from "./GlobalRedux/provider";
+
 config.autoAddCss = false;
 
 // export const metadata = {
@@ -32,7 +33,10 @@ export default function RootLayout({
                   </div>
 
                   {/*<LeftSideBar />*/}
-                  {children}
+                  <Providers>
+                      {children}
+                  </Providers>
+
               </div>
           </ApolloProvider>
       </div>
