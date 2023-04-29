@@ -8,6 +8,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootSate} from "../GlobalRedux/store";
 import {incrementLimit, incrementOffset, initialLimit, initialOffset} from "../GlobalRedux/Features/tagSlice";
 import {useSearchParams, useRouter} from "next/navigation";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHashtag} from "@fortawesome/free-solid-svg-icons";
 
 
 export default function PostList (params){
@@ -107,11 +109,12 @@ export default function PostList (params){
         <div ref={containerRef} className="flex flex-col justify-center items-center left-3  h-screen overflow-y-scroll">
             <div className="w-screen flex items-center justify-center">
                 <div className="flex flex-col h-screen w-xl ">
-                    <div className="flex flex-row justify-between ">
+                    <div className="flex flex-row items-center justify-center ">
                         {/*<input value={searchTag ||''} onChange={(e)=>setSearchTag(e.target.value)} className="bg-gray-200 border-gray-400 border-2 mb-1 w-56" placeholder="검색할 해시태그를 입력하세요"/>*/}
-                        <div className="flex items-end justify-end m-1">
-                            {tagName}
-                        </div>
+                        {tagName?<div className="flex items-center justify-end mt-12 text-4xl">
+                            <FontAwesomeIcon icon={faHashtag} style={{color: "#02060d",}} />
+                            &nbsp;{tagName}
+                        </div>:''}
                     </div>
                     <div className="h-screen mt-12 ">
                         {postList.map((item, index) => {
@@ -180,7 +183,6 @@ export default function PostList (params){
                         {/*{isFetching?<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" width="100" height="100" />:''}*/}
                     </div>
                     <div>
-
                     </div>
                 </div>
             </div>
