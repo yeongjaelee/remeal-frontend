@@ -17,42 +17,23 @@ export default function PostList (params){
     const [postList, setPostList] = useState([])
     const containerRef = useRef(null);
     const [isFetching, setIsFetching] = useState<boolean>(false)
-    // const [limit, setLimit] = useState<number>(4)
-    // const [offset, setOffset] = useState<number>(0)
     const limit = useSelector((state:RootSate)=>state.tag.limit)
     const offset = useSelector((state:RootSate)=>state.tag.offset)
     const dispatch = useDispatch();
-    //
-    const [allNumber, setAllNumber] = useState<number>(0)
     const [checkSame, setCheckSame] = useState<boolean>(false)
-    const Max_contents_length = 100
     const [searchTag, setSearchTag] = useState<string>(params.tagName)
-    const [searchTagCopy, setSearchTagCopy] = useState<string>(null)
     const fetchData = async () => {
         console.log(tagName)
         const {data} = await auth_client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset}})
-        const {data:allPost} = await auth_client.query({query: PostService.allPost})
-        // setPostList(data.postList)
         console.log(data.postList)
         if (data.postList.length>0){
             setPostList([...postList, ...data.postList]);
-            setAllNumber(allPost.allPost);
-            // if (data.postList.length == allPost.allPost){
-            //     setCheckSame(true)
-            // }
             console.log('data fetching')
-            setSearchTagCopy(searchTag)
         }
         else{
             setCheckSame(true)
         }
     };
-    // const handleTagClick = (tagName) => {
-    //     dispatch(initialLimit())
-    //     dispatch(initialOffset())
-    //     setPostList([])
-    //     setSearchTag(tagName);
-    // }
     function removeImages(str) {
         if (!str) {
             return '';
