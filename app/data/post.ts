@@ -15,6 +15,34 @@ export default class PostService{
         }
     }
     `;
+    static getPostUser = gql`
+    query Post($id:Int, $token:String){
+        post(id:$id){
+            title
+            content
+            dateCreated
+            comments{
+                comment
+            }
+            user{
+              email
+            }
+            dateCreatedYear
+            dateCreatedMonth
+            dateCreatedDay
+            dateCreatedHour
+            dateCreatedMinute
+            tagsOnPost{
+                id
+                name
+            }
+            likeNumber
+            isLikeUser(token: $token){
+                isLike
+            }
+        }
+    }
+    `;
     static getPost = gql`
     query Post($id:Int){
         post(id:$id){
@@ -36,6 +64,7 @@ export default class PostService{
                 id
                 name
             }
+            likeNumber
         }
     }
     `;
@@ -90,6 +119,15 @@ export default class PostService{
             user{
               email
             }
+        }
+    }
+    `;
+    static likeOnPost = gql`
+    mutation LikeOnPost($token: String, $postId: Int, $isLike: Boolean){
+        likeOnPostMutation(token: $token, postId: $postId, isLike: $isLike){
+            success
+            likeNumber
+            isLikeResult
         }
     }
     `;

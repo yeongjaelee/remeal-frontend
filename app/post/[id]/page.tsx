@@ -2,15 +2,16 @@
 import React, {useEffect, useRef, useState} from "react";
 import client from "../../../apollo-client";
 import PostService from "../../data/post";
-import { useRouter } from 'next/router';
-import { useSearchParams } from 'next/navigation';
-import {faChevronDown, faChevronUp, faCommentDots} from "@fortawesome/free-solid-svg-icons";
+import { useSearchParams, useRouter } from 'next/navigation';
+import {faChevronDown, faChevronUp, faCommentDots, faHeart} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Layout from "./layout";
 import CommentsBar from "../../components/CommentsBar";
 import LoginModal from "../../nav/login/LoginModal";
+import Link from "next/link";
 
 export default function Page() {
+    const router = useRouter();
     const [title, setTitle] = useState<string>('')
     const [content, setContent] = useState<string>('')
     const [datetime, setDatetime] = useState<string>()
@@ -28,18 +29,42 @@ export default function Page() {
     const [tags, setTags] = useState([])
     const [commentLength, setCommentLength] = useState<number>(0)
     const [showComment, setShowComment] = useState<boolean>(false)
+    const [likeNumber, setLikeNumber] = useState<number>(0)
+    const [isLike, setIsLike] = useState<boolean>(false)
     async function callPost() {
-        const {data} = await client.query({query: PostService.getPost, variables: {id: id}})
-        setTitle(data.post.title)
-        setContent(data.post.content)
-        setDatetime(data.post.dateCreated)
-        setEmail(data.post.user.email)
-        setYear(data.post.dateCreatedYear)
-        setMonth(data.post.dateCreatedMonth)
-        setDay(data.post.dateCreatedDay)
-        setHour(data.post.dateCreatedHour)
-        setMinute(data.post.dateCreatedMinute)
-        setTags(data.post.tagsOnPost)
+        const token = localStorage.getItem('token')
+        if (token){
+            const {data} = await client.query({query: PostService.getPostUser, variables: {'id': id, 'token':token}})
+            setTitle(data.post.title)
+            setContent(data.post.content)
+            setDatetime(data.post.dateCreated)
+            setEmail(data.post.user.email)
+            setYear(data.post.dateCreatedYear)
+            setMonth(data.post.dateCreatedMonth)
+            setDay(data.post.dateCreatedDay)
+            setHour(data.post.dateCreatedHour)
+            setMinute(data.post.dateCreatedMinute)
+            setTags(data.post.tagsOnPost)
+            setLikeNumber(data.post.likeNumber)
+            if(data.post.isLikeUser){
+                setIsLike(data.post.isLikeUser.isLike)
+            }
+
+        }
+        else{
+            const {data} = await client.query({query: PostService.getPost, variables: {'id': id}})
+            setTitle(data.post.title)
+            setContent(data.post.content)
+            setDatetime(data.post.dateCreated)
+            setEmail(data.post.user.email)
+            setYear(data.post.dateCreatedYear)
+            setMonth(data.post.dateCreatedMonth)
+            setDay(data.post.dateCreatedDay)
+            setHour(data.post.dateCreatedHour)
+            setMinute(data.post.dateCreatedMinute)
+            setTags(data.post.tagsOnPost)
+            setLikeNumber(data.post.likeNumber)
+        }
     }
     async function getComments(){
         const {data} = await client.query({query:PostService.getComments, variables:{'postId':id}})
@@ -50,7 +75,12 @@ export default function Page() {
         else{
             setCommentLength(0)
         }
-
+    }
+    async function clickLike(){
+        const token = localStorage.getItem('token')
+        const {data} = await client.mutate({mutation:PostService.likeOnPost, variables:{'token': token, 'postId':id, 'isLike':!isLike}})
+        setIsLike(data.likeOnPostMutation.isLikeResult)
+        setLikeNumber(data.likeOnPostMutation.likeNumber)
     }
     useEffect(() => {
             callPost()
@@ -111,9 +141,12 @@ export default function Page() {
                         return(
                             <div key={tag.id} className="w-20" >
                                 <div className="w-16 h-7 rounded-lg bg-gray-100">
-                                    <div className="flex items-center justify-center content-center">
-                                            {tag.name}
-
+                                    <div className="w-listOnTag h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center content-center">
+                                        <Link
+                                            href={`../../post/tag?tagName=${tag.name}`}
+                                            className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5">
+                                            # {tag.name}
+                                        </Link>
                                     </div>
                                 </div>
 
@@ -123,15 +156,25 @@ export default function Page() {
                 </div>
                 <div className="h-5"></div>
                 <div className="flex flex-row">
-                    <button className="flex flex-row" onClick={()=>setShowComment(!showComment)}>
-                        <FontAwesomeIcon icon={faCommentDots} style={{color: "#04090b",}} className="m-1"/>
-                        <div>
-                            {commentLength}
-                        </div>
-                    </button>
+                    <div className="flex flex-row items-center">
+                        <button onClick={clickLike}>
+                            {isLike?
+                                <FontAwesomeIcon icon={faHeart} style={{color: "#f70202",}} className="mr-0.5" />
+                                :
+                                <FontAwesomeIcon icon={faHeart} style={{color: "#dbdfe6",}} className="mr-0.5"/>
+                            }
+                        </button>
+                        {likeNumber}
+                    </div>
+
+                    {/*<button className="flex flex-row" onClick={()=>setShowComment(!showComment)}>*/}
+                    {/*    <FontAwesomeIcon icon={faCommentDots} style={{color: "#04090b",}} className="m-1"/>*/}
+                    {/*    <div>*/}
+                    {/*        {commentLength}*/}
+                    {/*    </div>*/}
+                    {/*</button>*/}
                 </div>
                 <div className="h-96"></div>
-
                 <div className={`fixed w-96 inset-y-0 overflow-hidden ${showComment ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"} top-0 right-0 z-[999] h-full bg-gray-200 text-black transition-opacity transition-transform duration-500 ease-out overflow-y-scroll`}>
                     <div className="mt-6 ml-8 mb-6">
                         <p className="text-xl font-bold">Responses ({comments?.length})</p>

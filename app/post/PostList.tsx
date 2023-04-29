@@ -7,8 +7,13 @@ import { debounce } from 'lodash';
 import {useDispatch, useSelector} from "react-redux";
 import {RootSate} from "../GlobalRedux/store";
 import {incrementLimit, incrementOffset, initialLimit, initialOffset} from "../GlobalRedux/Features/tagSlice";
+import {useSearchParams, useRouter} from "next/navigation";
 
-export default function PostList (){
+
+export default function PostList (params){
+    const searchParams = useSearchParams();
+    const router = useRouter()
+    const tagName = searchParams.get('tagName')
     const [postList, setPostList] = useState([])
     const containerRef = useRef(null);
     const [isFetching, setIsFetching] = useState<boolean>(false)
@@ -21,12 +26,14 @@ export default function PostList (){
     const [allNumber, setAllNumber] = useState<number>(0)
     const [checkSame, setCheckSame] = useState<boolean>(false)
     const Max_contents_length = 100
-    const [searchTag, setSearchTag] = useState<string>(null)
+    const [searchTag, setSearchTag] = useState<string>(params.tagName)
     const [searchTagCopy, setSearchTagCopy] = useState<string>(null)
     const fetchData = async () => {
-        const {data} = await auth_client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':searchTag, 'offset':offset}})
+        console.log(tagName)
+        const {data} = await auth_client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset}})
         const {data:allPost} = await auth_client.query({query: PostService.allPost})
         // setPostList(data.postList)
+        console.log(data.postList)
         if (data.postList.length>0){
             setPostList([...postList, ...data.postList]);
             setAllNumber(allPost.allPost);
@@ -40,12 +47,12 @@ export default function PostList (){
             setCheckSame(true)
         }
     };
-    const handleTagClick = (tagName) => {
-        dispatch(initialLimit())
-        dispatch(initialOffset())
-        setPostList([])
-        setSearchTag(tagName);
-    }
+    // const handleTagClick = (tagName) => {
+    //     dispatch(initialLimit())
+    //     dispatch(initialOffset())
+    //     setPostList([])
+    //     setSearchTag(tagName);
+    // }
     function removeImages(str) {
         if (!str) {
             return '';
@@ -66,11 +73,18 @@ export default function PostList (){
         return stringWithoutHtml
         // return <div dangerouslySetInnerHTML={html} className="font-light text-xs" />;
     }
-
     useEffect(() => {
         fetchData();
+    },[limit]);
 
-    },[limit, searchTag]);
+    useEffect(() => {
+        dispatch(initialLimit())
+        dispatch(initialOffset())
+        setPostList([])
+        setSearchTag(tagName);
+        router.refresh()
+
+    }, [])
 
     useEffect(() => {
         const handleScroll = debounce(() => {
@@ -116,6 +130,7 @@ export default function PostList (){
                         <input value={searchTag ||''} onChange={(e)=>setSearchTag(e.target.value)} className="bg-gray-200 border-gray-400 border-2 mb-1 w-56" placeholder="검색할 해시태그를 입력하세요"/>
                         <div className="flex items-end justify-end m-1">
                             <Link href="../post/postCreate" className="border-2 border-gray-400">글쓰기</Link>
+                            {tagName}
                         </div>
                     </div>
                     <div className="h-screen mt-12 ">
@@ -168,9 +183,11 @@ export default function PostList (){
                                                 return(
                                                     <div key={tag.id} className="w-20" >
                                                         <div className="w-listOnTag h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center">
-                                                                    <button onClick={() => handleTagClick(tag.name)} className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5">
-                                                                        # {tag.name}
-                                                                    </button>
+                                                            <Link
+                                                                href={`../../post/tag?tagName=${tag.name}`}
+                                                                className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5">
+                                                                # {tag.name}
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 )
@@ -188,7 +205,5 @@ export default function PostList (){
                 </div>
             </div>
         </div>
-
-
     )
 }
