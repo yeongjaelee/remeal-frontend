@@ -12,6 +12,7 @@ import Link from "next/link";
 
 export default function Page() {
     const router = useRouter();
+    const [showModal, setShowModal] = useState(false);
     const [title, setTitle] = useState<string>('')
     const [content, setContent] = useState<string>('')
     const [datetime, setDatetime] = useState<string>()
@@ -78,9 +79,15 @@ export default function Page() {
     }
     async function clickLike(){
         const token = localStorage.getItem('token')
-        const {data} = await client.mutate({mutation:PostService.likeOnPost, variables:{'token': token, 'postId':id, 'isLike':!isLike}})
-        setIsLike(data.likeOnPostMutation.isLikeResult)
-        setLikeNumber(data.likeOnPostMutation.likeNumber)
+        if (token){
+            const {data} = await client.mutate({mutation:PostService.likeOnPost, variables:{'token': token, 'postId':id, 'isLike':!isLike}})
+            setIsLike(data.likeOnPostMutation.isLikeResult)
+            setLikeNumber(data.likeOnPostMutation.likeNumber)
+        }
+        else{
+            alert('로그인 부탁드립니다')
+            setShowModal(true)
+        }
     }
     useEffect(() => {
             callPost()
@@ -94,10 +101,17 @@ export default function Page() {
         setComment(comment)
         console.log('create comment')
         const token = localStorage.getItem('token')
-        const {data} = await client.mutate({mutation: PostService.createComment, variables:{'token':token, 'postId':id, 'comment':comment}})
-        // setComments([...comments, { data.co }])
-        setComments(data.createComment.comments)
-        setComment('')
+        if (token){
+            const {data} = await client.mutate({mutation: PostService.createComment, variables:{'token':token, 'postId':id, 'comment':comment}})
+            // setComments([...comments, { data.co }])
+            setComments(data.createComment.comments)
+            setComment('')
+        }
+        else{
+            alert('로그인 부탁드립니다')
+            setShowModal(true)
+        }
+
 
     }
     return(
@@ -166,7 +180,6 @@ export default function Page() {
                         </button>
                         {likeNumber}
                     </div>
-
                     {/*<button className="flex flex-row" onClick={()=>setShowComment(!showComment)}>*/}
                     {/*    <FontAwesomeIcon icon={faCommentDots} style={{color: "#04090b",}} className="m-1"/>*/}
                     {/*    <div>*/}
@@ -203,6 +216,12 @@ export default function Page() {
                     }
                 </div>
             </div>
+            <LoginModal
+                onClose={() => setShowModal(false)}
+                show={showModal}
+            >
+                Hello from the modal!
+            </LoginModal>
         </div>
     )
 }

@@ -27,6 +27,7 @@ export default function RootLayout({
               <div className="h-12 w-screen border-black border-b justify-center items-center">
                   <div className="flex items-center justify-center h-12">
                       <div className="w-mainLayout h-12">
+
                           <NavLayout />
                       </div>
 

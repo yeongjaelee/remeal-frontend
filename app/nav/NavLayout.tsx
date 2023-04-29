@@ -5,6 +5,7 @@ import LoginModal from "./login/LoginModal";
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import {useRouter} from "next/router";
+import {faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 export default function NavLayout({
                                          children,
                                      }: {
@@ -30,22 +31,25 @@ export default function NavLayout({
                         <Link href="/" className="homepageButton">
                             <img src={`http://localhost:3000/img/logo.png`} alt="" width="78" height="18"/>
                         </Link>
-                        {/*<div>*/}
-                        {/*    <Link href="../chatting">*/}
-                        {/*        chatting room*/}
-                        {/*    </Link>*/}
-                        {/*</div>*/}
                     </div>
                 </div>
                 <div className="flex items-center">
+                    <Link href="../post/postCreate">
+                        <div className="flex flex-row">
+                            <FontAwesomeIcon icon={faPenToSquare} style={{color: "#8c95a6",}} />
+                            <p className="text-gray-400 ml-1 text-sm">Write</p>
+                        </div>
+
+                    </Link>
                     {token ?
                         <div>
                             you are log in
                         </div>
-                        : ''}
-                    <button onClick={() => setShowModal(true)} className="loginButton ml-4">
-                        <FontAwesomeIcon icon={faArrowRightFromBracket} className="w-4 h-4" />
-                    </button>
+                        :
+                        <button onClick={() => setShowModal(true)} className="loginButton ml-4">
+                            <FontAwesomeIcon icon={faArrowRightFromBracket} className="w-4 h-4" />
+                        </button>
+                    }
                     <LoginModal
                         onClose={() => setShowModal(false)}
                         show={showModal}

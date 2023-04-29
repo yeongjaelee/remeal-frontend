@@ -108,9 +108,8 @@ export default function PostList (params){
             <div className="w-screen flex items-center justify-center">
                 <div className="flex flex-col h-screen w-xl ">
                     <div className="flex flex-row justify-between ">
-                        <input value={searchTag ||''} onChange={(e)=>setSearchTag(e.target.value)} className="bg-gray-200 border-gray-400 border-2 mb-1 w-56" placeholder="검색할 해시태그를 입력하세요"/>
+                        {/*<input value={searchTag ||''} onChange={(e)=>setSearchTag(e.target.value)} className="bg-gray-200 border-gray-400 border-2 mb-1 w-56" placeholder="검색할 해시태그를 입력하세요"/>*/}
                         <div className="flex items-end justify-end m-1">
-                            <Link href="../post/postCreate" className="border-2 border-gray-400">글쓰기</Link>
                             {tagName}
                         </div>
                     </div>
