@@ -9,7 +9,9 @@ import {RootSate} from "../GlobalRedux/store";
 import {incrementLimit, incrementOffset, initialLimit, initialOffset} from "../GlobalRedux/Features/tagSlice";
 import {useSearchParams, useRouter} from "next/navigation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHashtag} from "@fortawesome/free-solid-svg-icons";
+import {faHashtag, faShareFromSquare} from "@fortawesome/free-solid-svg-icons";
+import LoginModal from "../nav/login/LoginModal";
+import ShareModal from "../components/ShareModal";
 
 
 export default function PostList (params){
@@ -24,6 +26,8 @@ export default function PostList (params){
     const dispatch = useDispatch();
     const [checkSame, setCheckSame] = useState<boolean>(false)
     const [searchTag, setSearchTag] = useState<string>(params.tagName)
+    const [showModal, setShowModal] = useState(false);
+    const [copyUrl, setCopyUrl] = useState<string>('')
     const fetchData = async () => {
         console.log(tagName)
         const {data} = await auth_client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset}})
@@ -66,7 +70,6 @@ export default function PostList (params){
         setPostList([])
         setSearchTag(tagName);
         router.refresh()
-
     }, [])
 
     useEffect(() => {
@@ -105,6 +108,12 @@ export default function PostList (params){
         };
     }, [isFetching]);
     //
+    function handleCopyClipBoard(postId: number) {
+        //http://localhost:3000/post/[id]?id=12
+        const url = `http://localhost:3000/post/[id]?id=${postId}`;
+        setCopyUrl(url)
+        setShowModal(true)
+    }
     return(
         <div ref={containerRef} className="flex flex-col justify-center items-center left-3  h-screen overflow-y-scroll">
             <div className="w-screen flex items-center justify-center">
@@ -161,20 +170,31 @@ export default function PostList (params){
                                     <div className="h-4"></div>
                                     <div className="flex flex-row">
                                         <div className="w-4"></div>
-                                        <div className="flex flex-row">
-                                            {tags.map((tag, index)=>{
-                                                return(
-                                                    <div key={tag.id} className="w-20" >
-                                                        <div className="w-listOnTag h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center">
-                                                            <Link
-                                                                href={`../../post/tag?tagName=${tag.name}`}
-                                                                className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5">
-                                                                # {tag.name}
-                                                            </Link>
+                                        <div className="flex flex-row w-80 justify-between">
+                                            <div className="flex flex-row">
+                                                {tags.slice(0,3).map((tag, index)=>{
+                                                    return(
+                                                        <div key={tag.id} className="w-20" >
+                                                            <div className="w-listOnTag h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center">
+                                                                <Link
+                                                                    href={`../../post/tag?tagName=${tag.name}`}
+                                                                    className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5">
+                                                                    # {tag.name}
+                                                                </Link>
+                                                            </div>
+                                                            <br />
                                                         </div>
-                                                    </div>
-                                                )
-                                            })}
+                                                    )
+                                                })}
+                                            </div>
+
+                                            {tags.length === 0 && <div className="w-20"></div>}
+                                            <div>
+                                                <div className="h-1"></div>
+                                                <button onClick={()=>handleCopyClipBoard(item.id)}>
+                                                    <FontAwesomeIcon icon={faShareFromSquare} style={{color: "#8e9cb4",}} />
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -184,6 +204,12 @@ export default function PostList (params){
                     </div>
                     <div>
                     </div>
+                    <ShareModal
+                        onClose={() => setShowModal(false)}
+                        show={showModal}
+                    >
+                        {copyUrl}
+                    </ShareModal>
                 </div>
             </div>
         </div>
