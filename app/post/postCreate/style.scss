@@ -1,0 +1,320 @@
+.ql-container {
+  font-family: 'Arial', serif;
+  font-size: 12px;
+  position: relative;
+}
+.ql-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #fff;
+}
+/* Set content font-families */
+
+/* Set dropdown font-families */
+#toolbar-container .ql-font span[data-label='Arial']::before {
+  font-family: 'Arial', serif;
+}
+#toolbar-container .ql-font span[data-label='Roboto']::before {
+  font-family: 'Roboto', serif;
+}
+#toolbar-container .ql-font span[data-label='Raleway']::before {
+  font-family: 'Raleway';
+}
+#toolbar-container .ql-font span[data-label='Montserrat']::before {
+  font-family: 'Montserrat';
+}
+#toolbar-container .ql-font span[data-label='Lato']::before {
+  font-family: 'Lato';
+}
+#toolbar-container .ql-font span[data-label='Rubik']::before {
+  font-family: 'Rubik';
+}
+
+/* Set content font-families */
+.ql-font-arial {
+  font-family: 'Arial';
+}
+.ql-font-roboto {
+  font-family: 'Roboto';
+}
+.ql-font-raleway {
+  font-family: 'Raleway';
+}
+.ql-font-montserrat {
+  font-family: 'Montserrat';
+}
+.ql-font-lato {
+  font-family: 'Lato';
+}
+.ql-font-rubik {
+  font-family: 'Rubik';
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value='9px']::before {
+  content: '9';
+  font-size: 9px !important;
+}
+
+.ql-snow .ql-size .ql-picker-item[data-value='10px']::before {
+  content: '10';
+  font-size: 10px !important;
+}
+
+.ql-snow .ql-size .ql-picker-item[data-value='11px']::before {
+  content: '11';
+  font-size: 11px !important;
+}
+.ql-snow .ql-size .ql-picker-item[data-value='12px']::before {
+  content: '12';
+  font-size: 12px !important;
+}
+
+.ql-snow .ql-size .ql-picker-item[data-value='14px']::before {
+  content: '14';
+  font-size: 14px !important;
+}
+
+.ql-snow .ql-size .ql-picker-item[data-value='16px']::before {
+  content: '16';
+  font-size: 16px !important;
+}
+.ql-snow .ql-size .ql-picker-item[data-value='18px']::before {
+  content: '18';
+  font-size: 18px !important;
+}
+
+.ql-snow .ql-size .ql-picker-item[data-value='20px']::before {
+  content: '20';
+  font-size: 20px !important;
+}
+
+.ql-snow .ql-size .ql-picker-item[data-value='22px']::before {
+  content: '22';
+  font-size: 22px !important;
+}
+.ql-snow .ql-size .ql-picker-item[data-value='24px']::before {
+  content: '24';
+  font-size: 24px !important;
+}
+
+.ql-snow .ql-size .ql-picker-item[data-value='26px']::before {
+  content: '26';
+  font-size: 26px !important;
+}
+
+.ql-snow .ql-size .ql-picker-item[data-value='28px']::before {
+  content: '28';
+  font-size: 28px !important;
+}
+
+.ql-size-9px {
+  font-size: 9px;
+}
+.ql-size-10px {
+  font-size: 10px;
+}
+.ql-size-11px {
+  font-size: 11px;
+}
+.ql-size-12px {
+  font-size: 12px;
+}
+.ql-size-14px {
+  font-size: 14px;
+}
+.ql-size-16px {
+  font-size: 16px;
+}
+.ql-size-18px {
+  font-size: 18px;
+}
+.ql-size-20px {
+  font-size: 20px;
+}
+.ql-size-22px {
+  font-size: 22px;
+}
+.ql-size-24px {
+  font-size: 24px;
+}
+.ql-size-26px {
+  font-size: 26px;
+}
+.ql-size-28px {
+  font-size: 28px;
+}
+
+.line-dotted {
+  border-style: dotted;
+}
+.line-solid {
+  border-style: solid;
+}
+.line-double {
+  border-style: double;
+}
+
+.ql-snow .ql-picker.ql-box .ql-picker-label::before,
+.ql-snow .ql-picker.ql-box .ql-picker-item::before {
+  content: 'None';
+}
+
+.ql-snow .ql-picker.ql-box .ql-picker-label[data-value='solid']::before,
+.ql-snow .ql-picker.ql-box .ql-picker-item[data-value='solid']::before {
+  content: 'Solid';
+}
+
+.ql-snow .ql-picker.ql-box .ql-picker-label[data-value='double']::before,
+.ql-snow .ql-picker.ql-box .ql-picker-item[data-value='double']::before {
+  content: 'Double';
+}
+
+.ql-snow .ql-picker.ql-box .ql-picker-label[data-value='dotted']::before,
+.ql-snow .ql-picker.ql-box .ql-picker-item[data-value='dotted']::before {
+  content: 'Dotted';
+}
+
+.ql-snow span.ql-picker.ql-box {
+  width: 8em;
+}
+
+//.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="9px"]::before {
+//  content: "9";
+//  font-size: 9px !important;
+//}
+//
+//.ql-snow .ql-size .ql-picker-item[data-value="10px"]::before {
+//  content: "10";
+//  font-size: 10px !important;
+//}
+//
+//.ql-snow .ql-size .ql-picker-item[data-value="11px"]::before {
+//  content: "11";
+//  font-size: 11px !important;
+//}
+//.ql-snow .ql-size .ql-picker-item[data-value="12px"]::before {
+//  content: "12";
+//  font-size: 12px !important;
+//}
+//
+//.ql-snow .ql-size .ql-picker-item[data-value="14px"]::before {
+//  content: "14";
+//  font-size: 14px !important;
+//}
+//
+//.ql-snow .ql-size .ql-picker-item[data-value="16px"]::before {
+//  content: "16";
+//  font-size: 16px !important;
+//}
+//.ql-snow .ql-size .ql-picker-item[data-value="18px"]::before {
+//  content: "18";
+//  font-size: 18px !important;
+//}
+//
+//.ql-snow .ql-size .ql-picker-item[data-value="20px"]::before {
+//  content: "20";
+//  font-size: 20px !important;
+//}
+//
+//.ql-snow .ql-size .ql-picker-item[data-value="22px"]::before {
+//  content: "22";
+//  font-size: 22px !important;
+//}
+//.ql-snow .ql-size .ql-picker-item[data-value="24px"]::before {
+//  content: "24";
+//  font-size: 24px !important;
+//}
+//
+//.ql-snow .ql-size .ql-picker-item[data-value="26px"]::before {
+//  content: "26";
+//  font-size: 26px !important;
+//}
+//
+//.ql-snow .ql-size .ql-picker-item[data-value="28px"]::before {
+//  content: "28";
+//  font-size: 28px !important;
+//}
+
+.ql-snow{
+  .ql-picker{
+    &.ql-size{
+      .ql-picker-label,
+      .ql-picker-item{
+        &::before{
+          content: attr(data-value) !important;
+        }
+      }
+    }
+  }
+}
+.ql-picker.ql-font {
+  .ql-picker-item {
+    font-size: 0;
+    &:before {
+      content: attr(data-value) !important;
+      font-size: 14px;
+    }
+  }
+}
+
+.ql-picker.ql-font{
+  .ql-active {
+    &:before {
+      content: attr(data-value) !important;
+      font-size: 14px;
+    }
+  }
+}
+
+.ql-picker.ql-font .ql-picker-label[data-value="Roboto"]::before,
+.ql-picker.ql-font .ql-picker-item[data-value="Roboto"]::before
+{
+  font-family: "Roboto", cursive;;
+  content: "Roboto" !important;
+}
+
+.ql-picker.ql-font .ql-picker-label[data-value="Raleway"]::before,
+.ql-picker.ql-font .ql-picker-item[data-value="Raleway"]::before
+{
+  font-family: "Raleway", cursive;;
+  content: "Raleway" !important;
+}
+
+.ql-picker.ql-font .ql-picker-label[data-value="Montserrat"]::before,
+.ql-picker.ql-font .ql-picker-item[data-value="Montserrat"]::before
+{
+  font-family: "Montserrat", cursive;;
+  content: "Montserrat" !important;
+}
+
+.ql-picker.ql-font .ql-picker-label[data-value="Lato"]::before,
+.ql-picker.ql-font .ql-picker-item[data-value="Lato"]::before
+{
+  font-family: "Lato", cursive;;
+  content: "Lato" !important;
+}
+
+.ql-picker.ql-font .ql-picker-label[data-value="Rubik"]::before,
+.ql-picker.ql-font .ql-picker-item[data-value="Rubik"]::before
+{
+  font-family: "Rubik", cursive;;
+  content: "Rubik" !important;
+}
+
+/* Set content font-families */
+.ql-font-Roboto {
+  font-family: "Roboto", cursive;
+}
+.ql-font-Raleway {
+  font-family: "Raleway", cursive;
+}
+.ql-font-Montserrat {
+  font-family: "Montserrat", cursive;
+}
+.ql-font-Lato {
+  font-family: "Lato", cursive;
+}
+.ql-font-Rubik {
+  font-family: "Rubik", cursive;
+}

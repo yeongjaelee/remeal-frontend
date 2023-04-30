@@ -6,8 +6,9 @@ import parse from 'html-react-parser';
 import client from "../../../apollo-client";
 import PostService from "../../data/post";
 import ImageResize from '@looop/quill-image-resize-module-react';
+import './style.scss';
+import {useRouter} from "next/navigation";
 
-Quill.register('modules/imageResize', ImageResize)
 
 // 위에서 설정한 모듈들 foramts을 설정한다
 const formats = [
@@ -18,14 +19,40 @@ const formats = [
     'strike',
     'blockquote',
     'image',
+    'font',
+    'size',
+    'list',
+    'indent',
+    'align'
 ];
+const Font = Quill.import("formats/font");
+const Size = Quill.import("attributors/style/size");
+Font.whitelist = ["dotum", "gullim", "batang", "NanumGothic"];
+Size.whitelist = [
+    "9px",
+    "10px",
+    "11px",
+    "12px",
+    "14px",
+    "16px",
+    "18px",
+    "20px",
+    "22px",
+    "24px",
+    "26px",
+    "28px",
+];
+Quill.register(Size, true);
+// Quill.register(Font, true);
+Quill.register('modules/imageResize', ImageResize)
+
 
 export default function PostCreate() {
+    const router = useRouter()
     const [title, setTitle] = useState<string>("");
     const [value, setValue] = useState("");
     const [tags, setTags] = useState([])
     const quillRef = useRef<ReactQuill>();
-
     const imageHandler = () => {
         const input = document.createElement("input");
         input.setAttribute("type", "file");
@@ -51,7 +78,6 @@ export default function PostCreate() {
                             editor.insertEmbed(range.index, "image", imageUrl);
                         }
                     }
-
                 } catch (error) {
                     console.log("Failed to upload image:", error);
                 }
@@ -63,9 +89,29 @@ export default function PostCreate() {
         return {
             toolbar: {
                 container: [
-                    ['image'],
-                    [{ header: [1, 2, 3, false] }],
                     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                    [{header: [1, 2, 3, 4, 5, 6, false]}],
+                    [{font:['serif','monospace',"dotum", "gullim", "batang", "NanumGothic"]}],
+                    [{size:["9px",
+                            "10px",
+                            "11px",
+                            "12px",
+                            "14px",
+                            "16px",
+                            "18px",
+                            "20px",
+                            "22px",
+                            "24px",
+                            "26px",
+                            "28px",]}],
+                    [
+                        { list: "ordered" },
+                        { list: "bullet" },
+                        { indent: "-1" },
+                        { indent: "+1" },
+                        { align: [] },
+                    ],
+                    ['image'],
                 ],
                 handlers: {
                     // 이미지 처리는 우리가 직접 imageHandler라는 함수로 처리할 것이다.
@@ -87,15 +133,23 @@ export default function PostCreate() {
     async function handleChange(e) {
         e.preventDefault();
         const images = extractImageUrls(value)
+        console.log(images)
         const token = localStorage.getItem('token')
-        const {data} = await client.mutate({
-            mutation: PostService.CreatePost,
-            variables: {'token':token, 'title': title, 'content': value, 'images':images, 'tagsName':tags}
-        })
-        console.log(data)
-        if (data.createPost.success) {
-            alert('성공')
+        if(images.length===0){
+            alert('최소 하나의 이미지를 첨부해주세요.')
         }
+        else{
+            const {data} = await client.mutate({
+                mutation: PostService.CreatePost,
+                variables: {'token':token, 'title': title, 'content': value, 'images':images, 'tagsName':tags}
+            })
+            console.log(data)
+            if (data.createPost.success) {
+                alert('성공')
+                router.push('/')
+            }
+        }
+
     }
     const handleImageDelete = (image) => {
         console.log('delete image')
@@ -135,7 +189,8 @@ export default function PostCreate() {
                     <input type="text" placeholder="제목을 입력하세요" className="bg-transparent h-12 w-3xl border-transparent" onChange={(e)=>setTitle(e.target.value)}/>
                 </div>
                 <div className="h-2"></div>
-                <div className="w-3xl h-2xl border-2 border-gray-400">
+
+                <div className="w-3xl h-2xl ">
                     <ReactQuill
                         ref={quillRef}
                         theme="snow"
@@ -146,6 +201,8 @@ export default function PostCreate() {
                         className="h-2xl overflow-y-scroll "
                         onImageDelete={handleImageDelete}
                     />
+
+                    <div className="w-3xl border border-gray-300"></div>
                 </div>
                 <div className="h-1"></div>
                 <div className="flex flex-row">
