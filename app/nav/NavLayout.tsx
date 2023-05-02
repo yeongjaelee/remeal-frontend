@@ -35,11 +35,10 @@ export default function NavLayout({
                 </div>
                 <div className="flex items-center">
                     <Link href="../post/postCreate">
-                        <div className="flex flex-row">
+                        <div className="flex flex-row items-center justify-center">
                             <FontAwesomeIcon icon={faPenToSquare} style={{color: "#8c95a6",}} />
                             <p className="text-gray-400 ml-1 text-sm">Write</p>
                         </div>
-
                     </Link>
                     {token ?
                         <div>

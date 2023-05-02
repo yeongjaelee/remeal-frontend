@@ -6,7 +6,7 @@ module.exports = {
       width:{
         '38':'152px',
         '3xl': '840px',
-        '2xl':'612px',
+        '2xl':'640px',
         'xl':'480px',
         '1.5xl':'540px',
         '5xl': '1200px',
@@ -17,6 +17,8 @@ module.exports = {
         '4.5': '18px',
         'xl':'400px',
         'xxl':'360px',
+        '1.2xl':'464px',
+        '1.5xl':'512px',
         '2xl':'640px',
         '3xl':'800px',
         '5xl':'1500px'
@@ -27,6 +29,13 @@ module.exports = {
     },
     fontFamily: {
       'NanumSquareNeoOTF-rg': ['NanumSquareNeoOTF-Rg', 'sans-serif'],
+    },
+    fontSize:{
+      'xxs':'10px',
+      'xs':'12px',
+    },
+    textUnderlineOffset: {
+      3: '3px',
     }
 
   },
