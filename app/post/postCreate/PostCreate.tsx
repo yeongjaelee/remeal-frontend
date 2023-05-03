@@ -50,7 +50,7 @@ Quill.register('modules/imageResize', ImageResize)
 export default function PostCreate() {
     const router = useRouter()
     const [title, setTitle] = useState<string>("");
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState<string>("");
     const [tags, setTags] = useState([])
     const quillRef = useRef<ReactQuill>();
     const imageHandler = () => {
@@ -190,7 +190,7 @@ export default function PostCreate() {
                 </div>
                 <div className="h-2"></div>
 
-                <div className="w-3xl h-2xl ">
+                <div className="h-2xl overflow-y-scroll ">
                     <ReactQuill
                         ref={quillRef}
                         theme="snow"
@@ -198,13 +198,13 @@ export default function PostCreate() {
                         onChange={setValue}
                         modules={modules}
                         formats={formats}
-                        className="h-2xl overflow-y-scroll "
+                        className="h-2xl w-3xl overflow-y-scroll"
                         onImageDelete={handleImageDelete}
                     />
 
                     <div className="w-3xl border border-gray-300"></div>
                 </div>
-                <div className="h-1"></div>
+                <div className="h-10"></div>
                 <div className="flex flex-row">
                     { tags.map((tag, index) => (
                         <div className="rounded-lg border-2 border-white" key={index}>

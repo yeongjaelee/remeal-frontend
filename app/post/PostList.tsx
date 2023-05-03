@@ -130,7 +130,7 @@ export default function PostList (params){
                             const contentLettersOnly = removeImages(item.content);
                             const tags = item.tagsOnPost;
                             return (
-                                <div key={item.id} className="bg-white flex flex-col h-64 w-2xl">
+                                <div key={item.id} className="bg-white flex flex-col w-2xl mb-16">
                                     <div className="h-4"></div>
                                     <div className="flex flex-row items-end content-center place-items-center h-10">
                                         <div className="pl-4 rounded-full bg-green-400 w-5 h-5"></div>
@@ -147,12 +147,12 @@ export default function PostList (params){
                                             <div className="text-xs font-normal text-gray-700 text-xs">{item.dateCreatedDay}</div>
                                         </div>
                                     </div>
-                                    <div className="h-4"></div>
+
                                     <div className="flex flex-row justify-between">
                                         <div>
                                             <div className="flex flex-row">
                                                 <div className="w-4"></div>
-                                                <Link href={`../post/[id]?id=${item.id}`} className="h-12">
+                                                <Link href={`../post/[id]?id=${item.id}`} className="w-96 mt-4">
                                                     <p className="text-xl font-bold font-NanumSquareNeoOTF-rg">{item.title}</p>
                                                 </Link>
                                             </div>
@@ -176,13 +176,13 @@ export default function PostList (params){
                                         </div>
                                     </div>
                                     <div className="h-4"></div>
-                                    <div className="flex flex-row">
+                                    <div className="flex">
                                         <div className="w-3"></div>
                                         <div className="flex flex-row justify-between">
-                                            <div className="flex flex-row">
+                                            <div className="flex flex-wrap w-96">
                                                 {tags.map((tag, index)=>{
                                                     return(
-                                                        <div key={tag.id} >
+                                                        <div key={tag.id} className="mb-2" >
                                                             <div className="mr-1 h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center">
                                                                 <Link
                                                                     href={`../../post/tag?tagName=${tag.name}`}
@@ -196,7 +196,8 @@ export default function PostList (params){
                                                     )
                                                 })}
                                             </div>
-                                            {tags.length === 0 && <div className="w-20"></div>}
+                                            {/*{tags.length === 0 && <div className="w-20"></div>}*/}
+                                            <div className="w-10"></div>
                                             <div>
                                                 <div className="h-1"></div>
                                                 <button onClick={()=>handleCopyClipBoard(item.id)}>
@@ -206,6 +207,7 @@ export default function PostList (params){
                                         </div>
                                     </div>
                                 </div>
+
                             )
                         })}
                         {/*{isFetching?<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921" width="100" height="100" />:''}*/}
