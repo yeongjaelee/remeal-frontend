@@ -33,6 +33,12 @@ module.exports = {
     fontSize:{
       'xxs':'10px',
       'xs':'12px',
+      'lg':'18px',
+      'xl':'20px',
+      'base':'16px',
+      '2xl':'24px',
+      '3xl':'30px',
+      'x':'14px'
     },
     textUnderlineOffset: {
       3: '3px',

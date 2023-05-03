@@ -92,9 +92,9 @@ export default function PostList (params){
                         behavior: "smooth",
                     });
                     setIsFetching(false);
-                }, 100);
+                }, 10);
             }
-        }, 100); // debounce with 500ms delay
+        }, 10); // debounce with 500ms delay
 
         const container = containerRef.current;
         if (container) {
@@ -117,7 +117,7 @@ export default function PostList (params){
     return(
         <div ref={containerRef} className="flex flex-col justify-center items-center left-3  h-screen overflow-y-scroll">
             <div className="w-screen flex items-center justify-center">
-                <div className="flex flex-col h-screen w-xl ">
+                <div className="flex flex-col h-screen w-2xl ">
                     <div className="flex flex-row items-center justify-center ">
                         {/*<input value={searchTag ||''} onChange={(e)=>setSearchTag(e.target.value)} className="bg-gray-200 border-gray-400 border-2 mb-1 w-56" placeholder="검색할 해시태그를 입력하세요"/>*/}
                         {tagName?<div className="flex items-center justify-end mt-12 text-4xl">
@@ -125,19 +125,18 @@ export default function PostList (params){
                             &nbsp;{tagName}
                         </div>:''}
                     </div>
-                    <div className="h-screen mt-12 ">
+                    <div className="mt-12 flex flex-col items-center justify-center">
                         {postList.map((item, index) => {
                             const contentLettersOnly = removeImages(item.content);
                             const tags = item.tagsOnPost;
                             return (
-                                <div key={item.id} className="bg-white flex flex-col h-64">
+                                <div key={item.id} className="bg-white flex flex-col h-64 w-2xl">
                                     <div className="h-4"></div>
-                                    <div className="flex flex-row items-end content-center place-items-center h-5">
-                                        <div className="w-4"></div>
+                                    <div className="flex flex-row items-end content-center place-items-center h-10">
                                         <div className="pl-4 rounded-full bg-green-400 w-5 h-5"></div>
                                         <div className="w-2"></div>
-                                        <div className="underline h-4.5">
-                                            <p className="text-xs font-normal font-mono">{item.user.email}</p>
+                                        <div>
+                                            <p className="font-normal font-mono underline">{item.user.email}</p>
                                         </div>
                                         <div className="w-1"></div>
                                         <div className="flex items-center ">.</div>
@@ -149,45 +148,54 @@ export default function PostList (params){
                                         </div>
                                     </div>
                                     <div className="h-4"></div>
-                                    <div className="flex flex-row">
-                                        <div className="w-4"></div>
-                                        <Link href={`../post/[id]?id=${item.id}`} className="h-7 font-bold text-lg font-NanumSquareNeoOTF-rg">{item.title}</Link>
-                                    </div>
-                                    <div className="h-4"></div>
-                                    <div className="flex flex-row h-24">
-                                        <div className="w-4"></div>
-                                        <div className="w-80 font-light text-xs leading-5">
-                                            <Link href={`../post/[id]?id=${item.id}`} className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 text-gray-700">{contentLettersOnly}</Link>
-                                        </div>
-                                        <div className="w-10"></div>
-                                        <Link href={`../post/[id]?id=${item.id}`}>
-                                            {item.firstPostImage?
-                                                <img src={item.firstPostImage?.image} alt={item.firstPostImage} width="120" height="100" />
-                                                :''
-                                            }
-                                        </Link>
-                                    </div>
-                                    <div className="h-4"></div>
-                                    <div className="flex flex-row">
-                                        <div className="w-4"></div>
-                                        <div className="flex flex-row w-80 justify-between">
+                                    <div className="flex flex-row justify-between">
+                                        <div>
                                             <div className="flex flex-row">
-                                                {tags.slice(0,3).map((tag, index)=>{
+                                                <div className="w-4"></div>
+                                                <Link href={`../post/[id]?id=${item.id}`} className="h-12">
+                                                    <p className="text-xl font-bold font-NanumSquareNeoOTF-rg">{item.title}</p>
+                                                </Link>
+                                            </div>
+                                            <div className="h-4"></div>
+                                            <div className="flex flex-row h-24">
+                                                <div className="w-4"></div>
+                                                <div className="w-80 font-light text-xs leading-5">
+                                                    <Link href={`../post/[id]?id=${item.id}`} className="font-NanumSquareNeoOTF-rg font-normal text-x leading-5 text-gray-700">{contentLettersOnly}</Link>
+                                                </div>
+                                                <div className="w-20"></div>
+
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <Link href={`../post/[id]?id=${item.id}`}>
+                                                {item.firstPostImage?
+                                                    <img src={item.firstPostImage?.image} alt={item.firstPostImage} width="120" height="120" />
+                                                    :''
+                                                }
+                                            </Link>
+                                        </div>
+                                    </div>
+                                    <div className="h-4"></div>
+                                    <div className="flex flex-row">
+                                        <div className="w-3"></div>
+                                        <div className="flex flex-row justify-between">
+                                            <div className="flex flex-row">
+                                                {tags.map((tag, index)=>{
                                                     return(
-                                                        <div key={tag.id} className="w-20" >
-                                                            <div className="w-listOnTag h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center">
+                                                        <div key={tag.id} >
+                                                            <div className="mr-1 h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center">
                                                                 <Link
                                                                     href={`../../post/tag?tagName=${tag.name}`}
-                                                                    className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5">
+                                                                    className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 ml-3 mr-3">
                                                                     # {tag.name}
+                                                                    {index}
                                                                 </Link>
                                                             </div>
-                                                            <br />
+                                                            {index+1%3 == 0 &&<br/>}
                                                         </div>
                                                     )
                                                 })}
                                             </div>
-
                                             {tags.length === 0 && <div className="w-20"></div>}
                                             <div>
                                                 <div className="h-1"></div>
