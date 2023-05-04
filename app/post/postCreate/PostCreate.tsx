@@ -205,9 +205,9 @@ export default function PostCreate() {
                     <div className="w-3xl border border-gray-300"></div>
                 </div>
                 <div className="h-6 border-t-2"></div>
-                <div className="flex flex-row">
+                <div className="flex flex-wrap w-3xl">
                     { tags.map((tag, index) => (
-                        <div className="mr-1 h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center flex flex-row" key={index}>
+                        <div className="mr-1 h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center flex flex-row mt-2" key={index}>
                             <p className="text font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 ml-3 h-4 ">#{tag}</p>
                             <button className="close flex items-center ml-1 mr-3 h-4" onClick={() => removeTag(index)}>&times;</button>
                         </div>
