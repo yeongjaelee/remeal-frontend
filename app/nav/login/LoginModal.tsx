@@ -140,7 +140,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
                                                     {error && <div className="text-xxs" style={{color: 'red'}}>{error}</div>}
                                                 </div>
                                             </div>
-                                            <div className="h-4.5">
+                                            <div className="h-6">
                                                 <button className="text-green-700 font-NanumSquareNeoOTF-rg font-normal text-xs" onClick={()=>setIndex(0)}>
                                                     {'<'} 다른 방법으로 시작하기
                                                 </button>
@@ -175,7 +175,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
                                                     </div>
                                             </div>
                                         </div>
-                                        <div className="h-4.5">
+                                        <div className="h-6">
                                             <button className="text-green-700 font-NanumSquareNeoOTF-rg font-normal text-xs" onClick={handleCloseClick}>
                                                 확인
                                             </button>
