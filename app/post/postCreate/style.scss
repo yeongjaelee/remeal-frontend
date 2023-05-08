@@ -1,7 +1,17 @@
 .ql-container {
+  box-sizing: border-box;
   font-family: 'Arial', serif;
   font-size: 12px;
   position: relative;
+  width: 840px;
+
+}
+.ql-editor{
+  width: 840px;
+  height: 596px;
+  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: scroll;
 }
 .ql-toolbar {
   position: sticky;

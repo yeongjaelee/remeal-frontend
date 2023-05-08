@@ -50,7 +50,7 @@ Quill.register('modules/imageResize', ImageResize)
 export default function PostCreate() {
     const router = useRouter()
     const [title, setTitle] = useState<string>("");
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState<string>("");
     const [tags, setTags] = useState([])
     const quillRef = useRef<ReactQuill>();
     const imageHandler = () => {
@@ -185,12 +185,12 @@ export default function PostCreate() {
         <div className="flex flex-col justify-items-center items-center">
             <div className="h-3"></div>
             <div>
-                <div className="h-12 w-3xl bg-transparent">
-                    <input type="text" placeholder="제목을 입력하세요" className="bg-transparent h-12 w-3xl border-transparent" onChange={(e)=>setTitle(e.target.value)}/>
+                <div className="h-12 w-3xl bg-transparent border-2 border-transparent border-none border-r-0 border-t-0 border-b-0 border-l-0">
+                    <input type="text" placeholder="제목을 입력하세요" className="bg-transparent h-12 w-3xl border-2 border-transparent outline-0" onChange={(e)=>setTitle(e.target.value)}/>
                 </div>
                 <div className="h-2"></div>
 
-                <div className="w-3xl h-2xl ">
+                <div className="h-2xl overflow-y-scroll ">
                     <ReactQuill
                         ref={quillRef}
                         theme="snow"
@@ -198,24 +198,24 @@ export default function PostCreate() {
                         onChange={setValue}
                         modules={modules}
                         formats={formats}
-                        className="h-2xl overflow-y-scroll "
+                        className="h-2xl w-3xl overflow-y-scroll"
                         onImageDelete={handleImageDelete}
                     />
 
                     <div className="w-3xl border border-gray-300"></div>
                 </div>
-                <div className="h-1"></div>
-                <div className="flex flex-row">
+                <div className="h-6 border-t-2"></div>
+                <div className="flex flex-wrap w-3xl">
                     { tags.map((tag, index) => (
-                        <div className="rounded-lg border-2 border-white" key={index}>
-                            <span className="text">#{tag}</span>
-                            <button className="close" onClick={() => removeTag(index)}>&times;</button>
+                        <div className="mr-1 h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center flex flex-row mt-2" key={index}>
+                            <p className="text font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 ml-3 h-4 ">#{tag}</p>
+                            <button className="close flex items-center ml-1 mr-3 h-4" onClick={() => removeTag(index)}>&times;</button>
                         </div>
                     )) }
-                    <div className="w-1"></div>
-                    <input onKeyPress={handleKeyDown} type="text" className="bg-transparent" placeholder="#해시태그를 입력하세요" />
+
+                    <input onKeyPress={handleKeyDown} type="text" className="bg-transparent outline-0" placeholder="#해시태그를 입력하세요" />
                 </div>
-                <div className="m-4">
+                <div className="mt-3">
                     <button onClick={handleChange}>submit</button>
                 </div>
             </div>

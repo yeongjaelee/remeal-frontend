@@ -150,20 +150,15 @@ export default function Page() {
 
                 <div dangerouslySetInnerHTML={{__html : content}}/>
                 <div className="h-5"></div>
-                <div className="flex flex-row">
+                <div className="flex flex-wrap w-96">
                     {tags.map((tag, index)=>{
                         return(
-                            <div key={tag.id} className="w-20" >
-                                <div className="w-16 h-7 rounded-lg bg-gray-100">
-                                    <div className="w-listOnTag h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center content-center">
-                                        <Link
-                                            href={`../../post/tag?tagName=${tag.name}`}
-                                            className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5">
-                                            # {tag.name}
-                                        </Link>
-                                    </div>
-                                </div>
-
+                            <div key={tag.id} >
+                                <Link
+                                    href={`../../post/tag?tagName=${tag.name}`}
+                                    className="h-7 rounded-lg bg-gray-100 h-7 mr-2 mt-2 rounded-2xl bg-gray-100 opacity-75 flex items-center justify-center content-center">
+                                    <p className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 ml-2 mr-2"># {tag.name}</p>
+                                </Link>
                             </div>
                         )
                     })}
