@@ -1,6 +1,5 @@
 'use client'
 import React, {useEffect, useRef, useState} from "react";
-import auth_client from "../../auth-client";
 import PostService from "../data/post";
 import Link from "next/link";
 import { debounce } from 'lodash';
@@ -12,6 +11,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHashtag, faShareFromSquare} from "@fortawesome/free-solid-svg-icons";
 import LoginModal from "../nav/login/LoginModal";
 import ShareModal from "../components/ShareModal";
+import client from "../../apollo-client";
 
 
 export default function PostList (params){
@@ -30,7 +30,7 @@ export default function PostList (params){
     const [copyUrl, setCopyUrl] = useState<string>('')
     const fetchData = async () => {
         console.log(tagName)
-        const {data} = await auth_client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset}})
+        const {data} = await client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset}})
         console.log(data.postList)
         if (data.postList.length>0){
             setPostList([...postList, ...data.postList]);

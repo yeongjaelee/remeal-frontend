@@ -601,7 +601,7 @@
 
 "@types/apollo-upload-client@^17.0.2":
   version "17.0.2"
-  resolved "https://registry.npmjs.org/@types/apollo-upload-client/-/apollo-upload-client-17.0.2.tgz"
+  resolved "https://registry.yarnpkg.com/@types/apollo-upload-client/-/apollo-upload-client-17.0.2.tgz#15dc737663928be27c768117603dfc23c21514bb"
   integrity sha512-NphAiBqzZv3iY8Cq+qWyi0QUFFzJ+nVd7QKI/iKV8RfILrpYDL69F/vlhjn4BNxKlmc3LxJHymcf3gFzLBwuZQ==
   dependencies:
     "@apollo/client" "^3.7.0"

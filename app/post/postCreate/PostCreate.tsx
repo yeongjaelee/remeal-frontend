@@ -161,10 +161,8 @@ export default function PostCreate() {
                 const content = quillRef.current.getEditor().root.innerHTML;
                 setValue(content);
             }
-
         }
     };
-
     function handleKeyDown(e){
         // If user did not press enter key, return
         if(e.key !== 'Enter') return

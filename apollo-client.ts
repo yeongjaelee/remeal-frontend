@@ -5,10 +5,12 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import {router} from "next/client";
 import UserService from "./app/data/users";
 import auth_client from "./auth-client";
+import {createUploadLink} from "apollo-upload-client";
 
 
-const httpLink = new HttpLink({
+const httpLink = new createUploadLink({
     uri: "http://127.0.0.1:8000/graphql",
+
 });
 
 const authLink = setContext( async (_, {headers}) => {
@@ -55,6 +57,7 @@ const link = ApolloLink.from([authLink, errorLink, httpLink]);
 const client = new ApolloClient({
     cache: new InMemoryCache(),
     link,
+
 });
 
 export default client;
