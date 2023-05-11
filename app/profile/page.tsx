@@ -10,12 +10,17 @@ import ProfileService from "../data/profile";
 import {ThemeProvider} from "@material-tailwind/react";
 import value = ThemeProvider.propTypes.value;
 import client from "../../apollo-client";
+import Link from "next/link";
+import ShareModal from "../components/ShareModal";
+import EditProfileModal from "../components/EditProfileModal";
 
 export default function Page() {
+    const [showModal, setShowModal] = useState<boolean>(false)
     const [username, setUsername] = useState<string>('')
     const [isUserContent, setIsUserContent] = useState<boolean>(false)
     const [userOldContent, setUserOldContent] = useState<string>('')
-    const [userOldImage, setUserOldImage] = useState<string>('')
+    const [userOldImage, setUserOldImage] = useState<string>('') // content image
+    const [userImage, setUserImage] = useState<string>('') // profile image
     const [isUserOldContent, setIsUserOldContent] = useState<boolean>(false)
     const [userContent, setUserContent] = useState<string>('')
     const [imageSrc, setImageSrc] = useState<string>('')
@@ -25,30 +30,35 @@ export default function Page() {
     const contentTextarea = useRef(null);
     const bottomArea = useRef(null);
     const imageInput = useRef(null);
-
+    const userEmailFirst = localStorage.getItem('userEmailFirst')
     async function userData() {
         const token = localStorage.getItem('token')
         const {data} = await client.query({query: UserService.GetUser, variables:{'token':token}})
-        if(data.user.userContent.content || data.user.userContent.image){
-            setIsUserOldContent(true)
-            setUserContent(data.user.userContent.content)
-            if (data.user.userContent.image){
-                setImageSrc("http://127.0.0.1:8000/media/" +data.user.userContent.image)
+        if (data.user.userContent){
+            if(data.user.userContent.content || data.user.userContent.image){
+                setIsUserOldContent(true)
+                setUserContent(data.user.userContent.content)
+                setUserOldContent(data.user.userContent.content)
+                setLine(data.user.userContent.content.split("\n").length)
+                setUserOldImage(data.user.userContent.image)
+                const imageUrl = "http://127.0.0.1:8000/media/" + data.user.userContent.image
+                setUserOldImage(imageUrl)
+                if (data.user.userContent.image){
+                    setImageSrc("http://127.0.0.1:8000/media/" +data.user.userContent.image)
+                }
+                else{
+                    setImageSrc(null)
+                }
+                setIsEdit(true)
             }
             else{
-                setImageSrc(null)
+                setIsUserOldContent(false)
             }
-            setIsEdit(true)
         }
-        else{
-            setIsUserOldContent(false)
+        if (data.user.userImage){
+            setUserImage("http://127.0.0.1:8000/media/" +data.user.userImage.image)
         }
         setUsername(data.user.username)
-        setUserOldContent(data.user.userContent.content)
-        setLine(data.user.userContent.content.split("\n").length)
-        setUserOldImage(data.user.userContent.image)
-        const imageUrl = "http://127.0.0.1:8000/media/" + data.user.userContent.image
-        setUserOldImage(imageUrl)
 
     }
     function goToEditProfile() {
@@ -69,12 +79,15 @@ export default function Page() {
             // body.append("image", i);
             const reader = new FileReader();
             reader.readAsDataURL(i);
-            return new Promise((resolve) => {
-                reader.onload = () => {
-                    setImageSrc(reader.result);
-                    resolve();
-                };
-            });
+            reader.onload = () => {
+                setImageSrc(reader.result);
+            };
+            // return new Promise((resolve) => {
+            //     reader.onload = () => {
+            //         setImageSrc(reader.result);
+            //         resolve();
+            //     };
+            // });
         }
     };
     const handleClick = event => {
@@ -84,8 +97,10 @@ export default function Page() {
         console.log(userContent)
         console.log(image)
         let isImageSrc = false
-        if (imageSrc.length>0){
-            console.log(1111)
+        if (!imageSrc){
+
+        }
+        else if(imageSrc.length>0){
             isImageSrc = true
         }
         const formData = new FormData();
@@ -112,12 +127,10 @@ export default function Page() {
             setUserContent('');
             setImageSrc('')
         }
-
     }
     useEffect(()=>{
         userData()
     },[])
-
 
     return(
         <div className="flex justify-center">
@@ -126,9 +139,9 @@ export default function Page() {
                     <div className="h-16"></div>
                     <div className="flex justify-between">
                         <p className="text-5xl text-black font-normal">{username}</p>
-                        <div className="flex items-center">
-                            <p className="text-xl">...</p>
-                        </div>
+                        {/*<div className="flex items-center">*/}
+                        {/*    <p className="text-xl">...</p>*/}
+                        {/*</div>*/}
                     </div>
                     <div className="h-6"></div>
                     <div className="border-b border-gray-200"></div>
@@ -204,11 +217,32 @@ export default function Page() {
                         }
                     </div>
                 </div>
-                <div className="w-38">
-                    edit profile
+                <div className="w-38 flex flex-col">
+                    <div className="h-16"></div>
+                    <div className="relative rounded-full w-20 h-20 bg-emerald-700 flex ml-3 items-center justify-center ">
+                        <p className="text-gray-100 flex items-center justify-center mb-3.5 text-10xl">{userEmailFirst}</p>
+                    </div>
+                    <div className="h-4"></div>
+                    <div>
+                        <p className="ml-4">{username}</p>
+                    </div>
+                    <div className="h-4"></div>
+                    <div>
+                        <button className="ml-4 text-emerald-500" onClick={()=>setShowModal(true)}>edit profile</button>
+                    </div>
+
                 </div>
             </div>
             <div ref={bottomArea}></div>
+            <EditProfileModal
+                onClose={() => setShowModal(false)}
+                show={showModal}
+                userImage={userImage}
+                username={username}
+                userEmailFirst={userEmailFirst}
+            >
+                hello edit profile modal
+            </EditProfileModal>
         </div>
     )
 }

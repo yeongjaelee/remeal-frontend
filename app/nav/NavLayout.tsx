@@ -44,7 +44,7 @@ export default function NavLayout({
                         </div>
                     </Link>
                     {token ?
-                        <Link href="../profile" className="relative rounded-full w-6 bg-green-500 flex ml-3 items-center justify-center h-6">
+                        <Link href="../profile" className="relative rounded-full w-6 bg-emerald-700 flex ml-3 items-center justify-center h-6">
                             <p className="text-gray-100 flex items-center justify-center mb-0.5">{userEmailFirst}</p>
                         </Link>
                         :

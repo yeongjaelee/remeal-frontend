@@ -18,6 +18,9 @@ export default class UserService{
                 content
                 image
             }
+            userImage{
+                image
+            }
         }
     }
     `;
