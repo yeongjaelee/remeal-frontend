@@ -38,7 +38,14 @@ module.exports = {
       'base':'16px',
       '2xl':'24px',
       '3xl':'30px',
-      'x':'14px'
+      'x':'14px',
+      '4xl':'36px',
+      '5xl':'42px',
+      '6xl':'48px',
+      '7xl':'54px',
+      '8xl':'60px',
+      '9xl':'66px',
+      '10xl':'72px'
     },
     textUnderlineOffset: {
       3: '3px',

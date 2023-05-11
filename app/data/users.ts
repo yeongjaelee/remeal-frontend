@@ -8,6 +8,23 @@ export default class UserService{
             email
         }
     }`;
+    static GetUser = gql`
+    query User($token:String){
+        user(token:$token){
+            id
+            email
+            username
+            userContent{
+                content
+                image
+            }
+            userImage{
+                image
+                isDeleted
+            }
+        }
+    }
+    `;
     static verify = gql`
     mutation VerifyToken($token: String!) {
             verifyToken(token: $token) {
