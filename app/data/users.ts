@@ -25,6 +25,23 @@ export default class UserService{
         }
     }
     `;
+    static GetUserByEmail = gql`
+    query GetUserByEmail($email:String){
+        getUserByEmail(email:$email){
+            id
+            email
+            username
+            userContent{
+                content
+                image
+            }
+            userImage{
+                image
+                isDeleted
+            }
+        }
+    }
+    `;
     static verify = gql`
     mutation VerifyToken($token: String!) {
             verifyToken(token: $token) {

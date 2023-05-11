@@ -57,7 +57,7 @@ context('Local Storage / Session Storage', () => {
     // getAllLocalStorage() yields a map of origins to localStorage values
     cy.getAllLocalStorage().should((storageMap) => {
       expect(storageMap).to.deep.equal({
-        // other origins will also be present if localStorage is set on them
+        // [email] origins will also be present if localStorage is set on them
         'https://example.cypress.io': {
           'prop1': 'red',
           'prop2': 'blue',
@@ -86,7 +86,7 @@ context('Local Storage / Session Storage', () => {
     // getAllSessionStorage() yields a map of origins to sessionStorage values
     cy.getAllSessionStorage().should((storageMap) => {
       expect(storageMap).to.deep.equal({
-        // other origins will also be present if sessionStorage is set on them
+        // [email] origins will also be present if sessionStorage is set on them
         'https://example.cypress.io': {
           'prop4': 'cyan',
           'prop5': 'yellow',
