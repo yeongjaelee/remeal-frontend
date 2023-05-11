@@ -1,5 +1,5 @@
 'use client'
-import React, {useCallback, useMemo, useRef, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import parse from 'html-react-parser';
@@ -23,18 +23,13 @@ const formats = [
     'size',
     'list',
     'indent',
-    'align'
+    'align',
+    'color'
 ];
 const Font = Quill.import("formats/font");
 const Size = Quill.import("attributors/style/size");
 Font.whitelist = ["dotum", "gullim", "batang", "NanumGothic"];
 Size.whitelist = [
-    "9px",
-    "10px",
-    "11px",
-    "12px",
-    "14px",
-    "16px",
     "18px",
     "20px",
     "22px",
@@ -90,14 +85,9 @@ export default function PostCreate() {
             toolbar: {
                 container: [
                     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                    [{header: [1, 2, 3, 4, 5, 6, false]}],
-                    [{font:['serif','monospace',"dotum", "gullim", "batang", "NanumGothic"]}],
-                    [{size:["9px",
-                            "10px",
-                            "11px",
-                            "12px",
-                            "14px",
-                            "16px",
+                    // [{header: [1, 2, 3, 4, 5, 6, false]}],
+                    // [{font:['serif','monospace',"dotum", "gullim", "batang", "NanumGothic"]}],
+                    [{size:[
                             "18px",
                             "20px",
                             "22px",
@@ -112,6 +102,42 @@ export default function PostCreate() {
                         { align: [] },
                     ],
                     ['image'],
+                    [{ 'color':
+                            ['#000000',
+                                '#e60000',
+                                '#ff9900',
+                                '#ffff00',
+                                '#008a00',
+                                '#0066cc',
+                                '#9933ff',
+                                '#ffffff',
+                                '#facccc',
+                                '#ffebcc',
+                                '#ffffcc',
+                                '#cce8cc',
+                                '#cce0f5',
+                                '#ebd6ff',
+                                '#bbbbbb',
+                                '#f06666',
+                                '#ffc266',
+                                '#ffff66',
+                                '#66b966',
+                                '#66a3e0',
+                                '#c285ff',
+                                '#888888',
+                                '#a10000',
+                                '#b26b00',
+                                '#b2b200',
+                                '#006100',
+                                '#0047b2',
+                                '#6b24b2',
+                                '#444444',
+                                '#5c0000',
+                                '#663d00',
+                                '#666600',
+                                '#003700',
+                                '#002966',
+                                '#3d1466',]},]
                 ],
                 handlers: {
                     // 이미지 처리는 우리가 직접 imageHandler라는 함수로 처리할 것이다.
@@ -145,7 +171,6 @@ export default function PostCreate() {
             })
             console.log(data)
             if (data.createPost.success) {
-                alert('성공')
                 router.push('/')
             }
         }
@@ -180,6 +205,13 @@ export default function PostCreate() {
     function removeTag(index){
         setTags(tags.filter((el, i) => i !== index))
     }
+    useEffect(()=>{
+        setTimeout(()=>{
+            if (quillRef.current instanceof ReactQuill) {
+                quillRef.current.focus()
+            }
+        },0)
+    },[])
 
     return (
         <div className="flex flex-col justify-items-center items-center">
@@ -198,13 +230,12 @@ export default function PostCreate() {
                         onChange={setValue}
                         modules={modules}
                         formats={formats}
-                        className="h-2xl w-3xl overflow-y-scroll"
+                        className="h-2xl w-3xl "
                         onImageDelete={handleImageDelete}
                     />
-
-                    <div className="w-3xl border border-gray-300"></div>
+                    {/*<div className="w-3xl border border-gray-300"></div>*/}
                 </div>
-                <div className="h-6 border-t-2"></div>
+                <div className="h-6"></div>
                 <div className="flex flex-wrap w-3xl">
                     { tags.map((tag, index) => (
                         <div className="mr-1 h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center flex flex-row mt-2" key={index}>
@@ -212,12 +243,15 @@ export default function PostCreate() {
                             <button className="close flex items-center ml-1 mr-3 h-4" onClick={() => removeTag(index)}>&times;</button>
                         </div>
                     )) }
-
                     <input onKeyPress={handleKeyDown} type="text" className="bg-transparent outline-0" placeholder="#해시태그를 입력하세요" />
                 </div>
-                <div className="mt-3">
-                    <button onClick={handleChange}>submit</button>
+                <div className="flex justify-end">
+                    <button className="rounded-full bg-green-700 border border-green-700 mr-2 h-9 w-20 justify-end " onClick={handleChange}>
+                        <p className="ml-4 mr-4 flex items-center mb-1.5 mt-1 text-black font-light tracking-wide w-12 flex justify-center text-center text-white">save</p>
+                    </button>
+                    <div className="w-4"></div>
                 </div>
+
             </div>
 
         </div>

@@ -9,6 +9,7 @@ import Layout from "./layout";
 import CommentsBar from "../../components/CommentsBar";
 import LoginModal from "../../nav/login/LoginModal";
 import Link from "next/link";
+import "react-quill/dist/quill.core.css";
 
 export default function Page() {
     const router = useRouter();
@@ -148,7 +149,7 @@ export default function Page() {
                 <div className="border border-gray-400"></div>
                 <div className="h-5"></div>
 
-                <div dangerouslySetInnerHTML={{__html : content}}/>
+                <div className="view ql-editor" dangerouslySetInnerHTML={{__html : content}}/>
                 <div className="h-5"></div>
                 <div className="flex flex-wrap w-96">
                     {tags.map((tag, index)=>{
@@ -166,6 +167,7 @@ export default function Page() {
                 <div className="h-5"></div>
                 <div className="flex flex-row">
                     <div className="flex flex-row items-center">
+                        <div className="w-3"></div>
                         <button onClick={clickLike}>
                             {isLike?
                                 <FontAwesomeIcon icon={faHeart} style={{color: "#f70202",}} className="mr-0.5" />
@@ -173,7 +175,7 @@ export default function Page() {
                                 <FontAwesomeIcon icon={faHeart} style={{color: "#dbdfe6",}} className="mr-0.5"/>
                             }
                         </button>
-                        {likeNumber}
+                        <div className="ml-1">{likeNumber}</div>
                     </div>
                     {/*<button className="flex flex-row" onClick={()=>setShowComment(!showComment)}>*/}
                     {/*    <FontAwesomeIcon icon={faCommentDots} style={{color: "#04090b",}} className="m-1"/>*/}
