@@ -21,6 +21,7 @@ export default function Page() {
     const [userOldContent, setUserOldContent] = useState<string>('')
     const [userOldImage, setUserOldImage] = useState<string>('') // content image
     const [userImage, setUserImage] = useState<string>('') // profile image
+    const [isUserImageDeleted, setIsUserImageDelete] = useState<boolean>(false)
     const [isUserOldContent, setIsUserOldContent] = useState<boolean>(false)
     const [userContent, setUserContent] = useState<string>('')
     const [imageSrc, setImageSrc] = useState<string>('')
@@ -57,6 +58,7 @@ export default function Page() {
         }
         if (data.user.userImage){
             setUserImage("http://127.0.0.1:8000/media/" +data.user.userImage.image)
+            setIsUserImageDelete(data.user.userImage.isDeleted)
         }
         setUsername(data.user.username)
     }
@@ -218,7 +220,7 @@ export default function Page() {
                 </div>
                 <div className="w-38 flex flex-col">
                     <div className="h-16"></div>
-                    {userImage?
+                    {userImage && !isUserImageDeleted?
                         <div className="relative rounded-full w-20 h-20 bg-emerald-700 flex ml-3 items-center justify-center ">
                             <img src={userImage} className="rounded-full w-full h-full object-cover"/>
                         </div>

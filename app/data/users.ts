@@ -20,6 +20,7 @@ export default class UserService{
             }
             userImage{
                 image
+                isDeleted
             }
         }
     }
