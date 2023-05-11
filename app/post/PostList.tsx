@@ -136,7 +136,7 @@ export default function PostList (params){
                                         <div className="pl-4 rounded-full bg-green-400 w-5 h-5"></div>
                                         <div className="w-2"></div>
                                         <div>
-                                            <p className="font-normal font-mono underline">{item.user.email}</p>
+                                            <p className="font-normal font-mono underline underline-offset-3">{item.user.email}</p>
                                         </div>
                                         <div className="w-1"></div>
                                         <div className="flex items-center ">.</div>
