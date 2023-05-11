@@ -48,9 +48,9 @@ export default function PostList (params){
         const htmlWithoutImages = str.replace(/<img[^>]*>/g, '');
         let stringWithoutHtml = htmlWithoutImages.replace(/(<([^>]+)>)/gi, '');
         let truncatedHtml = htmlWithoutImages;
-        if (stringWithoutHtml.length > 100) {
+        if (stringWithoutHtml.length > 150) {
             // If the length of the text content is greater than 100, truncate the HTML and add an ellipsis
-            const truncatedText = stringWithoutHtml.slice(0, 100) + ' ...';
+            const truncatedText = stringWithoutHtml.slice(0, 150) + ' ...';
             // truncatedHtml = htmlWithoutImages.replace(stringWithoutHtml, truncatedText + '...');
             stringWithoutHtml = truncatedText
         }
@@ -159,11 +159,14 @@ export default function PostList (params){
                                             <div className="h-4"></div>
                                             <div className="flex flex-row h-24">
                                                 <div className="w-4"></div>
-                                                <div className="w-80 font-light text-xs leading-5">
-                                                    <Link href={`../post/[id]?id=${item.id}`} className="font-NanumSquareNeoOTF-rg font-normal text-x leading-5 text-gray-700">{contentLettersOnly}</Link>
+                                                <div className="w-80 font-light text-xs leading-5 flex flex-wrap">
+                                                    <Link href={`../post/[id]?id=${item.id}`} className="font-NanumSquareNeoOTF-rg font-normal text-lg leading-5 text-gray-700 w-80 flex flex-wrap">
+                                                        <div>{contentLettersOnly.slice(0,50)}</div>
+                                                        <div>{contentLettersOnly.slice(51,100)}</div>
+                                                        <div>{contentLettersOnly.slice(101,153)}</div>
+                                                    </Link>
                                                 </div>
                                                 <div className="w-20"></div>
-
                                             </div>
                                         </div>
                                         <div>
