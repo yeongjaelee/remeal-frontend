@@ -29,12 +29,6 @@ const Font = Quill.import("formats/font");
 const Size = Quill.import("attributors/style/size");
 Font.whitelist = ["dotum", "gullim", "batang", "NanumGothic"];
 Size.whitelist = [
-    "9px",
-    "10px",
-    "11px",
-    "12px",
-    "14px",
-    "16px",
     "18px",
     "20px",
     "22px",
@@ -92,10 +86,7 @@ export default function PostCreate() {
                     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
                     [{header: [1, 2, 3, 4, 5, 6, false]}],
                     [{font:['serif','monospace',"dotum", "gullim", "batang", "NanumGothic"]}],
-                    [{size:["9px",
-                            "10px",
-                            "11px",
-                            "12px",
+                    [{size:[
                             "14px",
                             "16px",
                             "18px",
@@ -198,13 +189,12 @@ export default function PostCreate() {
                         onChange={setValue}
                         modules={modules}
                         formats={formats}
-                        className="h-2xl w-3xl overflow-y-scroll"
+                        className="h-2xl w-3xl overflow-y-scroll "
                         onImageDelete={handleImageDelete}
                     />
-
-                    <div className="w-3xl border border-gray-300"></div>
+                    {/*<div className="w-3xl border border-gray-300"></div>*/}
                 </div>
-                <div className="h-6 border-t-2"></div>
+                {/*<div className="h-6 border-t-2"></div>*/}
                 <div className="flex flex-wrap w-3xl">
                     { tags.map((tag, index) => (
                         <div className="mr-1 h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center flex flex-row mt-2" key={index}>
