@@ -171,7 +171,6 @@ export default function PostCreate() {
             })
             console.log(data)
             if (data.createPost.success) {
-                alert('성공')
                 router.push('/')
             }
         }
@@ -212,7 +211,6 @@ export default function PostCreate() {
                 quillRef.current.focus()
             }
         },0)
-
     },[])
 
     return (
@@ -247,9 +245,13 @@ export default function PostCreate() {
                     )) }
                     <input onKeyPress={handleKeyDown} type="text" className="bg-transparent outline-0" placeholder="#해시태그를 입력하세요" />
                 </div>
-                <div className="mt-3">
-                    <button onClick={handleChange}>submit</button>
+                <div className="flex justify-end">
+                    <button className="rounded-full bg-green-700 border border-green-700 mr-2 h-9 w-20 justify-end " onClick={handleChange}>
+                        <p className="ml-4 mr-4 flex items-center mb-1.5 mt-1 text-black font-light tracking-wide w-12 flex justify-center text-center text-white">save</p>
+                    </button>
+                    <div className="w-4"></div>
                 </div>
+
             </div>
 
         </div>
