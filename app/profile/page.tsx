@@ -59,7 +59,6 @@ export default function Page() {
             setUserImage("http://127.0.0.1:8000/media/" +data.user.userImage.image)
         }
         setUsername(data.user.username)
-
     }
     function goToEditProfile() {
         setIsUserContent(true)
@@ -219,9 +218,15 @@ export default function Page() {
                 </div>
                 <div className="w-38 flex flex-col">
                     <div className="h-16"></div>
-                    <div className="relative rounded-full w-20 h-20 bg-emerald-700 flex ml-3 items-center justify-center ">
-                        <p className="text-gray-100 flex items-center justify-center mb-3.5 text-10xl">{userEmailFirst}</p>
-                    </div>
+                    {userImage?
+                        <div className="relative rounded-full w-20 h-20 bg-emerald-700 flex ml-3 items-center justify-center ">
+                            <img src={userImage} className="rounded-full w-full h-full object-cover"/>
+                        </div>
+                        :
+                        <div className="relative rounded-full w-20 h-20 bg-emerald-700 flex ml-3 items-center justify-center ">
+                            <p className="text-gray-100 flex items-center justify-center mb-3.5 text-10xl">{userEmailFirst}</p>
+                        </div>
+                    }
                     <div className="h-4"></div>
                     <div>
                         <p className="ml-4">{username}</p>
