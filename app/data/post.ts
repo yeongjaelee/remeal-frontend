@@ -107,6 +107,14 @@ export default class PostService{
             comments{
                 comment
                 dateCreated
+                user{
+                  email
+                }
+                userImage{
+                    image
+                    isDeleted
+                }
+            
             }
         }
     }
@@ -118,6 +126,11 @@ export default class PostService{
             comment
             user{
               email
+            }
+            dateCreated
+            userImage{
+                image
+                isDeleted
             }
         }
     }
