@@ -198,7 +198,7 @@ export default function Page() {
                     </form>
                     <div className="h-8"></div>
                     <div className="border border-white"></div>
-                    {comments?
+                    {comments.length>0?
                         <div className="w-3xl">
                             <div className="h-5"></div>
                             <div className="flex flex-col">
@@ -209,7 +209,7 @@ export default function Page() {
                                     )
                                 )}
                             </div>
-                            </div>:'아직 댓글이 없습니다'
+                            </div>:''
                     }
                 </div>
             </div>
