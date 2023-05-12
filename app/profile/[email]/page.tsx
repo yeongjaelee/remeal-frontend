@@ -11,9 +11,7 @@ import client from "../../../apollo-client";
 import UserService from "../../data/users";
 
 export default function Page() {
-    const [showModal, setShowModal] = useState<boolean>(false)
     const [username, setUsername] = useState<string>('')
-    const [isUserContent, setIsUserContent] = useState<boolean>(false)
     const [userOldContent, setUserOldContent] = useState<string>('')
     const [userOldImage, setUserOldImage] = useState<string>('') // content image
     const [userImage, setUserImage] = useState<string>('') // profile image
@@ -23,12 +21,10 @@ export default function Page() {
     const searchParams = useSearchParams();
     const email = String(searchParams.get('email'));
     const [imageSrc, setImageSrc] = useState<string>('')
-    const [image, setImage] = useState(null)
     const [line, setLine] = useState<number>(0)
     const [isEdit, setIsEdit] = useState<boolean>(false)
-    const contentTextarea = useRef(null);
     const bottomArea = useRef(null);
-    const imageInput = useRef(null);
+    const [order, setOrder] = useState<number>(0)
     async function userData() {
         const {data} = await client.query({query: UserService.GetUserByEmail, variables:{'email':email}})
         if (data.getUserByEmail.userContent){
@@ -71,24 +67,37 @@ export default function Page() {
                         <p className="text-5xl text-black font-normal">{username}</p>
                     </div>
                     <div className="h-6"></div>
+                    <div className="flex flex-row">
+                        <button onClick={()=>setOrder(0)} className={order===0 ? "border-b-2 border-black":''}>
+                            <p className="font-NanumSquareNeoOTF-rg text-gray-500 ">소개글</p>
+                        </button>
+                        <div className="w-3"></div>
+                        <button onClick={()=>setOrder(1)} className={order===1 ? "border-b-2 border-black":''}>
+                            <p className="font-NanumSquareNeoOTF-rg text-gray-500">글목록</p>
+                        </button>
+                    </div>
                     <div className="border-b border-gray-200"></div>
                     <div className="h-6"></div>
-                    {
-                        isUserOldContent?<div>
-                                {userOldImage.length>28&&<img src={userOldImage}/>}
-                                {userOldContent.split('\n').map((line, index) => (
-                                    <React.Fragment key={index}>
-                                        <div className="text-xl leading-9 font-NanumSquareNeoOTF-rg">
-                                            {line}
-                                            <br />
-                                        </div>
-                                    </React.Fragment>))}
-                                <div className="h-24"></div>
-                            </div>:
-                            <div className="h-56 bg-gray-50 flex flex-col items-center justify-center">
-                                <p className="font-normal">소개 문구가 없습니다</p>
-                            </div>
-                    }
+                    {order===0 &&
+                        <div>
+                        {
+                            isUserOldContent?<div>
+                                    {userOldImage.length>28&&<img src={userOldImage}/>}
+                                    {userOldContent.split('\n').map((line, index) => (
+                                        <React.Fragment key={index}>
+                                            <div className="text-xl leading-9 font-NanumSquareNeoOTF-rg">
+                                                {line}
+                                                <br />
+                                            </div>
+                                        </React.Fragment>))}
+                                    <div className="h-24"></div>
+                                </div>:
+                                <div className="h-56 bg-gray-50 flex flex-col items-center justify-center">
+                                    <p className="font-normal">소개 문구가 없습니다</p>
+                                </div>
+                        }
+                    </div>}
+
                 </div>
                 <div className="w-38 flex flex-col">
                     <div className="h-16"></div>
