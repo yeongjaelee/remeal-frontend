@@ -9,6 +9,7 @@ import {ThemeProvider} from "@material-tailwind/react";
 import {useSearchParams} from "next/navigation";
 import client from "../../../apollo-client";
 import UserService from "../../data/users";
+import PostList from "../../post/PostList";
 
 export default function Page() {
     const [username, setUsername] = useState<string>('')
@@ -96,7 +97,11 @@ export default function Page() {
                                     <p className="font-normal">소개 문구가 없습니다</p>
                                 </div>
                         }
-                    </div>}
+                        </div>}
+                    {order===1 &&
+                        <div>
+                            <PostList params={email}>{email}</PostList>
+                        </div>}
 
                 </div>
                 <div className="w-38 flex flex-col">

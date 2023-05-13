@@ -14,7 +14,7 @@ import ShareModal from "../components/ShareModal";
 import client from "../../apollo-client";
 
 
-export default function PostList (params){
+export default function PostList ({params}){
     const searchParams = useSearchParams();
     const router = useRouter()
     const tagName = searchParams.get('tagName')
@@ -25,12 +25,12 @@ export default function PostList (params){
     const offset = useSelector((state:RootSate)=>state.tag.offset)
     const dispatch = useDispatch();
     const [checkSame, setCheckSame] = useState<boolean>(false)
-    const [searchTag, setSearchTag] = useState<string>(params.tagName)
+    // const [searchTag, setSearchTag] = useState<string>(params.tagName)
     const [showModal, setShowModal] = useState(false);
     const [copyUrl, setCopyUrl] = useState<string>('')
+    const email = params
     const fetchData = async () => {
-        console.log(tagName)
-        const {data} = await client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset}})
+        const {data} = await client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset, 'email':email}})
         console.log(data.postList)
         if (data.postList.length>0){
             setPostList([...postList, ...data.postList]);
@@ -68,7 +68,7 @@ export default function PostList (params){
         dispatch(initialLimit())
         dispatch(initialOffset())
         setPostList([])
-        setSearchTag(tagName);
+        // setSearchTag(tagName);
         router.refresh()
     }, [])
 
