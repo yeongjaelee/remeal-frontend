@@ -8,6 +8,7 @@ import PostService from "../../data/post";
 import ImageResize from '@looop/quill-image-resize-module-react';
 import './style.scss';
 import {useRouter} from "next/navigation";
+import Link from "next/link";
 
 
 // 위에서 설정한 모듈들 foramts을 설정한다
@@ -171,7 +172,7 @@ export default function PostCreate() {
             })
             console.log(data)
             if (data.createPost.success) {
-                router.push('/')
+                router.push('/', undefined, {prefetch:false})
             }
         }
 
