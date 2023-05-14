@@ -30,6 +30,7 @@ export default function PostList ({params}){
     const [copyUrl, setCopyUrl] = useState<string>('')
     const email = params
     const fetchData = async () => {
+        console.log(tagName)
         const {data} = await client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset, 'email':email}})
         console.log(data.postList)
         if (data.postList.length>0){
@@ -191,7 +192,7 @@ export default function PostList ({params}){
                                                                     href={`../../post/tag?tagName=${tag.name}`}
                                                                     className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 ml-3 mr-3">
                                                                     # {tag.name}
-                                                                    {index}
+
                                                                 </Link>
                                                             </div>
                                                             {index+1%3 == 0 &&<br/>}

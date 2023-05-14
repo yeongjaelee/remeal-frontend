@@ -4,8 +4,8 @@ import {faArrowRightFromBracket} from "@fortawesome/free-solid-svg-icons/faArrow
 import LoginModal from "./login/LoginModal";
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
-import {useRouter} from "next/router";
 import {faPenToSquare} from "@fortawesome/free-solid-svg-icons";
+import {useRouter} from "next/navigation";
 export default function NavLayout({
                                          children,
                                      }: {
@@ -14,6 +14,7 @@ export default function NavLayout({
     const [showModal, setShowModal] = useState(false);
     const token = localStorage.getItem('token')
     const userEmailFirst = localStorage.getItem('userEmailFirst')
+    const router = useRouter()
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search)
         const token = urlParams.get('token')
@@ -26,6 +27,16 @@ export default function NavLayout({
             window.location.replace('/')
         }
     }, []);
+    function goToWrite () {
+        if(!token){
+            alert('로그인해주세요')
+        }
+        else{
+            router.push('../post/postCreate')
+
+        }
+
+    }
     return (
         <div className="h-12">
             <div className="flex justify-between items-center h-12 pl-4 pt-4 pb-4 pr-4">
@@ -37,12 +48,12 @@ export default function NavLayout({
                     </div>
                 </div>
                 <div className="flex flex-row items-center h-12">
-                    <Link href="../post/postCreate">
+                    <button onClick={goToWrite}>
                         <div className="flex flex-row items-center justify-center">
                             <FontAwesomeIcon icon={faPenToSquare} style={{color: "#8c95a6",}} />
                             <p className="text-gray-400 ml-1 text-sm font-light">Write</p>
                         </div>
-                    </Link>
+                    </button>
                     {token ?
                         <Link href="../profile" className="relative rounded-full w-6 bg-emerald-700 flex ml-3 items-center justify-center h-6">
                             <p className="text-gray-100 flex items-center justify-center mb-0.5">{userEmailFirst}</p>
