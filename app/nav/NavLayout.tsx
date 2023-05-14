@@ -30,6 +30,7 @@ export default function NavLayout({
     function goToWrite () {
         if(!token){
             alert('로그인해주세요')
+            setShowModal(true)
         }
         else{
             router.push('../post/postCreate')
@@ -70,7 +71,6 @@ export default function NavLayout({
                         Hello from the modal!
                     </LoginModal>
                 </div>
-
             </div>
             {children}
         </div>
