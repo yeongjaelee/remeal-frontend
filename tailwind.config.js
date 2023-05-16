@@ -49,7 +49,10 @@ module.exports = {
     },
     textUnderlineOffset: {
       3: '3px',
-    }
+    },
+    // inset: {
+    //   '3px': '3px',
+    // }
 
   },
   plugins: [],

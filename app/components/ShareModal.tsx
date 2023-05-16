@@ -1,9 +1,10 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {Fragment, useEffect, useRef, useState} from "react";
 import ReactDOM from "react-dom";
 import TextModal from "./searchBar/TextModal";
 
 
 const ShareModal = ({ show, onClose, title, children }) => {
+    const modalRef = useRef(null);
     const [isBrowser, setIsBrowser] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [nextModalShow, setNextModalShow] = useState(false);
@@ -23,14 +24,19 @@ const ShareModal = ({ show, onClose, title, children }) => {
         });
         setNextModalShow(true);
     }
+    const modalOutSideClick = (event) => {
+        console.log(8)
+        console.log(modalRef.current)
+        if(modalRef.current && !modalRef.current.contains(event.target)) {
+            onClose()
+        }  }
 
     const modalContent = show ? (
-        <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div className="fixed inset-0 bg-gray-100 bg-opacity-75 transition-opacity"></div>
-            <div className="fixed inset-0 z-10 overflow-y-auto">
-                <div className="flex w-full h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
+        <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true" >
+            <div className="fixed inset-0 bg-gray-100 bg-opacity-75 transition-opacity" onClick={()=>onClose()} ></div>
+                <div className="flex items-center justify-center h-full w-full text-center " >
                     <div
-                        className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-72 h-48"
+                        className="relative top-72 inset-y-1 transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-72 h-48 "
                     >
                         <div className="flex justify-end">
                             <button type="button"
@@ -57,7 +63,6 @@ const ShareModal = ({ show, onClose, title, children }) => {
                         show={nextModalShow}
                     >
                     </TextModal>
-                </div>
             </div>
         </div>
     ) : null;
