@@ -15,6 +15,7 @@ const ShareModal = ({ show, onClose, title, children }) => {
     const handleCloseClick = (e) => {
         e.preventDefault();
         onClose();
+
     };
     function handleCopyClipBoard(url) {
         navigator.clipboard.writeText(url).then(() => {

@@ -34,6 +34,8 @@ const LoginModal = ({ show, onClose, title, children }) => {
         e.preventDefault();
         onClose();
         setFirstEmailPage(false)
+        setIndex(0)
+        setEmail('')
     };
 
     function isValidEmail(email) {
@@ -54,11 +56,10 @@ const LoginModal = ({ show, onClose, title, children }) => {
     };
     const modalContent = show ? (
         <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div className="fixed inset-0 bg-gray-100 bg-opacity-75 transition-opacity"></div>
-            <div className="fixed inset-0 z-10 overflow-y-auto">
-                <div className="flex w-full h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
+            <div className="fixed inset-0 bg-gray-100 bg-opacity-75 transition-opacity" onClick={handleCloseClick}></div>
+                <div className="flex items-center justify-center h-full w-full text-center ">
                     <div
-                        className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-2xl h-1.5xl"
+                        className="relative top-32 inset-y-1 transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-2xl h-1.5xl"
                         >
                         <div className="flex justify-end h-12">
                             <button type="button"
@@ -187,7 +188,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
                         </div>
                         </div>
                     </div>
-                </div>
+
             </div>
         </div>
     ) : null;
