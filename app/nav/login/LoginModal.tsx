@@ -6,6 +6,8 @@ import { gql } from "@apollo/client";
 import client from "../../../apollo-client";
 import UserService from "../../data/users";
 import auth_client from "../../../auth-client";
+import axios, { AxiosResponse, AxiosError } from 'axios';
+
 
 const CHECK_USER = gql`
     mutation CheckUser($email:String){
@@ -16,6 +18,7 @@ const CHECK_USER = gql`
     }
 `;
 
+
 const LoginModal = ({ show, onClose, title, children }) => {
     const [isBrowser, setIsBrowser] = useState(false);
     const [firstEmailPage, setFirstEmailPage] = useState(false);
@@ -25,6 +28,9 @@ const LoginModal = ({ show, onClose, title, children }) => {
 
     const check_user = async () => {
         await auth_client.mutate({mutation: CHECK_USER, variables:{'email':email}})
+    }
+    const kakaoLogin = async () => {
+        await axios.post("http://127.0.0.1:8000/kakao/")
     }
     useEffect(() => {
         setIsBrowser(true);
@@ -54,6 +60,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
         check_user().then(r => console.log(r))
 
     };
+
     const modalContent = show ? (
         <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div className="fixed inset-0 bg-gray-100 bg-opacity-75 transition-opacity" onClick={handleCloseClick}></div>
@@ -81,7 +88,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
                                         <div className="flex flex-col items-center w-2xl">
                                             <div className="flex items-center justify-center w-full">
                                                 <div className="flex items-center justify-center bg-yellow-300 w-44 h-8 rounded">
-                                                    <button className="flex flex-row items-center">
+                                                    <button className="flex flex-row items-center" onClick={kakaoLogin}>
                                                         <div>
                                                             <FontAwesomeIcon icon={faComment} />
                                                         </div>
