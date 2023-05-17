@@ -12,20 +12,34 @@ export default function NavLayout({
     children: React.ReactNode,
 }) {
     const [showModal, setShowModal] = useState(false);
-    const token = localStorage.getItem('token')
-    const userEmailFirst = localStorage.getItem('userEmailFirst')
+    // const token = localStorage.getItem('token')
+    // const userEmailFirst = localStorage.getItem('userEmailFirst')
+    const [token, setToken] = useState<string>('')
+    const [userEmailFirst, setUserEmailFirst] = useState<string>('')
+
     const router = useRouter()
     useEffect(() => {
+        console.log(1)
         const urlParams = new URLSearchParams(window.location.search)
         const token = urlParams.get('token')
         const refreshToken = urlParams.get('refreshToken')
         const userEmailFirst = urlParams.get('userEmailFirst')
         if (typeof token === "string" && typeof refreshToken==="string" && typeof userEmailFirst==="string") {
+            console.log(1)
             localStorage.setItem('token', token)
             localStorage.setItem('refreshToken', refreshToken)
             localStorage.setItem('userEmailFirst', userEmailFirst)
             window.location.replace('/')
         }
+        console.log(localStorage.hasOwnProperty("token"))
+        console.log(localStorage.hasOwnProperty('userEmailFirst'))
+        if (localStorage.hasOwnProperty("token") && localStorage.hasOwnProperty('userEmailFirst')) {
+            console.log('inside')
+            setToken(localStorage.getItem('token'))
+            setUserEmailFirst(localStorage.getItem('userEmailFirst'))
+        }
+
+
     }, []);
     function goToWrite () {
         if(!token){
