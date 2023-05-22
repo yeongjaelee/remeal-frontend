@@ -1,12 +1,10 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import ReactDOM from "react-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faComment, faEnvelope} from "@fortawesome/free-solid-svg-icons";
-import { gql } from "@apollo/client";
-import client from "../../../apollo-client";
-import UserService from "../../data/users";
+import {gql} from "@apollo/client";
 import auth_client from "../../../auth-client";
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios from 'axios';
 
 
 const CHECK_USER = gql`
@@ -17,6 +15,17 @@ const CHECK_USER = gql`
         }
     }
 `;
+const api = axios.create({
+    headers: {
+        "Content-Type": `application/json;charset=UTF-8`,
+        "Accept": "application/json",
+
+        // // 추가
+        // "Access-Control-Allow-Origin": '*',
+        // 'Access-Control-Allow-Credentials': true,
+
+    },
+});
 
 
 const LoginModal = ({ show, onClose, title, children }) => {
@@ -30,7 +39,23 @@ const LoginModal = ({ show, onClose, title, children }) => {
         await auth_client.mutate({mutation: CHECK_USER, variables:{'email':email}})
     }
     const kakaoLogin = async () => {
-        await axios.post("http://127.0.0.1:8000/kakao/")
+        try{
+            const response = await axios.get("http://127.0.0.1:8000/kakao")
+            console.log(response)
+            // console.log(response.status)
+            // if (response.status === 302) {
+            //     // Handle the redirect manually
+            //     const redirectUrl = response.request.responseURL;
+            //     window.location.href = redirectUrl;
+            // } else {
+            //     console.log(response.data);  // Handle other responses as needed
+            // }
+        } catch (error){
+            console.log(1)
+            console.error(error);
+            console.log(2)
+        }
+
     }
     useEffect(() => {
         setIsBrowser(true);
