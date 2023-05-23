@@ -48,16 +48,6 @@ const LoginModal = ({ show, onClose, title, children }) => {
     }
     const kakaoLogin = async () => {
         try{
-            // const response = await axios.get("http://127.0.0.1:8000/kakao")
-            // console.log(response)
-            // console.log(response.status)
-            // if (response.status === 302) {
-            //     // Handle the redirect manually
-            //     const redirectUrl = response.request.responseURL;
-            //     window.location.href = redirectUrl;
-            // } else {
-            //     console.log(response.data);  // Handle other responses as needed
-            // }
             const {data} = await auth_client.mutate({mutation:KAKAO_LOGIN})
             if (data.kakaoLogin.success){
                 window.location.href = data.kakaoLogin.url
