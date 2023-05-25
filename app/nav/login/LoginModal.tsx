@@ -49,6 +49,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
     const kakaoLogin = async () => {
         try{
             const {data} = await auth_client.mutate({mutation:KAKAO_LOGIN})
+            console.log(data.kakaoLogin.url)
             if (data.kakaoLogin.success){
                 window.location.href = data.kakaoLogin.url
             }
