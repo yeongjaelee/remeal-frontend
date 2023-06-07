@@ -7,7 +7,7 @@ import client from "../../../apollo-client";
 import PostService from "../../data/post";
 import ImageResize from '@looop/quill-image-resize-module-react';
 import './style.scss';
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import Link from "next/link";
 
 
@@ -25,7 +25,8 @@ const formats = [
     'list',
     'indent',
     'align',
-    'color'
+    'color',
+    'width'
 ];
 const Font = Quill.import("formats/font");
 const Size = Quill.import("attributors/style/size");
@@ -43,7 +44,9 @@ Quill.register(Size, true);
 Quill.register('modules/imageResize', ImageResize)
 
 
-export default function PostCreate() {
+export default function PostCreate({params}) {
+    const searchParams = useSearchParams();
+    const postId = searchParams.get('id')
     const router = useRouter()
     const [title, setTitle] = useState<string>("");
     const [value, setValue] = useState<string>("");
@@ -157,6 +160,13 @@ export default function PostCreate() {
         }
         return urls;
     }
+    const handleNavigate = () => {
+        router.replace('/');
+        // window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 500);
+    };
     async function handleChange(e) {
         e.preventDefault();
         const images = extractImageUrls(value)
@@ -166,14 +176,28 @@ export default function PostCreate() {
             alert('최소 하나의 이미지를 첨부해주세요.')
         }
         else{
-            const {data} = await client.mutate({
-                mutation: PostService.CreatePost,
-                variables: {'token':token, 'title': title, 'content': value, 'images':images, 'tagsName':tags}
-            })
-            console.log(data)
-            if (data.createPost.success) {
-                router.push('/', undefined, {prefetch:false})
+            if(postId){
+                console.log(value)
+                const {data} = await client.mutate({
+                    mutation: PostService.UpdatePost,
+                    variables: {'postId':Number(postId), 'title': title, 'content': value, 'images':images, 'tagsName':tags}
+                })
+                console.log(data)
+                if (data.updatePost.success) {
+                    handleNavigate()
+                }
             }
+            else{
+                const {data} = await client.mutate({
+                    mutation: PostService.CreatePost,
+                    variables: {'token':token, 'title': title, 'content': value, 'images':images, 'tagsName':tags}
+                })
+                console.log(data)
+                if (data.createPost.success) {
+                    handleNavigate()
+                }
+            }
+
         }
 
     }
@@ -204,12 +228,22 @@ export default function PostCreate() {
     function removeTag(index){
         setTags(tags.filter((el, i) => i !== index))
     }
+    async function getPost() {
+        const {data} = await client.query({query: PostService.getPost, variables: {'id': Number(postId)}})
+        setTitle(data.post.title)
+        setValue(data.post.content)
+        setTags(prevTags => [...prevTags, ...data.post.tagsOnPost.map(item => item.name)]);
+    }
     useEffect(()=>{
+        if(postId){
+            getPost()
+        }
         setTimeout(()=>{
             if (quillRef.current instanceof ReactQuill) {
                 quillRef.current.focus()
             }
         },0)
+
     },[])
 
     return (
@@ -217,7 +251,7 @@ export default function PostCreate() {
             <div className="h-3"></div>
             <div>
                 <div className="h-12 w-3xl bg-transparent border-2 border-transparent border-none border-r-0 border-t-0 border-b-0 border-l-0">
-                    <input type="text" placeholder="제목을 입력하세요" className="bg-transparent h-12 w-3xl border-2 border-transparent outline-0" onChange={(e)=>setTitle(e.target.value)}/>
+                    <input type="text" placeholder="제목을 입력하세요" className="bg-transparent h-12 w-3xl border-2 border-transparent outline-0" value={title} onChange={(e)=>setTitle(e.target.value)}/>
                 </div>
                 <div className="h-2"></div>
 
@@ -229,7 +263,7 @@ export default function PostCreate() {
                         onChange={setValue}
                         modules={modules}
                         formats={formats}
-                        className="h-2xl w-3xl "
+                        className="w-3xl"
                         onImageDelete={handleImageDelete}
                     />
                     {/*<div className="w-3xl border border-gray-300"></div>*/}
@@ -250,9 +284,7 @@ export default function PostCreate() {
                     </button>
                     <div className="w-4"></div>
                 </div>
-
             </div>
-
         </div>
     );
 

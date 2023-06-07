@@ -8,6 +8,13 @@ export default class PostService{
         }
     }
     `;
+    static UpdatePost = gql`
+    mutation UpdatePost($postId:Int, $title:String, $content:String, $images:[Upload], $tagsName:[String]){
+        updatePost(postId:$postId, title:$title, content:$content, images:$images, tagsName:$tagsName){
+            success
+        }
+    }
+    `
     static UploadImage = gql`
     mutation UploadImage($image:Upload){
         uploadImage(image:$image){
@@ -40,6 +47,7 @@ export default class PostService{
             isLikeUser(token: $token){
                 isLike
             }
+            isMine(token: $token)
         }
     }
     `;

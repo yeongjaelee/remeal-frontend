@@ -1,9 +1,11 @@
 import PostCreate from "./PostCreate";
 
-export default function page() {
+export default function page({params}:{params : {id: number}}) {
+    const {id} = params;
+    console.log(id)
     return(
         <div>
-            <PostCreate />
+            <PostCreate params={id} />
         </div>
     )
 }
