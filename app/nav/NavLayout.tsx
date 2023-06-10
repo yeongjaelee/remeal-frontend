@@ -48,9 +48,7 @@ export default function NavLayout({
         }
         else{
             router.push('../post/postCreate')
-
         }
-
     }
     return (
         <div className="h-12">

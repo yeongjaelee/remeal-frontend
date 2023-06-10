@@ -42,6 +42,7 @@ export default function Page() {
     const [isLike, setIsLike] = useState<boolean>(false)
     const [userImage, setUserImage] = useState<string>('')
     const [isUserImageDeleted, setIsUserImageDeleted] = useState<boolean>(false)
+    const [isMine, setIsMine] = useState<boolean>(false)
     async function callPost() {
         const token = localStorage.getItem('token')
         if (token){
@@ -60,7 +61,7 @@ export default function Page() {
             if(data.post.isLikeUser){
                 setIsLike(data.post.isLikeUser.isLike)
             }
-
+            setIsMine(data.post.isMine)
         }
         else{
             const {data} = await client.query({query: PostService.getPost, variables: {'id': id}})
@@ -132,41 +133,49 @@ export default function Page() {
 
     }
     return(
-        <div className="relative flex flex-col items-center justify-center overflow-y-scroll">
+        <div className="relative flex flex-col items-center justify-center ">
             <div className="mt-8 flex ">
                 <p className="text-3xl">{title}</p>
             </div>
             <div className="w-3xl">
-                <div className="flex flex-row mt-5 items-end">
-                    <div>
-                        <Link href={`../profile/[email]?email=${email}`} className="font-normal font-mono font-light">{email}</Link>
-                    </div>
-                    <div className="w-5"></div>
-                    <div>
-                        <p className="font-light text-xs text-gray-400">{year}</p>
-                    </div>
+                <div className="flex flex-row justify-between">
+                    <div className="flex flex-row items-end">
+                        <div>
+                            <Link href={`../profile/[email]?email=${email}`} className="font-normal font-mono font-light">{email}</Link>
+                        </div>
+                        <div className="w-5"></div>
+                        <div>
+                            <p className="font-light text-xs text-gray-400">{year}</p>
+                        </div>
 
-                    <div>
-                        <p className="font-light text-xs text-gray-400">.{month}</p>
+                        <div>
+                            <p className="font-light text-xs text-gray-400">.{month}</p>
+                        </div>
+                        <div>
+                            <p className="font-light text-xs text-gray-400">.{day}</p>
+                        </div>
+                        <div className="w-2"></div>
+                        <div>
+                            <p className="font-light text-xs text-gray-400">{hour}</p>
+                        </div>
+                        <div>
+                            <p className="font-light text-xs text-gray-400">:{minute}</p>
+                        </div>
                     </div>
                     <div>
-                        <p className="font-light text-xs text-gray-400">.{day}</p>
-                    </div>
-                    <div className="w-2"></div>
-                    <div>
-                        <p className="font-light text-xs text-gray-400">{hour}</p>
-                    </div>
-                    <div>
-                        <p className="font-light text-xs text-gray-400">:{minute}</p>
+                        {isMine?<Link href={`../post/postCreate?id=${id}`} className="font-NanumSquareNeoOTF-rg font-normal mr-1">
+                                    수정하기
+                                </Link>:""}
                     </div>
                 </div>
 
-                <div className="h-5"></div>
+                <div className="h-1"></div>
                 <div className="border border-gray-400"></div>
                 <div className="h-5"></div>
 
                 <div className="view ql-editor" dangerouslySetInnerHTML={{__html : content}}/>
                 <div className="h-5"></div>
+
                 <div className="flex flex-wrap w-96">
                     {tags.map((tag, index)=>{
                         return(

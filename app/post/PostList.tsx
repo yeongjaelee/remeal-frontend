@@ -1,5 +1,5 @@
 'use client'
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useLayoutEffect, useRef, useState} from "react";
 import PostService from "../data/post";
 import Link from "next/link";
 import { debounce } from 'lodash';
@@ -19,6 +19,7 @@ export default function PostList ({params}){
     const router = useRouter()
     const tagName = searchParams.get('tagName')
     const [postList, setPostList] = useState([])
+    const [pageLoaded, setPageLoaded] = useState(false);
     const containerRef = useRef(null);
     const [isFetching, setIsFetching] = useState<boolean>(false)
     const limit = useSelector((state:RootSate)=>state.tag.limit)
@@ -65,13 +66,14 @@ export default function PostList ({params}){
         fetchData();
     },[limit]);
 
-    useEffect(() => {
-        dispatch(initialLimit())
-        dispatch(initialOffset())
-        setPostList([])
-        // setSearchTag(tagName);
-        router.refresh()
-    }, [])
+    // useEffect(() => {
+    //     if (!pageLoaded) {
+    //         console.log(1111)
+    //         setPageLoaded(true);
+    //         const currentURL = window.location.href;
+    //         window.history.replaceState(null, '', currentURL);
+    //     }
+    // }, [dispatch, router, setPostList, pageLoaded]);
 
     useEffect(() => {
         const handleScroll = debounce(() => {

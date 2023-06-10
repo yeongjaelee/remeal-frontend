@@ -1,11 +1,11 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import ReactDOM from "react-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faComment, faEnvelope} from "@fortawesome/free-solid-svg-icons";
-import { gql } from "@apollo/client";
-import client from "../../../apollo-client";
-import UserService from "../../data/users";
+import {gql} from "@apollo/client";
 import auth_client from "../../../auth-client";
+import axios from 'axios';
+
 
 const CHECK_USER = gql`
     mutation CheckUser($email:String){
@@ -15,6 +15,26 @@ const CHECK_USER = gql`
         }
     }
 `;
+const KAKAO_LOGIN = gql`
+    mutation KakaoLogin{
+        kakaoLogin{
+            success
+            url
+        }
+    }
+`
+const api = axios.create({
+    headers: {
+        "Content-Type": `application/json;charset=UTF-8`,
+        "Accept": "application/json",
+
+        // // 추가
+        // "Access-Control-Allow-Origin": '*',
+        // 'Access-Control-Allow-Credentials': true,
+
+    },
+});
+
 
 const LoginModal = ({ show, onClose, title, children }) => {
     const [isBrowser, setIsBrowser] = useState(false);
@@ -25,6 +45,22 @@ const LoginModal = ({ show, onClose, title, children }) => {
 
     const check_user = async () => {
         await auth_client.mutate({mutation: CHECK_USER, variables:{'email':email}})
+    }
+    const kakaoLogin = async () => {
+        try{
+            const {data} = await auth_client.mutate({mutation:KAKAO_LOGIN})
+            console.log(data.kakaoLogin.url)
+            if (data.kakaoLogin.success){
+                window.location.href = data.kakaoLogin.url
+            }
+            console.log(data)
+
+        } catch (error){
+            console.log(1)
+            console.error(error);
+            console.log(2)
+        }
+
     }
     useEffect(() => {
         setIsBrowser(true);
@@ -54,6 +90,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
         check_user().then(r => console.log(r))
 
     };
+
     const modalContent = show ? (
         <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div className="fixed inset-0 bg-gray-100 bg-opacity-75 transition-opacity" onClick={handleCloseClick}></div>
@@ -81,7 +118,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
                                         <div className="flex flex-col items-center w-2xl">
                                             <div className="flex items-center justify-center w-full">
                                                 <div className="flex items-center justify-center bg-yellow-300 w-44 h-8 rounded">
-                                                    <button className="flex flex-row items-center">
+                                                    <button className="flex flex-row items-center" onClick={kakaoLogin}>
                                                         <div>
                                                             <FontAwesomeIcon icon={faComment} />
                                                         </div>

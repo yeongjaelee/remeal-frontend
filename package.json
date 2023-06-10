@@ -2,6 +2,7 @@
   "name": "nextjs",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://127.0.0.1:8000",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -21,6 +22,7 @@
     "@material-tailwind/react": "^1.4.2",
     "@reduxjs/toolkit": "^1.9.5",
     "@toast-ui/react-editor": "^3.2.3",
+    "@types/axios": "^0.14.0",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "@types/react-redux": "^7.1.25",
@@ -28,6 +30,7 @@
     "apis": "^0.1.2",
     "apollo-link-error": "^1.1.13",
     "apollo-upload-client": "^17.0.0",
+    "axios": "^1.4.0",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
     "file-reader": "^1.1.1",
