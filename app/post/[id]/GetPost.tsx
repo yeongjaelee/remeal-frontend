@@ -10,6 +10,8 @@ export default function GetPost(){
     const [content, setContent] = useState<string>('')
     const [datetime, setDatetime] = useState<string>()
     const router = useRouter()
+
+    // @ts-ignore
     const [id] = router.query
     async function callPost() {
         const {data} = await client.query({query: PostService.getPost, variables: {id: id}})

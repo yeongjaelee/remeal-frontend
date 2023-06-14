@@ -10,7 +10,7 @@ export default function Page({params}:{params : {tagName: string}}) {
     console.log(tagName)
     return (
         <div>
-            <PostList  />
+            <PostList  params=''/>
         </div>
     );
 }

@@ -6,11 +6,7 @@ import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import {faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 import {useRouter} from "next/navigation";
-export default function NavLayout({
-                                         children,
-                                     }: {
-    children: React.ReactNode,
-}) {
+export default function NavLayout() {
     const [showModal, setShowModal] = useState(false);
     // const token = localStorage.getItem('token')
     // const userEmailFirst = localStorage.getItem('userEmailFirst')
@@ -35,7 +31,9 @@ export default function NavLayout({
         console.log(localStorage.hasOwnProperty('userEmailFirst'))
         if (localStorage.hasOwnProperty("token") && localStorage.hasOwnProperty('userEmailFirst')) {
             console.log('inside')
+            // @ts-ignore
             setToken(localStorage.getItem('token'))
+            // @ts-ignore
             setUserEmailFirst(localStorage.getItem('userEmailFirst'))
         }
 
@@ -56,7 +54,7 @@ export default function NavLayout({
                 <div className="flex flex-row items-center">
                     <div>
                         <Link href="/" className="homepageButton">
-                            <img src={`http://localhost:3000/img/logo.png`} alt="" width="78" height="18"/>
+                            <img src={`13.209.129.230/img/logo.png`} alt="" width="78" height="18"/>
                         </Link>
                     </div>
                 </div>
@@ -75,7 +73,10 @@ export default function NavLayout({
                         <button onClick={() => setShowModal(true)} className="loginButton ml-4">
                             <FontAwesomeIcon icon={faArrowRightFromBracket} className="w-4 h-4" />
                         </button>
+                        // eslint-disable-next-line react/jsx-no-comment-textnodes
                     }
+
+
                     <LoginModal
                         onClose={() => setShowModal(false)}
                         show={showModal}
@@ -84,7 +85,6 @@ export default function NavLayout({
                     </LoginModal>
                 </div>
             </div>
-            {children}
         </div>
     );
 }

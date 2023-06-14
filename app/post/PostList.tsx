@@ -52,6 +52,7 @@ export default function PostList ({params}){
         let truncatedHtml = htmlWithoutImages;
         if (stringWithoutHtml.length > 150) {
             // If the length of the text content is greater than 100, truncate the HTML and add an ellipsis
+            // @ts-ignore
             const truncatedText = stringWithoutHtml.slice(0, 150) + ' ...';
             // truncatedHtml = htmlWithoutImages.replace(stringWithoutHtml, truncatedText + '...');
             stringWithoutHtml = truncatedText

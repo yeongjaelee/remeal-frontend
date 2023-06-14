@@ -31,7 +31,7 @@ export default function RootLayout({
                       {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
                       <div className="w-mainLayout h-12">
                           {/* eslint-disable-next-line react/no-children-prop */}
-                          <NavLayout  children={}/>
+                          <NavLayout />
                       </div>
 
                   </div>

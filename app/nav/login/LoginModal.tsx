@@ -35,12 +35,13 @@ const api = axios.create({
     },
 });
 
-
-const LoginModal = ({ show, onClose, title, children }) => {
+// @ts-ignore
+const LoginModal = ({ show, onClose, children }) => {
     const [isBrowser, setIsBrowser] = useState(false);
     const [firstEmailPage, setFirstEmailPage] = useState(false);
     const [index, setIndex] = useState(0);
     const [email, setEmail] = useState('');
+    // @ts-ignore
     const [error, setError] = useState<string>(null);
 
     const check_user = async () => {
@@ -65,7 +66,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
     useEffect(() => {
         setIsBrowser(true);
     }, []);
-
+    // @ts-ignore
     const handleCloseClick = (e) => {
         e.preventDefault();
         onClose();
@@ -73,17 +74,18 @@ const LoginModal = ({ show, onClose, title, children }) => {
         setIndex(0)
         setEmail('')
     };
-
+    // @ts-ignore
     function isValidEmail(email) {
         return /\S+@\S+\.\S+/.test(email);
     }
-
+    // @ts-ignore
     const handleEmail = (event) => {
         event.preventDefault()
         console.log(email)
         if (!isValidEmail(email)) {
             setError('이메일 형식을 바르게 입력하세요');
         } else {
+            // @ts-ignore
             setError(null);
             setIndex(2)
         }
@@ -113,7 +115,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
                                     {/*<FirstEmailPage/>*/}
                                     <div className="flex flex-col w-2xl h-xl items-center justify-between">
                                         <div className="flex justify-center">
-                                            <img src={`http://localhost:3000/img/logo.png`} alt="" width="78" height="18"/>
+                                            <img src={`13.209.129.230/img/logo.png`} alt="" width="78" height="18"/>
                                         </div>
                                         <div className="flex flex-col items-center w-2xl">
                                             <div className="flex items-center justify-center w-full">
@@ -162,7 +164,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
                                     {/*<SecondEmailPage/>*/}
                                     <div className="flex flex-col w-2xl h-xl items-center justify-between">
                                         <div className="flex justify-center">
-                                            <img src={`http://localhost:3000/img/logo.png`} alt="" width="78" height="18"/>
+                                            <img src={`13.209.129.230/img/logo.png`} alt="" width="78" height="18"/>
                                         </div>
                                             <div className="flex items-center justify-center w-2xl">
                                                 <div className="flex flex-col items-center justify-center w-56">
@@ -188,7 +190,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
                                     {/*<ThirdEmailPage/>*/}
                                     <div className="flex flex-col w-2xl h-xl items-center justify-between">
                                         <div className="flex justify-center">
-                                            <img src={`http://localhost:3000/img/logo.png`} alt="" width="78" height="18"/>
+                                            <img src={`13.209.129.230/img/logo.png`} alt="" width="78" height="18"/>
                                         </div>
                                         <div className="flex items-center justify-center w-2xl">
                                             <div className="flex flex-col items-center justify-center w-56">
@@ -233,6 +235,7 @@ const LoginModal = ({ show, onClose, title, children }) => {
     if (isBrowser) {
         return ReactDOM.createPortal(
             modalContent,
+            // @ts-ignore
             document.getElementById("modal")
         );
     } else {

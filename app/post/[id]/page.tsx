@@ -107,6 +107,7 @@ export default function Page() {
 
         },[]
     )
+    // @ts-ignore
     async function createComment(e) {
         e.preventDefault()
         setComment(comment)
@@ -179,8 +180,11 @@ export default function Page() {
                 <div className="flex flex-wrap w-96">
                     {tags.map((tag, index)=>{
                         return(
+                            // @ts-ignore
+                            // eslint-disable-next-line react/jsx-no-comment-textnodes
                             <div key={tag.id} >
                                 <Link
+                                    // @ts-ignore
                                     href={`../../post/tag?tagName=${tag.name}`}
                                     className="h-7 rounded-lg bg-gray-100 h-7 mr-2 mt-2 rounded-2xl bg-gray-100 opacity-75 flex items-center justify-center content-center">
                                     <p className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 ml-2 mr-2"># {tag.name}</p>

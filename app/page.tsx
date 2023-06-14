@@ -11,8 +11,9 @@ export default function Home() {
     const router = useRouter()
     useEffect(()=>{console.log(1);router.refresh()},[])
   return (
+      // eslint-disable-next-line react/jsx-no-comment-textnodes
     <div>
-        <PostList />
+        <PostList params='' />
     </div>
   );
 }
