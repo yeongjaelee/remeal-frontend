@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/link-context';
 import { onError } from '@apollo/link-error';
