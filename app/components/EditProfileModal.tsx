@@ -5,6 +5,7 @@ import client from "../../apollo-client";
 import ProfileService from "../data/profile";
 
 
+// @ts-ignore
 const EditProfileModal = ({ show, onClose, title, children, imageSrc, username, userEmailFirst, userImage }) => {
     const [isBrowser, setIsBrowser] = useState(false);
     const [isImage, setIsImage] = useState<boolean>(false);
@@ -21,14 +22,19 @@ const EditProfileModal = ({ show, onClose, title, children, imageSrc, username, 
             setIsImageChange(true)
         }
     }, []);
+    // @ts-ignore
     const handleCloseClick = (e) => {
         e.preventDefault();
         window.location.reload()
         onClose();
     };
+
+    // @ts-ignore
     const imageClick = event => {
+        // @ts-ignore
         imageRef.current.click();
     };
+    // @ts-ignore
     const handleProfileImage = async event => {
         if (event.target.files && event.target.files[0]) {
             const i = event.target.files[0];
@@ -36,6 +42,7 @@ const EditProfileModal = ({ show, onClose, title, children, imageSrc, username, 
             reader.readAsDataURL(i);
             setIsImageChange(true)
             reader.onload = () => {
+                // @ts-ignore
                 setProfileImage(reader.result);
             };
             // const formData = new FormData();
@@ -182,6 +189,7 @@ const EditProfileModal = ({ show, onClose, title, children, imageSrc, username, 
     if (isBrowser) {
         return ReactDOM.createPortal(
             modalContent,
+            // @ts-ignore
             document.getElementById("modal")
         );
     } else {

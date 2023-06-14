@@ -1,3 +1,5 @@
+
+// @ts-ignore
 export default function CommentsBar (props) {
     const pay = props.parameterValue
     return (

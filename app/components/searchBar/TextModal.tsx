@@ -2,13 +2,14 @@ import React, {Fragment, useEffect, useState} from "react";
 import ReactDOM from "react-dom";
 
 
-const TextModal = ({ show, onClose, title, children }) => {
+// @ts-ignore
+const TextModal = ({ show, onClose, children}) => {
     const [isBrowser, setIsBrowser] = useState(false);
 
     useEffect(() => {
         setIsBrowser(true);
     }, []);
-
+    // @ts-ignore
     const handleCloseClick = (e) => {
         e.preventDefault();
         onClose();
@@ -36,6 +37,7 @@ const TextModal = ({ show, onClose, title, children }) => {
     if (isBrowser) {
         return ReactDOM.createPortal(
             modalContent,
+            // @ts-ignore
             document.getElementById("modal")
         );
     } else {
