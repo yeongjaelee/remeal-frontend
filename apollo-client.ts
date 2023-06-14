@@ -8,7 +8,7 @@ import UserService from "./app/data/users";
 import auth_client from "./auth-client";
 import {createUploadLink} from "apollo-upload-client";
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const httpLink = new createUploadLink({
     uri: "http://127.0.0.1:8000/graphql",
 
