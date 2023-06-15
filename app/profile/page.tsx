@@ -31,8 +31,8 @@ export default function Page() {
     const contentTextarea = useRef(null);
     const bottomArea = useRef(null);
     const imageInput = useRef(null);
-    // @ts-ignore
-    const userEmailFirst = localStorage.getItem('userEmailFirst')
+    // const userEmailFirst = localStorage.getItem('userEmailFirst')
+    const [userEmailFirst, setUserEmailFirst] = useState<string>('')
     async function userData() {
         const token = localStorage.getItem('token')
         const {data} = await client.query({query: UserService.GetUser, variables:{'token':token}})
@@ -143,6 +143,12 @@ export default function Page() {
     }
     useEffect(()=>{
         userData()
+        if (typeof localStorage !== "undefined") {
+            const userEmailFirst = localStorage.getItem('userEmailFirst');
+            // @ts-ignore
+            setUserEmailFirst(userEmailFirst);
+            // Rest of the code...
+        }
     },[])
 
     return(
@@ -238,7 +244,7 @@ export default function Page() {
                         </div>
                         :
                         <div className="relative rounded-full w-20 h-20 bg-emerald-700 flex ml-3 items-center justify-center ">
-                            <p className="text-gray-100 flex items-center justify-center mb-3.5 text-10xl">{userEmailFirst}</p>
+                            {userEmailFirst && <p className="text-gray-100 flex items-center justify-center mb-3.5 text-10xl">{userEmailFirst}</p>}
                         </div>
                     }
                     <div className="h-4"></div>

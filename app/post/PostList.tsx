@@ -1,3 +1,4 @@
+
 'use client'
 import React, {useEffect, useLayoutEffect, useRef, useState} from "react";
 import PostService from "../data/post";
@@ -33,15 +34,29 @@ export default function PostList (params:any){
     const email = params
     const fetchData = async () => {
         console.log(tagName)
-        const {data} = await client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset, 'email':email}})
-        console.log(data.postList)
-        if (data.postList.length>0){
-            // @ts-ignore
-            setPostList([...postList, ...data.postList]);
-            console.log('data fetching')
+        if (email.params==='all'){
+            const {data} = await client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset, 'email':null}})
+            console.log(data.postList)
+            if (data.postList.length>0){
+                // @ts-ignore
+                setPostList([...postList, ...data.postList]);
+                console.log('data fetching')
+            }
+            else{
+                setCheckSame(true)
+            }
         }
-        else{
-            setCheckSame(true)
+        else {
+            const {data} = await client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset, 'email':email.params}})
+            console.log(data.postList)
+            if (data.postList.length>0){
+                // @ts-ignore
+                setPostList([...postList, ...data.postList]);
+                console.log('data fetching')
+            }
+            else{
+                setCheckSame(true)
+            }
         }
     };
     // @ts-ignore

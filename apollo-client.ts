@@ -19,20 +19,23 @@ const authLink = setContext( async (_, {headers}) => {
     const token = localStorage.getItem('token');
     const refreshToken = localStorage.getItem('refreshToken')
     try {
-        const {data} = await auth_client.mutate({mutation:UserService.CheckToken, variables:{'token':token, 'refreshToken': refreshToken}})
-        console.log(data)
-        if (data.checkToken.success){
-            if (typeof data.checkToken.token ==='string' && typeof data.checkToken.refreshToken==='string'){
-                localStorage.setItem('token', data.checkToken.token)
-                localStorage.setItem('refreshToken', data.checkToken.refreshToken)
-            }
-            else if (typeof data.checkToken.token === 'string'){
-                localStorage.setItem('token', data.checkToken.token)
-            }
-            else if (typeof data.checkToken.refreshToken === 'string'){
-                localStorage.setItem('refreshToken', data.checkToken.refreshToken)
+        if (token && refreshToken){
+            const {data} = await auth_client.mutate({mutation:UserService.CheckToken, variables:{'token':token, 'refreshToken': refreshToken}})
+            console.log(data)
+            if (data.checkToken.success){
+                if (typeof data.checkToken.token ==='string' && typeof data.checkToken.refreshToken==='string'){
+                    localStorage.setItem('token', data.checkToken.token)
+                    localStorage.setItem('refreshToken', data.checkToken.refreshToken)
+                }
+                else if (typeof data.checkToken.token === 'string'){
+                    localStorage.setItem('token', data.checkToken.token)
+                }
+                else if (typeof data.checkToken.refreshToken === 'string'){
+                    localStorage.setItem('refreshToken', data.checkToken.refreshToken)
+                }
             }
         }
+
     } catch (err) {
         // alert('재로그인 부탁드립니다')
     }

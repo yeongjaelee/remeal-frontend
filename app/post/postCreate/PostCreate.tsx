@@ -45,7 +45,7 @@ Quill.register(Size, true);
 Quill.register('modules/imageResize', ImageResize)
 
 // @ts-ignore
-export default function PostCreate({params}) {
+export default function PostCreate(params:any) {
     const searchParams = useSearchParams();
     const postId = searchParams.get('id')
     const router = useRouter()
@@ -63,6 +63,7 @@ export default function PostCreate({params}) {
             const reader = new FileReader();
             // @ts-ignore
             reader.readAsDataURL(file); // Read the selected image file as data URL
+
             reader.onload = async () => {
                 const imageDataUrl = reader.result as string;
                 try {
@@ -247,15 +248,20 @@ export default function PostCreate({params}) {
         setTags(prevTags => [...prevTags, ...data.post.tagsOnPost.map(item => item.name)]);
     }
     useEffect(()=>{
-        if(postId){
-            getPost()
-        }
-        setTimeout(()=>{
-            if (quillRef.current instanceof ReactQuill) {
-                quillRef.current.focus()
+        if (typeof document !== "undefined") {
+            // Code that uses the document object
+            if(postId){
+                getPost()
             }
-        },0)
-
+            setTimeout(()=>{
+                if (quillRef.current instanceof ReactQuill) {
+                    quillRef.current.focus()
+                }
+            },0)
+        }
+        else{
+            alert('undefined')
+        }
 
     },[])
 

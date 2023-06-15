@@ -13,7 +13,8 @@ export default function Home() {
   return (
       // eslint-disable-next-line react/jsx-no-comment-textnodes
     <div>
-        <PostList params='' />
+
+        <PostList params='all' />
     </div>
   );
 }
