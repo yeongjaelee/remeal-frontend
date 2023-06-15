@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import TextModal from "./searchBar/TextModal";
 
 // @ts-ignore
-const ShareModal = ({ show, onClose, title, children }) => {
+const ShareModal = ({ show, onClose, children }) => {
     const modalRef = useRef(null);
     const [isBrowser, setIsBrowser] = useState(false);
     const [showModal, setShowModal] = useState(false);

@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client'
 import React, {useEffect, useRef, useState} from "react";
 import client from "../../../apollo-client";
@@ -27,7 +28,7 @@ export default function Page() {
     const searchParams = useSearchParams();
     const id = Number(searchParams.get('id'));
     const [comment, setComment] = useState<string>('')
-    const [comments, setComments] = useState(null)
+    const [comments, setComments] = useState<any>(null)
     const [email, setEmail] = useState<string>('')
     const [year, setYear] = useState<string>('')
     const [month, setMonth] = useState<string>('')
@@ -134,6 +135,7 @@ export default function Page() {
 
     }
     return(
+        /* eslint-disable */
         <div className="relative flex flex-col items-center justify-center ">
             <div className="mt-8 flex ">
                 <p className="text-3xl">{title}</p>
@@ -178,11 +180,12 @@ export default function Page() {
                 <div className="h-5"></div>
 
                 <div className="flex flex-wrap w-96">
-                    {tags.map((tag, index)=>{
+                    {tags.map((tag:any, index)=>{
                         return(
+                            /* eslint-disable */
                             // @ts-ignore
-                            // eslint-disable-next-line react/jsx-no-comment-textnodes
                             <div key={tag.id} >
+
                                 <Link
                                     // @ts-ignore
                                     href={`../../post/tag?tagName=${tag.name}`}
@@ -190,6 +193,7 @@ export default function Page() {
                                     <p className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 ml-2 mr-2"># {tag.name}</p>
                                 </Link>
                             </div>
+                            /* eslint-enable */
                         )
                     })}
                 </div>
@@ -231,7 +235,7 @@ export default function Page() {
                         <div className="w-3xl">
                             <div className="h-5"></div>
                             <div className="flex flex-col">
-                                {comments.map((item, index)=>(
+                                {comments.map((item:any, index:number)=>(
                                         <div key={item.id} className="w-80 ml-8">
                                             <div className="flex flex-row">
                                                 {item.userImage && !item.userImage.isDeleted?
@@ -271,5 +275,6 @@ export default function Page() {
                 Hello from the modal!
             </LoginModal>
         </div>
+
     )
 }

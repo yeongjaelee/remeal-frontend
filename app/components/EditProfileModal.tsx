@@ -6,7 +6,7 @@ import ProfileService from "../data/profile";
 
 
 // @ts-ignore
-const EditProfileModal = ({ show, onClose, title, children, imageSrc, username, userEmailFirst, userImage }) => {
+const EditProfileModal = ({ show, onClose, children, username, userEmailFirst, userImage }) => {
     const [isBrowser, setIsBrowser] = useState(false);
     const [isImage, setIsImage] = useState<boolean>(false);
     const imageRef = useRef(null)

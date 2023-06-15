@@ -41,11 +41,14 @@ export default function Page() {
                     setImageSrc("http://127.0.0.1:8000/media/" +data.getUserByEmail.userContent.image)
                 }
                 else{
+                    // @ts-ignore
                     setImageSrc(null)
                 }
+                // @ts-ignore
                 setIsEdit(true)
             }
             else{
+                // @ts-ignore
                 setIsUserOldContent(false)
             }
         }

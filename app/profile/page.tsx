@@ -31,6 +31,7 @@ export default function Page() {
     const contentTextarea = useRef(null);
     const bottomArea = useRef(null);
     const imageInput = useRef(null);
+    // @ts-ignore
     const userEmailFirst = localStorage.getItem('userEmailFirst')
     async function userData() {
         const token = localStorage.getItem('token')
@@ -48,11 +49,14 @@ export default function Page() {
                     setImageSrc("http://127.0.0.1:8000/media/" +data.user.userContent.image)
                 }
                 else{
+                    // @ts-ignore
                     setImageSrc(null)
                 }
+                // @ts-ignore
                 setIsEdit(true)
             }
             else{
+                // @ts-ignore
                 setIsUserOldContent(false)
             }
         }
@@ -65,13 +69,17 @@ export default function Page() {
     function goToEditProfile() {
         setIsUserContent(true)
         setTimeout(() => {
+            // @ts-ignore
             contentTextarea.current.focus();
         }, 0);
     }
     function handleTextareaChange() {
+        // @ts-ignore
         contentTextarea.current.style.height = 'auto';
+        // @ts-ignore
         contentTextarea.current.style.height = `${contentTextarea.current.scrollHeight}px`;
     }
+    // @ts-ignore
     const handleUpload = event => {
         if (event.target.files && event.target.files[0]) {
             const i = event.target.files[0];
@@ -81,6 +89,7 @@ export default function Page() {
             const reader = new FileReader();
             reader.readAsDataURL(i);
             reader.onload = () => {
+                // @ts-ignore
                 setImageSrc(reader.result);
             };
             // return new Promise((resolve) => {
@@ -91,7 +100,9 @@ export default function Page() {
             // });
         }
     };
+    // @ts-ignore
     const handleClick = event => {
+        // @ts-ignore
         imageInput.current.click();
     };
     async function saveUserContent () {
@@ -105,6 +116,7 @@ export default function Page() {
             isImageSrc = true
         }
         const formData = new FormData();
+        // @ts-ignore
         formData.append("image", image);
         const token = localStorage.getItem('token')
         const {data} = await client.mutate({mutation: ProfileService.CreateUserContent,

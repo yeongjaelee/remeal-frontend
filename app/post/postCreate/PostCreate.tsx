@@ -5,6 +5,7 @@ import "react-quill/dist/quill.snow.css";
 import parse from 'html-react-parser';
 import client from "../../../apollo-client";
 import PostService from "../../data/post";
+// @ts-ignore
 import ImageResize from '@looop/quill-image-resize-module-react';
 import './style.scss';
 import {useRouter, useSearchParams} from "next/navigation";
@@ -43,7 +44,7 @@ Quill.register(Size, true);
 // Quill.register(Font, true);
 Quill.register('modules/imageResize', ImageResize)
 
-
+// @ts-ignore
 export default function PostCreate({params}) {
     const searchParams = useSearchParams();
     const postId = searchParams.get('id')
@@ -60,6 +61,7 @@ export default function PostCreate({params}) {
         input.addEventListener("change", async () => {
             const file = input.files?.[0];
             const reader = new FileReader();
+            // @ts-ignore
             reader.readAsDataURL(file); // Read the selected image file as data URL
             reader.onload = async () => {
                 const imageDataUrl = reader.result as string;
@@ -73,6 +75,7 @@ export default function PostCreate({params}) {
                     if (quillRef.current instanceof ReactQuill) {
                         const editor = quillRef.current.getEditor();
                         const range = editor.getSelection();
+                        // @ts-ignore
                         if ("index" in range) {
                             editor.insertEmbed(range.index, "image", imageUrl);
                         }
@@ -151,6 +154,7 @@ export default function PostCreate({params}) {
             imageResize: { modules: ['Resize'] },
     };
     }, []);
+    // @ts-ignore
     function extractImageUrls(htmlString) {
         const regex = /<img.*?src="(.*?)"/g;
         const urls = [];
@@ -167,10 +171,12 @@ export default function PostCreate({params}) {
             window.location.reload();
         }, 500);
     };
+    // @ts-ignore
     async function handleChange(e) {
         e.preventDefault();
         const images = extractImageUrls(value)
         console.log(images)
+
         const token = localStorage.getItem('token')
         if(images.length===0){
             alert('최소 하나의 이미지를 첨부해주세요.')
@@ -201,11 +207,13 @@ export default function PostCreate({params}) {
         }
 
     }
+    // @ts-ignore
     const handleImageDelete = (image) => {
         console.log('delete image')
         if (quillRef.current instanceof ReactQuill) {
             const editor = quillRef.current.getEditor();
             const selection = editor.getSelection();
+            // @ts-ignore
             if ("index" in selection) {
                 editor.formatText(selection.index, selection.length, 'clean', {image: image});
                 const content = quillRef.current.getEditor().root.innerHTML;
@@ -213,6 +221,7 @@ export default function PostCreate({params}) {
             }
         }
     };
+    // @ts-ignore
     function handleKeyDown(e){
         // If user did not press enter key, return
         if(e.key !== 'Enter') return
@@ -221,10 +230,12 @@ export default function PostCreate({params}) {
         // If the value is empty, return
         if(!value.trim()) return
         // Add the value to the tags array
+        // @ts-ignore
         setTags([...tags, value])
         // Clear the input
         e.target.value = ''
     }
+    // @ts-ignore
     function removeTag(index){
         setTags(tags.filter((el, i) => i !== index))
     }
@@ -232,6 +243,7 @@ export default function PostCreate({params}) {
         const {data} = await client.query({query: PostService.getPost, variables: {'id': Number(postId)}})
         setTitle(data.post.title)
         setValue(data.post.content)
+        // @ts-ignore
         setTags(prevTags => [...prevTags, ...data.post.tagsOnPost.map(item => item.name)]);
     }
     useEffect(()=>{
@@ -243,6 +255,7 @@ export default function PostCreate({params}) {
                 quillRef.current.focus()
             }
         },0)
+
 
     },[])
 
@@ -257,6 +270,7 @@ export default function PostCreate({params}) {
 
                 <div className="h-2xl overflow-y-scroll ">
                     <ReactQuill
+                        // @ts-ignore
                         ref={quillRef}
                         theme="snow"
                         value={value}

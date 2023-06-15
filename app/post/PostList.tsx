@@ -2,6 +2,7 @@
 import React, {useEffect, useLayoutEffect, useRef, useState} from "react";
 import PostService from "../data/post";
 import Link from "next/link";
+// @ts-ignore
 import { debounce } from 'lodash';
 import {useDispatch, useSelector} from "react-redux";
 import {RootSate} from "../GlobalRedux/store";
@@ -13,8 +14,8 @@ import LoginModal from "../nav/login/LoginModal";
 import ShareModal from "../components/ShareModal";
 import client from "../../apollo-client";
 
-
-export default function PostList ({params}){
+// @ts-ignore
+export default function PostList (params:any){
     const searchParams = useSearchParams();
     const router = useRouter()
     const tagName = searchParams.get('tagName')
@@ -35,6 +36,7 @@ export default function PostList ({params}){
         const {data} = await client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset, 'email':email}})
         console.log(data.postList)
         if (data.postList.length>0){
+            // @ts-ignore
             setPostList([...postList, ...data.postList]);
             console.log('data fetching')
         }
@@ -42,6 +44,7 @@ export default function PostList ({params}){
             setCheckSame(true)
         }
     };
+    // @ts-ignore
     function removeImages(str) {
         if (!str) {
             return '';
@@ -78,6 +81,7 @@ export default function PostList ({params}){
 
     useEffect(() => {
         const handleScroll = debounce(() => {
+            // @ts-ignore
             const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
             if (scrollTop + clientHeight === scrollHeight && !isFetching && !checkSame) {
                 setIsFetching(true);
@@ -90,7 +94,9 @@ export default function PostList ({params}){
                     // setLimit(limit + 4);
                     dispatch(incrementLimit())
                     dispatch(incrementOffset())
+                    // @ts-ignore
                     const newScrollHeight = containerRef.current.scrollHeight;
+                    // @ts-ignore
                     containerRef.current.scrollTo({
                         top: newScrollHeight - 20,
                         behavior: "smooth",
@@ -102,11 +108,13 @@ export default function PostList ({params}){
 
         const container = containerRef.current;
         if (container) {
+            // @ts-ignore
             container.addEventListener("scroll", handleScroll);
         }
         return () => {
             const container = containerRef.current;
             if (container) {
+                // @ts-ignore
                 container.removeEventListener("scroll", handleScroll);
             }
         };
@@ -130,16 +138,20 @@ export default function PostList ({params}){
                         </div>:''}
                     </div>
                     <div className="mt-12 flex flex-col items-center justify-center">
-                        {postList.map((item, index) => {
+                        {postList.map((item:any, index) => {
+                            // @ts-ignore
                             const contentLettersOnly = removeImages(item.content);
+                            // @ts-ignore
                             const tags = item.tagsOnPost;
                             return (
+                                // @ts-ignore
                                 <div key={item.id} className="bg-white flex flex-col w-2xl mb-16">
                                     <div className="h-4"></div>
                                     <div className="flex flex-row items-end content-center place-items-center h-10">
                                         <div className="pl-4 rounded-full bg-green-400 w-5 h-5"></div>
                                         <div className="w-2"></div>
                                         <div>
+
                                             <Link href={`../profile/[email]?email=${item.user.email}`} className="font-normal font-mono underline underline-offset-3">{item.user.email}</Link>
                                         </div>
                                         <div className="w-1"></div>
@@ -187,7 +199,7 @@ export default function PostList ({params}){
                                         <div className="w-3"></div>
                                         <div className="flex flex-row justify-between">
                                             <div className="flex flex-wrap w-96">
-                                                {tags.map((tag, index)=>{
+                                                {tags.map((tag:any, index:number)=>{
                                                     return(
                                                         <div key={tag.id} className="mb-2" >
                                                             <div className="mr-1 h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center">
@@ -221,6 +233,7 @@ export default function PostList ({params}){
                     </div>
                     <div>
                     </div>
+
                     <ShareModal
                         onClose={() => setShowModal(false)}
                         show={showModal}
