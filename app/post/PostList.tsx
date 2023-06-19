@@ -181,7 +181,7 @@ export default function PostList ({params}){
                                             </Link>
                                         </div>
                                     </div>
-                                    <div className="h-4"></div>
+                                    <div className="h-10"></div>
                                     <div className="flex">
                                         <div className="w-3"></div>
                                         <div className="flex flex-row justify-between">
