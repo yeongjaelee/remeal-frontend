@@ -8,8 +8,6 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 're-meal.com',
-        port:'',
-        pathname:'/**'
       },
     ],
   },
