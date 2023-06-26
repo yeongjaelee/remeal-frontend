@@ -13,6 +13,7 @@ import client from "../../apollo-client";
 import Link from "next/link";
 import ShareModal from "../components/ShareModal";
 import EditProfileModal from "../components/EditProfileModal";
+import Image from 'next/image';
 
 export default function Page() {
     const [showModal, setShowModal] = useState<boolean>(false)
@@ -43,10 +44,11 @@ export default function Page() {
                 setUserOldContent(data.user.userContent.content)
                 setLine(data.user.userContent.content.split("\n").length)
                 setUserOldImage(data.user.userContent.image)
-                const imageUrl = "http://127.0.0.1:8000/media/" + data.user.userContent.image
+                const imageUrl = process.env.END_POINT_MEDIA + data.user.userContent.image
                 setUserOldImage(imageUrl)
                 if (data.user.userContent.image){
-                    setImageSrc("http://127.0.0.1:8000/media/" +data.user.userContent.image)
+                    // setImageSrc("http://127.0.0.1:8000/media/" +data.user.userContent.image)
+                    setImageSrc(process.env.END_POINT_MEDIA +data.user.userContent.image)
                 }
                 else{
                     // @ts-ignore
@@ -61,7 +63,7 @@ export default function Page() {
             }
         }
         if (data.user.userImage){
-            setUserImage("http://127.0.0.1:8000/media/" +data.user.userImage.image)
+            setUserImage(process.env.END_POINT_MEDIA +data.user.userImage.image)
             setIsUserImageDelete(data.user.userImage.isDeleted)
         }
         setUsername(data.user.username)
@@ -240,7 +242,7 @@ export default function Page() {
                     <div className="h-16"></div>
                     {userImage && !isUserImageDeleted?
                         <div className="relative rounded-full w-20 h-20 bg-emerald-700 flex ml-3 items-center justify-center ">
-                            <img src={userImage} className="rounded-full w-full h-full object-cover"/>
+                            <Image src={userImage} className="rounded-full w-full h-full object-cover"/>
                         </div>
                         :
                         <div className="relative rounded-full w-20 h-20 bg-emerald-700 flex ml-3 items-center justify-center ">

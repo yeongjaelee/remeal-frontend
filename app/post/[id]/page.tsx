@@ -18,6 +18,7 @@ TimeAgo.addDefaultLocale(en)
 TimeAgo.addLocale(ru)
 
 import ReactTimeAgo from "react-time-ago";
+import Image from 'next/image';
 
 export default function Page() {
     const router = useRouter();
@@ -241,7 +242,7 @@ export default function Page() {
                                                 {item.userImage && !item.userImage.isDeleted?
                                                     //<Link href={`../profile/[email]?email=${item.user.email}`} className="font-normal font-mono underline underline-offset-3">{item.user.email}</Link>
                                                     <Link href={`../profile/[email]?email=${item.user.email}`} className="relative rounded-full w-8 h-8 flex items-center justify-center mt-1 mr-3 ">
-                                                        <img src={"/media/"+item.userImage.image} className="rounded-full w-full h-full object-cover"/>
+                                                        <Image src={"/media/"+item.userImage.image} className="rounded-full w-full h-full object-cover"/>
                                                     </Link>:
                                                     <Link href={`../profile/[email]?email=${item.user.email}`} className="relative rounded-full w-8 h-8 bg-emerald-700 flex items-center justify-center mt-1 mr-3 ">
                                                         <p className="text-gray-100 flex items-center justify-center mb-0.5 text-base">{item.user.email[0]}</p>

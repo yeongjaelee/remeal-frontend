@@ -127,6 +127,7 @@ export default function PostList (params:any){
             container.addEventListener("scroll", handleScroll);
         }
         return () => {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
             const container = containerRef.current;
             if (container) {
                 // @ts-ignore
@@ -137,7 +138,7 @@ export default function PostList (params:any){
     //
     function handleCopyClipBoard(postId: number) {
         //http://localhost:3000/post/[id]?id=12
-        const url = `http://localhost:3000/post/[id]?id=${postId}`;
+        const url = `${process.env.END_POINT_MEDIA}/post/[id]?id=${postId}`;
         setCopyUrl(url)
         setShowModal(true)
     }
