@@ -8,6 +8,7 @@ import {faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 import {useRouter} from "next/navigation";
 import Image from 'next/image';
 
+
 export default function NavLayout() {
     const [showModal, setShowModal] = useState(false);
     // const token = localStorage.getItem('token')
@@ -56,7 +57,7 @@ export default function NavLayout() {
                 <div className="flex flex-row items-center">
                     <div>
                         <Link href="/" className="homepageButton">
-                            <Image src={`/img/logo.png`} alt="" width="78" height="18"/>
+                            <Image src={`/logo.png`} alt="" width={78} height={18} priority/>
                         </Link>
                     </div>
                 </div>

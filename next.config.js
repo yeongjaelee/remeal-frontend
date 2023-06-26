@@ -4,7 +4,14 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['re-meal.com'],
+    remotePatterns : [
+      {
+        protocol: 'https',
+        hostname: 're-meal.com',
+        port:'',
+        pathname:'/**'
+      },
+    ],
   },
 }
 
