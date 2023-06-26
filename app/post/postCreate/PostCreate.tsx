@@ -1,6 +1,6 @@
 'use client'
 import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
-import { Quill } from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import parse from 'html-react-parser';
 import client from "../../../apollo-client";
@@ -11,9 +11,9 @@ import './style.scss';
 import {useRouter, useSearchParams} from "next/navigation";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), {
-    ssr: false
-});
+// const ReactQuill = dynamic(() => import("react-quill"), {
+//     ssr: false
+// });
 
 
 
