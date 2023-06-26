@@ -54,7 +54,7 @@ export default function NavLayout() {
                 <div className="flex flex-row items-center">
                     <div>
                         <Link href="/" className="homepageButton">
-                            <img src={`13.209.129.230/img/logo.png`} alt="" width="78" height="18"/>
+                            <img src={`https://www.re-meal.com/img/logo.png`} alt="" width="78" height="18"/>
                         </Link>
                     </div>
                 </div>
