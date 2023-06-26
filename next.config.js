@@ -4,7 +4,6 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-
     domains: ['https://www.re-meal.com'],
   },
 }

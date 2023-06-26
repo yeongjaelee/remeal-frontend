@@ -56,8 +56,8 @@ export default function NavLayout() {
             <div className="flex justify-between items-center h-12 pl-4 pt-4 pb-4 pr-4">
                 <div className="flex flex-row items-center">
                     <div>
-                        <Link href="/" className="homepageButton">
-                            <Image src={`/logo.png`} alt="" width={78} height={18} priority/>
+                        <Link href="/" >
+                            <Image src={`/logo.png`} alt="" width={78} height={18}/>
                         </Link>
                     </div>
                 </div>
