@@ -54,6 +54,7 @@ export default function NavLayout() {
                 <div className="flex flex-row items-center">
                     <div>
                         <Link href="/" className="homepageButton">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={`https://www.re-meal.com/img/logo.png`} alt="" width="78" height="18"/>
                         </Link>
                     </div>
