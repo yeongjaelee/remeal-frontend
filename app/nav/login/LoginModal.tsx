@@ -5,7 +5,7 @@ import {faComment, faEnvelope} from "@fortawesome/free-solid-svg-icons";
 import {gql} from "@apollo/client";
 import auth_client from "../../../auth-client";
 import axios from 'axios';
-
+import Image from 'next/image';
 
 const CHECK_USER = gql`
     mutation CheckUser($email:String){
@@ -164,7 +164,7 @@ const LoginModal = ({ show, onClose, children }) => {
                                     {/*<SecondEmailPage/>*/}
                                     <div className="flex flex-col w-2xl h-xl items-center justify-between">
                                         <div className="flex justify-center">
-                                            <img src={`/logo.png`} alt="" width="78" height="18"/>
+                                            <Image src={`/logo.png`} alt="" width="78" height="18"/>
                                         </div>
                                             <div className="flex items-center justify-center w-2xl">
                                                 <div className="flex flex-col items-center justify-center w-56">
@@ -190,7 +190,7 @@ const LoginModal = ({ show, onClose, children }) => {
                                     {/*<ThirdEmailPage/>*/}
                                     <div className="flex flex-col w-2xl h-xl items-center justify-between">
                                         <div className="flex justify-center">
-                                            <img src={`/logo.png`} alt="" width="78" height="18"/>
+                                            <Image src={`/logo.png`} alt="" width="78" height="18"/>
                                         </div>
                                         <div className="flex items-center justify-center w-2xl">
                                             <div className="flex flex-col items-center justify-center w-56">
