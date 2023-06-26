@@ -5,7 +5,7 @@ export default function page({params}:{params : {id: number}}) {
     console.log(id)
     return(
         <div>
-            <PostCreate params={id} />
+            {/*<PostCreate params={id} />*/}
         </div>
     )
 }

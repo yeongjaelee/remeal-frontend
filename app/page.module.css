@@ -273,5 +273,5 @@
 
 @font-face {
   font-family:'NanumSquareNeoOTF-Rg';
-  src: url('public/font/NanumSquareNeo/OTF/NanumSquareNeoOTF-Rg.otf') format('truetype')
+  src: url('../../reactjs/public/font/NanumSquareNeo/OTF/NanumSquareNeoOTF-Rg.otf') format('truetype')
 }
