@@ -138,7 +138,7 @@ export default function PostList (params:any){
     //
     function handleCopyClipBoard(postId: number) {
         //http://localhost:3000/post/[id]?id=12
-        const url = `${process.env.END_POINT_MEDIA}/post/[id]?id=${postId}`;
+        const url = `${process.env.END_POINT}/post/[id]?id=${postId}`;
         setCopyUrl(url)
         setShowModal(true)
     }
