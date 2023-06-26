@@ -78,14 +78,14 @@ export default function PostCreate(params:any) {
                     });
                     const IMG_URL = data.uploadImage.url;
                     const imageUrl = "http://127.0.0.1:8000" + IMG_URL
-                    if (quillRef.current instanceof ReactQuill) {
-                        // const editor = quillRef.current.getEditor();
-                        // const range = editor.getSelection();
-                        // // @ts-ignore
-                        // if ("index" in range) {
-                        //     editor.insertEmbed(range.index, "image", imageUrl);
-                        // }
-                    }
+                    // if (quillRef.current instanceof ReactQuill) {
+                    //     const editor = quillRef.current.getEditor();
+                    //     const range = editor.getSelection();
+                    //     // @ts-ignore
+                    //     if ("index" in range) {
+                    //         editor.insertEmbed(range.index, "image", imageUrl);
+                    //     }
+                    // }
                 } catch (error) {
                     console.log("Failed to upload image:", error);
                 }
