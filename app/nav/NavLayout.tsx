@@ -6,6 +6,9 @@ import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import {faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 import {useRouter} from "next/navigation";
+import Image from 'next/image';
+
+
 export default function NavLayout() {
     const [showModal, setShowModal] = useState(false);
     // const token = localStorage.getItem('token')
@@ -53,8 +56,8 @@ export default function NavLayout() {
             <div className="flex justify-between items-center h-12 pl-4 pt-4 pb-4 pr-4">
                 <div className="flex flex-row items-center">
                     <div>
-                        <Link href="/" className="homepageButton">
-                            <img src={`13.209.129.230/img/logo.png`} alt="" width="78" height="18"/>
+                        <Link href="/" >
+                            <Image src={`/logo.png`} alt="" width={78} height={18}/>
                         </Link>
                     </div>
                 </div>

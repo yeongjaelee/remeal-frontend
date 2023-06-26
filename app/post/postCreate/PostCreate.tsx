@@ -1,6 +1,6 @@
 'use client'
 import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
-import ReactQuill, { Quill } from "react-quill";
+import { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import parse from 'html-react-parser';
 import client from "../../../apollo-client";
@@ -10,6 +10,11 @@ import ImageResize from '@looop/quill-image-resize-module-react';
 import './style.scss';
 import {useRouter, useSearchParams} from "next/navigation";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), {
+    ssr: false
+});
+
 
 
 // 위에서 설정한 모듈들 foramts을 설정한다
@@ -52,7 +57,7 @@ export default function PostCreate(params:any) {
     const [title, setTitle] = useState<string>("");
     const [value, setValue] = useState<string>("");
     const [tags, setTags] = useState([])
-    const quillRef = useRef<ReactQuill>();
+    const quillRef = useRef();
     const imageHandler = () => {
         const input = document.createElement("input");
         input.setAttribute("type", "file");
@@ -73,14 +78,14 @@ export default function PostCreate(params:any) {
                     });
                     const IMG_URL = data.uploadImage.url;
                     const imageUrl = "http://127.0.0.1:8000" + IMG_URL
-                    if (quillRef.current instanceof ReactQuill) {
-                        const editor = quillRef.current.getEditor();
-                        const range = editor.getSelection();
-                        // @ts-ignore
-                        if ("index" in range) {
-                            editor.insertEmbed(range.index, "image", imageUrl);
-                        }
-                    }
+                    // if (quillRef.current instanceof ReactQuill) {
+                    //     const editor = quillRef.current.getEditor();
+                    //     const range = editor.getSelection();
+                    //     // @ts-ignore
+                    //     if ("index" in range) {
+                    //         editor.insertEmbed(range.index, "image", imageUrl);
+                    //     }
+                    // }
                 } catch (error) {
                     console.log("Failed to upload image:", error);
                 }
@@ -211,16 +216,16 @@ export default function PostCreate(params:any) {
     // @ts-ignore
     const handleImageDelete = (image) => {
         console.log('delete image')
-        if (quillRef.current instanceof ReactQuill) {
-            const editor = quillRef.current.getEditor();
-            const selection = editor.getSelection();
-            // @ts-ignore
-            if ("index" in selection) {
-                editor.formatText(selection.index, selection.length, 'clean', {image: image});
-                const content = quillRef.current.getEditor().root.innerHTML;
-                setValue(content);
-            }
-        }
+        // if (quillRef.current instanceof ReactQuill) {
+        //     const editor = quillRef.current.getEditor();
+        //     const selection = editor.getSelection();
+        //     // @ts-ignore
+        //     if ("index" in selection) {
+        //         editor.formatText(selection.index, selection.length, 'clean', {image: image});
+        //         const content = quillRef.current.getEditor().root.innerHTML;
+        //         setValue(content);
+        //     }
+        // }
     };
     // @ts-ignore
     function handleKeyDown(e){
@@ -254,9 +259,9 @@ export default function PostCreate(params:any) {
                 getPost()
             }
             setTimeout(()=>{
-                if (quillRef.current instanceof ReactQuill) {
-                    quillRef.current.focus()
-                }
+                // if (quillRef.current instanceof ReactQuill) {
+                //     quillRef.current.focus()
+                // }
             },0)
         }
         else{
