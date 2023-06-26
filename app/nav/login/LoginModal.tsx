@@ -115,7 +115,7 @@ const LoginModal = ({ show, onClose, children }) => {
                                     {/*<FirstEmailPage/>*/}
                                     <div className="flex flex-col w-2xl h-xl items-center justify-between">
                                         <div className="flex justify-center">
-                                            <img src={`13.209.129.230/img/logo.png`} alt="" width="78" height="18"/>
+                                            <img src={`/logo.png`} alt="" width="78" height="18"/>
                                         </div>
                                         <div className="flex flex-col items-center w-2xl">
                                             <div className="flex items-center justify-center w-full">
@@ -164,7 +164,7 @@ const LoginModal = ({ show, onClose, children }) => {
                                     {/*<SecondEmailPage/>*/}
                                     <div className="flex flex-col w-2xl h-xl items-center justify-between">
                                         <div className="flex justify-center">
-                                            <img src={`13.209.129.230/img/logo.png`} alt="" width="78" height="18"/>
+                                            <img src={`/logo.png`} alt="" width="78" height="18"/>
                                         </div>
                                             <div className="flex items-center justify-center w-2xl">
                                                 <div className="flex flex-col items-center justify-center w-56">
@@ -190,7 +190,7 @@ const LoginModal = ({ show, onClose, children }) => {
                                     {/*<ThirdEmailPage/>*/}
                                     <div className="flex flex-col w-2xl h-xl items-center justify-between">
                                         <div className="flex justify-center">
-                                            <img src={`13.209.129.230/img/logo.png`} alt="" width="78" height="18"/>
+                                            <img src={`/logo.png`} alt="" width="78" height="18"/>
                                         </div>
                                         <div className="flex items-center justify-center w-2xl">
                                             <div className="flex flex-col items-center justify-center w-56">
