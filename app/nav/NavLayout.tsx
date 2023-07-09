@@ -51,14 +51,20 @@ export default function NavLayout() {
             router.push('../post/postCreate')
         }
     }
+    function goToMain(){
+        router.push('/')
+        setTimeout(() => {
+            window.location.reload();
+        }, 500);
+    }
     return (
         <div className="h-12">
             <div className="flex justify-between items-center h-12 pl-4 pt-4 pb-4 pr-4">
                 <div className="flex flex-row items-center">
                     <div>
-                        <Link href="/" >
+                        <button onClick={goToMain} >
                             <Image src={`/logo.png`} alt="" width={78} height={18}/>
-                        </Link>
+                        </button>
                     </div>
                 </div>
                 <div className="flex flex-row items-center h-12">
