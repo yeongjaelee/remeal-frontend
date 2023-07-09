@@ -322,6 +322,8 @@ import client from "../../../apollo-client";
 import PostService from "../../data/post";
 import { ForwardedRef } from 'react';
 import { Quill } from 'react-quill';
+// @ts-ignore
+import ImageResize from '@looop/quill-image-resize-module-react';
 type QuillType = typeof ReactQuill & {
     Quill: any; // Add the Quill type declaration if necessary
 };
@@ -332,6 +334,21 @@ const ReactQuill = dynamic(async () => {
         return <RQ ref={forwardedRef} {...props} />;
     };
 }, { ssr: false });
+// const Font = Quill.import("formats/font");
+// @ts-ignore
+// const Size = Quill.import("attributors/style/size");
+// Font.whitelist = ["dotum", "gullim", "batang", "NanumGothic"];
+// Size.whitelist = [
+//     "18px",
+//     "20px",
+//     "22px",
+//     "24px",
+//     "26px",
+//     "28px",
+// ];
+// Quill.register(Size, true);
+// // Quill.register(Font, true);
+// Quill.register('modules/imageResize', ImageResize)
 
 export default function PostCreate(params:any) {
     const searchParams = useSearchParams();
@@ -367,6 +384,8 @@ export default function PostCreate(params:any) {
                         const range = quill.getSelection();
                         if (range) {
                             quill.insertEmbed(range.index, "image", imageUrl);
+                            quillRef.current.getEditor().setSelection(range.index + 1);
+
                         }
                     }
                     // const range = quillRef.current.getEditorSelection();
@@ -443,7 +462,7 @@ export default function PostCreate(params:any) {
                 image: imageHandler,
             },
         },
-        // imageResize: { modules: ['Resize'] },
+        imageResize: { modules: ['Resize'] },
     };
     }, []);
     // @ts-ignore
