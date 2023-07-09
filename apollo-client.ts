@@ -11,7 +11,7 @@ import {createUploadLink} from "apollo-upload-client";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 const httpLink = new createUploadLink({
-    uri: "http://127.0.0.1:8000/graphql",
+    uri: "https://dev.re-meal.com/graphql",
     // uri: `${process.env.END_POINT}/graphql`
 
 });
