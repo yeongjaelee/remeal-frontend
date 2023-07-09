@@ -87,7 +87,7 @@ export default function Page() {
                         <div>
                         {
                             isUserOldContent?<div>
-                                    {userOldImage.length>28&&<img src={userOldImage}/>}
+                                    {userOldImage.length>30&&<img src={userOldImage}/>}
                                     {userOldContent.split('\n').map((line, index) => (
                                         <React.Fragment key={index}>
                                             <div className="text-xl leading-9 font-NanumSquareNeoOTF-rg">

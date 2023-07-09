@@ -254,7 +254,6 @@ export default function Page() {
                                                         <Link href={`../profile/[email]?email=${item.user.email}`} className="text-x">{item.user.email}</Link>
                                                     </div>
                                                     <ReactTimeAgo date={new Date(item.dateCreated)} className="text-xs font-light text-gray-400"></ReactTimeAgo>
-                                                    {item.userImage.image}
                                                 </div>
 
                                             </div>
