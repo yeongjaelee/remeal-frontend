@@ -63,8 +63,8 @@ const ShareModal = ({ show, onClose, children }) => {
                         </div>
                         {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
                     </div>
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
+
+
                     <TextModal
                         onClose={() => {setNextModalShow(false); onClose();}}
                         show={nextModalShow}
