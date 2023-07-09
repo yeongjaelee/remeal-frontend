@@ -66,8 +66,7 @@ export default function Page() {
         if (data.user.userImage){
             console.log(data.user.userImage.image)
             // setUserImage('https://dev.re-meal.com/media/user_image/키토-2.jpeg')
-            // setUserImage('https://dev.re-meal.com/media/'+data.user.userImage.image)
-            setUserImage('https://dev.re-meal.com/media/user_image/KakaoTalk_Photo_2023-02-23-23-18-30_002.jpeg')
+            setUserImage('https://dev.re-meal.com/media/'+data.user.userImage.image)
             setIsUserImageDelete(data.user.userImage.isDeleted)
         }
         setUsername(data.user.username)
