@@ -48,7 +48,7 @@ export default function Page() {
                 setUserOldImage(imageUrl)
                 if (data.user.userContent.image){
                     // setImageSrc("http://127.0.0.1:8000/media/" +data.user.userContent.image)
-                    setImageSrc('https://dev.re-meal.com/' +data.user.userImage.image)
+                    setImageSrc('https://dev.re-meal.com/media/'+data.user.userImage.image)
                 }
                 else{
                     // @ts-ignore
@@ -213,7 +213,7 @@ export default function Page() {
                             </div>
                             :
                             (isUserOldContent?<div>
-                                {userOldImage.length>28&&<img src={userOldImage}/>}
+                                {userOldImage.length>28&&<Image src={userOldImage} alt=""/>}
                                     {userOldContent.split('\n').map((line, index) => (
                                         <React.Fragment key={index}>
                                             <div className="text-xl leading-9 font-NanumSquareNeoOTF-rg">
