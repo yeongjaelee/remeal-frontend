@@ -63,7 +63,7 @@ export default function NavLayout() {
                 <div className="flex flex-row items-center">
                     <div>
                         <button onClick={goToMain} >
-                            <Image src={`/logo.png`} alt="" width={78} height={18}/>
+                            <img src={`/logo.png`} alt="" width={78} height={18}/>
                         </button>
                     </div>
                 </div>
