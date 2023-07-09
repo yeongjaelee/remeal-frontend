@@ -39,7 +39,7 @@ export default function Page() {
                 const imageUrl = "https://dev.re-meal.com/media/"+data.getUserByEmail.userContent.image
                 setUserOldImage(imageUrl)
                 if (data.getUserByEmail.userContent.image){
-                    setImageSrc("https://dev.re-meal.com/media/" +data.getUserByEmail.userContent.image)
+                    setImageSrc("https://dev.re-meal.com/media/"+data.getUserByEmail.userContent.image)
                 }
                 else{
                     // @ts-ignore
