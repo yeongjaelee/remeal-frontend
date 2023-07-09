@@ -36,8 +36,7 @@ export default function Page() {
                 setLine(data.getUserByEmail.userContent.content.split("\n").length)
                 setUserOldImage(data.getUserByEmail.userContent.image)
                 // const imageUrl = "https://dev.re-meal.com/media/"+data.getUserByEmail.userContent.image
-                console.log(data.getUserByEmail.user.image)
-                const imageUrl = data.getUserByEmail.userContent.image
+                const imageUrl = "https://dev.re-meal.com/media/"+data.getUserByEmail.userContent.image
                 setUserOldImage(imageUrl)
                 if (data.getUserByEmail.userContent.image){
                     setImageSrc("https://dev.re-meal.com/media/" +data.getUserByEmail.userContent.image)
