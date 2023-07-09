@@ -85,6 +85,7 @@ export default function Page() {
         if (data){
             setComments(data.comments)
             setCommentLength(data.comments.length)
+            
         }
         else{
             setCommentLength(0)
