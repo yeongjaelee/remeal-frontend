@@ -65,7 +65,7 @@ export default function PostCreate(params:any) {
                         variables: { image: imageDataUrl },
                     });
                     const IMG_URL = data.uploadImage.url;
-                    const imageUrl = "http://127.0.0.1:8000" + IMG_URL
+                    const imageUrl = "https://dev.re-meal.com/" + IMG_URL
                     const quill = quillRef.current?.getEditor();
                     console.log(quill)
                     if (quill) {
