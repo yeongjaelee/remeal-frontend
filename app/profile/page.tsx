@@ -63,7 +63,7 @@ export default function Page() {
             }
         }
         if (data.user.userImage){
-            setUserImage(process.env.END_POINT_MEDIA +data.user.userImage.image)
+            setUserImage('https://dev.re-meal.com/' +data.user.userImage.image)
             setIsUserImageDelete(data.user.userImage.isDeleted)
         }
         setUsername(data.user.username)
