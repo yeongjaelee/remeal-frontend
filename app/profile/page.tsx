@@ -63,6 +63,7 @@ export default function Page() {
             }
         }
         if (data.user.userImage){
+            console.log(data.user.userImage.image)
             setUserImage('https://dev.re-meal.com/' +data.user.userImage.image)
             setIsUserImageDelete(data.user.userImage.isDeleted)
         }
