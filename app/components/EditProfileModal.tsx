@@ -48,6 +48,7 @@ const EditProfileModal = ({ show, onClose, children, username, userEmailFirst, u
             // const formData = new FormData();
             // formData.append("image", i);
             const token = localStorage.getItem('token')
+            console.log(i)
             await client.mutate({mutation: ProfileService.CreateUserImage, variables: {'token': token, 'image': i}})
             setIsImageDeleted(false)
         }
