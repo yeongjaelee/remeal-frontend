@@ -12,8 +12,6 @@ import {createUploadLink} from "apollo-upload-client";
 // @ts-ignore
 const httpLink = new createUploadLink({
     uri: "https://dev.re-meal.com/graphql",
-    // uri: `${process.env.END_POINT}/graphql`
-
 });
 
 const authLink = setContext( async (_, {headers}) => {
