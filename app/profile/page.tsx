@@ -48,7 +48,7 @@ export default function Page() {
                 setUserOldImage(imageUrl)
                 if (data.user.userContent.image){
                     // setImageSrc("http://127.0.0.1:8000/media/" +data.user.userContent.image)
-                    setImageSrc(process.env.END_POINT_MEDIA +data.user.userContent.image)
+                    setImageSrc('https://dev.re-meal.com/' +data.user.userImage.image)
                 }
                 else{
                     // @ts-ignore
