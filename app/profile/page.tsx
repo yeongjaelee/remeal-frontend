@@ -65,7 +65,8 @@ export default function Page() {
         }
         if (data.user.userImage){
             console.log(data.user.userImage.image)
-            setUserImage('https://dev.re-meal.com/media/user_image/키토-2.jpeg')
+            // setUserImage('https://dev.re-meal.com/media/user_image/키토-2.jpeg')
+            setUserImage(data.user.userImage.image)
             setIsUserImageDelete(data.user.userImage.isDeleted)
         }
         setUsername(data.user.username)
@@ -244,7 +245,7 @@ export default function Page() {
                     <div className="h-16"></div>
                     {userImage && !isUserImageDeleted?
                         <div className="relative rounded-full w-20 h-20 flex ml-3 items-center justify-center ">
-                            <Image src={`https://dev.re-meal.com/media/user_image/키토-2.jpeg`} className="rounded-full w-full h-full object-cover" alt=""/>
+                            <Image src={userImage} className="rounded-full w-full h-full object-cover" alt=""/>
                         </div>
                         :
                         <div className="relative rounded-full w-20 h-20 bg-emerald-700 flex ml-3 items-center justify-center ">
