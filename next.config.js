@@ -4,7 +4,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['https://www.re-meal.com'],
+    domains: ['https://dev.re-meal.com/media/'],
   },
 }
 
