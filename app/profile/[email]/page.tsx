@@ -35,10 +35,10 @@ export default function Page() {
                 setUserOldContent(data.getUserByEmail.userContent.content)
                 setLine(data.getUserByEmail.userContent.content.split("\n").length)
                 setUserOldImage(data.getUserByEmail.userContent.image)
-                const imageUrl = "http://127.0.0.1:8000/media/" + data.getUserByEmail.userContent.image
+                const imageUrl = "https://dev.re-meal.com/media/" + data.getUserByEmail.userContent.image
                 setUserOldImage(imageUrl)
                 if (data.getUserByEmail.userContent.image){
-                    setImageSrc("http://127.0.0.1:8000/media/" +data.getUserByEmail.userContent.image)
+                    setImageSrc("https://dev.re-meal.com/media/" +data.getUserByEmail.userContent.image)
                 }
                 else{
                     // @ts-ignore
@@ -53,7 +53,7 @@ export default function Page() {
             }
         }
         if (data.getUserByEmail.userImage){
-            setUserImage("http://127.0.0.1:8000/media/" +data.getUserByEmail.userImage.image)
+            setUserImage("https://dev.re-meal.com/media/" +data.getUserByEmail.userImage.image)
             setIsUserImageDelete(data.getUserByEmail.userImage.isDeleted)
         }
         setUsername(data.getUserByEmail.username)
