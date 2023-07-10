@@ -36,40 +36,28 @@ export default function PostList (params:any){
     const [isFetch, setIsFetch] = useState<boolean>(false)
     const email = params
     const fetchData = async () => {
-        console.log(tagName)
         if (email.params==='all'){
-            console.log('limit')
-            console.log(limit)
-            console.log('offset')
-            console.log(offset)
             const {data} = await client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset, 'email':null}})
-            console.log(data.postList)
             if (data.postList.length>0){
                 // @ts-ignore
                 setPostList([...postList, ...data.postList]);
-                console.log('data fetching')
                 if (data.postList.length==4){
-                    setIsFetching(true)
+                    setIsFetch(true)
                 }
                 else{
-                    setIsFetching(false)
+                    setIsFetch(false)
                 }
             }
             else{
                 setCheckSame(true)
             }
+            console.log(isFetch)
         }
         else {
-            console.log('limit')
-            console.log(limit)
-            console.log('offset')
-            console.log(offset)
             const {data} = await client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset, 'email':email.params}})
-            console.log(data.postList)
             if (data.postList.length>0){
                 // @ts-ignore
                 setPostList([...postList, ...data.postList]);
-                console.log('data fetching')
             }
             else{
                 setCheckSame(true)
@@ -99,18 +87,15 @@ export default function PostList (params:any){
         // return <div dangerouslySetInnerHTML={html} className="font-light text-xs" />;
     }
     useEffect(() => {
-        console.log('okok')
         fetchData();
-    },[limit]);
-
+    },[isFetching]);
     // useEffect(() => {
-    //     if (!pageLoaded) {
-    //         console.log(1111)
-    //         setPageLoaded(true);
-    //         const currentURL = window.location.href;
-    //         window.history.replaceState(null, '', currentURL);
+    //     // Perform additional actions based on the updated value of isFetch
+    //     if(isFetch){
+    //         setLimit(limit+4)
+    //         setOffset(offset+4)
     //     }
-    // }, [dispatch, router, setPostList, pageLoaded]);
+    // }, [isFetch]);
 
     useEffect(() => {
         const handleScroll = debounce(() => {
@@ -118,30 +103,20 @@ export default function PostList (params:any){
             const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
             if (scrollTop + clientHeight === scrollHeight && !isFetching && !checkSame) {
                 setIsFetching(true);
-                console.log('isfetching true')
                 window.scrollTo({
                     top: scrollTop - 20,
                     behavior: "smooth",
                 });
-                if(isFetch){
-                    setLimit(limit+4)
-                    setOffset(offset+4)
-                }
+                setLimit(limit+4)
+                setOffset(offset+4)
                 setTimeout(() => {
-                    // setOffset(limit);
-                    // setLimit(limit + 4);
-                    // dispatch(incrementLimit())
-                    // dispatch(incrementOffset())
-                    // @ts-ignore
                     const newScrollHeight = containerRef.current.scrollHeight;
                     // @ts-ignore
                     containerRef.current.scrollTo({
                         top: newScrollHeight - 20,
                         behavior: "smooth",
                     });
-
                     setIsFetching(false);
-                    console.log('isfetching false')
                 }, 10);
             }
         }, 10); // debounce with 500ms delay
@@ -159,7 +134,7 @@ export default function PostList (params:any){
                 container.removeEventListener("scroll", handleScroll);
             }
         };
-    }, [isFetching]);
+    }, );
     //
     function handleCopyClipBoard(postId: number) {
         //http://localhost:3000/post/[id]?id=12
@@ -247,7 +222,7 @@ export default function PostList (params:any){
                                                                 <Link
                                                                     href={`../../post/tag?tagName=${tag.name}`}
                                                                     className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 ml-3 mr-3">
-                                                                    <a># {tag.name}</a>
+                                                                    # {tag.name}
                                                                 </Link>
                                                             </div>
                                                             {index+1%3 == 0 &&<br/>}
