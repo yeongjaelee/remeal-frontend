@@ -33,6 +33,7 @@ export default function PostList (params:any){
     // const [searchTag, setSearchTag] = useState<string>(params.tagName)
     const [showModal, setShowModal] = useState(false);
     const [copyUrl, setCopyUrl] = useState<string>('')
+    const [isFetch, setIsFetch] = useState<boolean>(false)
     const email = params
     const fetchData = async () => {
         console.log(tagName)
@@ -47,6 +48,12 @@ export default function PostList (params:any){
                 // @ts-ignore
                 setPostList([...postList, ...data.postList]);
                 console.log('data fetching')
+                if (data.postList.length==4){
+                    setIsFetching(true)
+                }
+                else{
+                    setIsFetching(false)
+                }
             }
             else{
                 setCheckSame(true)
@@ -116,6 +123,10 @@ export default function PostList (params:any){
                     top: scrollTop - 20,
                     behavior: "smooth",
                 });
+                if(isFetch){
+                    setLimit(limit+4)
+                    setOffset(offset+4)
+                }
                 setTimeout(() => {
                     // setOffset(limit);
                     // setLimit(limit + 4);
