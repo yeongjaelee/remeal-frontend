@@ -110,6 +110,7 @@ export default function PostList (params:any){
                 setLimit(limit+4)
                 setOffset(offset+4)
                 setTimeout(() => {
+                    // @ts-ignore
                     const newScrollHeight = containerRef.current.scrollHeight;
                     // @ts-ignore
                     containerRef.current.scrollTo({
