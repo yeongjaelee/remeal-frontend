@@ -24,8 +24,10 @@ export default function PostList (params:any){
     const [pageLoaded, setPageLoaded] = useState(false);
     const containerRef = useRef(null);
     const [isFetching, setIsFetching] = useState<boolean>(false)
-    const limit = useSelector((state:RootSate)=>state.tag.limit)
-    const offset = useSelector((state:RootSate)=>state.tag.offset)
+    // const limit = useSelector((state:RootSate)=>state.tag.limit)
+    // const offset = useSelector((state:RootSate)=>state.tag.offset)
+    const limit = useState<number>(4)
+    const offset = useState<number>(0)
     const dispatch = useDispatch();
     const [checkSame, setCheckSame] = useState<boolean>(false)
     // const [searchTag, setSearchTag] = useState<string>(params.tagName)
