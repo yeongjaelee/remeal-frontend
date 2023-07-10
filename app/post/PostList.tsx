@@ -142,6 +142,13 @@ export default function PostList (params:any){
         setCopyUrl(url)
         setShowModal(true)
     }
+    function tagPostList(tagName:string) {
+
+        router.replace(`../../post/tag?tagName=${tagName}`)
+        setTimeout(() => {
+            window.location.reload();
+        }, 500);
+    }
     return(
         <div ref={containerRef} className="flex flex-col justify-center items-center left-3  h-screen overflow-y-scroll">
             <div className="w-screen flex items-center justify-center">
@@ -219,12 +226,15 @@ export default function PostList (params:any){
                                                     return(
                                                         <div key={tag.id} className="mb-2" >
                                                             <div className="mr-1 h-7 rounded-2xl bg-gray-200 opacity-75 flex items-center justify-center">
-                                                                <Link
-                                                                    href={`../../post/tag?tagName=${tag.name}`}
-                                                                    className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 ml-3 mr-3">
-                                                                    # {tag.name}
-
-                                                                </Link>
+                                                                {/*<Link*/}
+                                                                {/*    href={`../../post/tag?tagName=${tag.name}`}*/}
+                                                                {/*    className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 ml-3 mr-3">*/}
+                                                                {/*    # {tag.name}*/}
+                                                                {/*</Link>*/}
+                                                                <button onClick={()=>tagPostList(tag.Name)}
+                                                                        className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 ml-3 mr-3">
+                                                                        # {tag.name}
+                                                                </button>
                                                             </div>
                                                             {index+1%3 == 0 &&<br/>}
                                                         </div>
