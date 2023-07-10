@@ -143,7 +143,7 @@ export default function PostList (params:any){
         setShowModal(true)
     }
     function tagPostList(tagName:string) {
-
+        console.log(tagName)
         router.replace(`../../post/tag?tagName=${tagName}`)
         setTimeout(() => {
             window.location.reload();
