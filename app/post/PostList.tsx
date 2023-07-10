@@ -83,7 +83,7 @@ export default function PostList (params:any){
     }
     useEffect(() => {
         fetchData();
-    },[limit]);
+    },[]);
 
     // useEffect(() => {
     //     if (!pageLoaded) {
