@@ -142,7 +142,7 @@ export default function PostList (params:any){
         setCopyUrl(url)
         setShowModal(true)
     }
-    const tagPostList = (tagName) => {
+    const tagPostList = (tagName:string) => {
         console.log(tagName)
         router.replace(`../../post/tag?tagName=${tagName}`)
         setTimeout(() => {
