@@ -82,8 +82,9 @@ export default function PostList (params:any){
         // return <div dangerouslySetInnerHTML={html} className="font-light text-xs" />;
     }
     useEffect(() => {
+        console.log('okok')
         fetchData();
-    },[limit]);
+    },[isFetching]);
 
     // useEffect(() => {
     //     if (!pageLoaded) {
@@ -100,6 +101,7 @@ export default function PostList (params:any){
             const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
             if (scrollTop + clientHeight === scrollHeight && !isFetching && !checkSame) {
                 setIsFetching(true);
+                console.log('isfetching true')
                 window.scrollTo({
                     top: scrollTop - 20,
                     behavior: "smooth",
@@ -116,7 +118,9 @@ export default function PostList (params:any){
                         top: newScrollHeight - 20,
                         behavior: "smooth",
                     });
+
                     setIsFetching(false);
+                    console.log('isfetching false')
                 }, 10);
             }
         }, 10); // debounce with 500ms delay
