@@ -83,7 +83,7 @@ export default function PostList (params:any){
     }
     useEffect(() => {
         fetchData();
-    },[]);
+    },[fetchData]);
 
     // useEffect(() => {
     //     if (!pageLoaded) {
@@ -107,8 +107,8 @@ export default function PostList (params:any){
                 setTimeout(() => {
                     // setOffset(limit);
                     // setLimit(limit + 4);
-                    dispatch(incrementLimit())
-                    dispatch(incrementOffset())
+                    // dispatch(incrementLimit())
+                    // dispatch(incrementOffset())
                     // @ts-ignore
                     const newScrollHeight = containerRef.current.scrollHeight;
                     // @ts-ignore
@@ -141,13 +141,6 @@ export default function PostList (params:any){
         const url = `https://www.re-meal.com/post/[id]?id=${postId}`;
         setCopyUrl(url)
         setShowModal(true)
-    }
-    const tagPostList = (tagName:string) => {
-        console.log(tagName)
-        router.replace(`../../post/tag?tagName=${tagName}`)
-        setTimeout(() => {
-            window.location.reload();
-        }, 500);
     }
     return(
         <div ref={containerRef} className="flex flex-col justify-center items-center left-3  h-screen overflow-y-scroll">
@@ -231,10 +224,6 @@ export default function PostList (params:any){
                                                                     className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 ml-3 mr-3">
                                                                     <a># {tag.name}</a>
                                                                 </Link>
-                                                                {/*<button onClick={()=>tagPostList(tag.Name)}*/}
-                                                                {/*        className="font-NanumSquareNeoOTF-rg font-normal text-xs leading-5 ml-3 mr-3">*/}
-                                                                {/*        # {tag.name}*/}
-                                                                {/*</button>*/}
                                                             </div>
                                                             {index+1%3 == 0 &&<br/>}
                                                         </div>
