@@ -26,8 +26,8 @@ export default function PostList (params:any){
     const [isFetching, setIsFetching] = useState<boolean>(false)
     // const limit = useSelector((state:RootSate)=>state.tag.limit)
     // const offset = useSelector((state:RootSate)=>state.tag.offset)
-    const limit = useState<number>(4)
-    const offset = useState<number>(0)
+    const [limit, setLimit] = useState<number>(4)
+    const [offset, setOffset] = useState<number>(0)
     const dispatch = useDispatch();
     const [checkSame, setCheckSame] = useState<boolean>(false)
     // const [searchTag, setSearchTag] = useState<string>(params.tagName)
