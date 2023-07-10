@@ -35,6 +35,10 @@ export default function PostList (params:any){
     const fetchData = async () => {
         console.log(tagName)
         if (email.params==='all'){
+            console.log('limit')
+            console.log(limit)
+            console.log('offset')
+            console.log(offset)
             const {data} = await client.query({query: PostService.getPostList, variables:{'limit':limit, 'tagName':tagName, 'offset':offset, 'email':null}})
             console.log(data.postList)
             if (data.postList.length>0){
